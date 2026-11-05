@@ -1,0 +1,36 @@
+{
+  "id": "gestea",
+  "alias": [
+    "gestea"
+  ],
+  "nom_affiche": "Gestea",
+  "statut_charte": "a_completer",
+  "raison_sociale": "Gestea SRL",
+  "bce": "0846.809.505",
+  "ipi": null,
+  "adresse": "Rue Vilain XIIII 53-55, 1050 Ixelles",
+  "telephone": null,
+  "email": null,
+  "site": null,
+  "signature": null,
+  "couleurs": null,
+  "police_titres": null,
+  "police_texte": null,
+  "titres_majuscules": false,
+  "logo": null,
+  "logo_largeur_cm": 4.0,
+  "logo_entete": null,
+  "logo_entete_largeur_cm": 2.4,
+  "logo_sur_fond": null,
+  "style": {},
+  "mentions_pied": [],
+  "sources": [
+    "Registre public des entreprises : GESTEA, BCE 0846.809.505, SRL active, NACE 68321 activités des syndics (busibee.be, companyweb.be)"
+  ],
+  "a_verifier": [
+    "Site internet officiel (URL non trouvée)",
+    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
+    "Couleurs, polices et éléments graphiques — à capturer sur le site",
+    "IPI, téléphone, e-mail"
+  ]
+}

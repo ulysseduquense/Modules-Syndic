@@ -7,6 +7,7 @@ simplement pas affiché ; les champs indispensables manquants sont remplacés pa
 ```jsonc
 {
   "marque": "dr-syndic",              // id ou alias d'une marque de brands/ (défaut : emeria)
+  "entite": "op-wallonie",             // facultatif : société de la marque (brand.json > entites) pour le pied de page
 
   "acp": {
     "nom": "Résidence Les Coteaux",   // « ACP » est ajouté devant s'il n'y est pas

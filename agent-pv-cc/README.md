@@ -12,7 +12,9 @@ agent-pv-cc/
     references/                rédaction, cadre légal et plan type, format JSON, marques
     brands/                    une charte par marque : brand.json + logo
     scripts/generate_pv.py     JSON → DOCX/PDF à la charte
-    scripts/extract_brand.py   relève logo/couleurs/polices d'un site
+    scripts/capture_site.js    capture la charte d'un site (Playwright)
+    scripts/brand_from_capture.py  intègre une capture dans brands/<id>/
+    scripts/extract_brand.py   relevé simplifié sans navigateur
     assets/exemple-pv.json     exemple complet
   build.sh                     fabrique dist/pv-conseil-copropriete.zip
 ```
@@ -30,22 +32,31 @@ dans le chat (« ajoute M. X excusé », « reformule le point 3 »).
 
 ## Marques
 
-| marque | état |
-|---|---|
-| Emeria | charte complète (charte Emeria 2026, logos officiels) |
-| Noblué | identité légale renseignée (BCE) ; **logo, couleurs et coordonnées à compléter** |
-| DR Syndic | identité légale renseignée (BCE, siège à Huy) ; **logo, couleurs, IPI à compléter** |
-| OP | couleurs connues ; logo et coordonnées à compléter |
+| marque | site | état |
+|---|---|---|
+| Emeria | emeriagroup.com | charte complète : logos officiels, bandeau de pied navy à coin arrondi |
+| Office des Propriétaires (OP Bruxelles, OP Wallonie) | op.be | couleurs connues ; logo et éléments graphiques à capturer |
+| Syncura | syncura.be | à capturer |
+| Easy Syndic | à confirmer | à capturer |
+| Gestea | à confirmer | à capturer |
+| Agigest (Luxembourg, « conseil syndical ») | agigest.lu (à confirmer) | à capturer |
+| Noblué | syndic-noblue.be | identité légale renseignée ; charte à capturer |
+| DR Syndic | drsyndic.be | identité légale et contacts renseignés ; charte à capturer |
 
-Tant qu'une charte est incomplète, le PV sort en rendu neutre gris et le nom de la
-marque remplace le logo ; l'agent le signale à chaque génération. Pour compléter une
-marque depuis son site :
+Le générateur reproduit la charte de chaque marque : logo sur fond clair, logo blanc
+sur bandeau de couleur à fond perdu (en-tête et/ou pied de page), couleurs, police de la
+marque (embarquée pour le PDF), style des titres, des encadrés et des tableaux. Tant
+qu'une charte n'est pas capturée, le PV sort en gris neutre avec le nom de la marque
+en texte, et l'agent le signale.
+
+Capture d'une charte (le site et ses CDN doivent être joignables) :
 
 ```bash
-python3 pv-conseil-copropriete/scripts/extract_brand.py https://<site> noblue --apply
+node pv-conseil-copropriete/scripts/capture_site.js https://www.drsyndic.be/ /tmp/cap-dr https://www.drsyndic.be/contact https://www.drsyndic.be/legal
+python3 pv-conseil-copropriete/scripts/brand_from_capture.py /tmp/cap-dr dr-syndic --logo … --logo-blanc … --primaire … --entete bandeau --pied bandeau
 ```
 
-Détails et vérifications manuelles : `pv-conseil-copropriete/references/marques.md`.
+Procédure complète : `pv-conseil-copropriete/references/marques.md`.
 
 ## Installation
 
@@ -57,8 +68,9 @@ Importer `dist/pv-conseil-copropriete.zip` comme skill dans Claude (paramètres 
 l'organisation ou du compte, rubrique Skills). En local avec Claude Code : copier le
 dossier `pv-conseil-copropriete/` dans `~/.claude/skills/`.
 
-Dépendances d'exécution : Python 3 + `python-docx` ; LibreOffice pour le PDF et
-`pdftoppm` pour l'aperçu de contrôle (sans eux, seul le .docx est produit).
+Dépendances d'exécution : Python 3 + `python-docx` + Pillow ; LibreOffice pour le PDF
+et `pdftoppm` pour l'aperçu de contrôle (sans eux, seul le .docx est produit). Capture
+des chartes : Node + Playwright (Chromium), `fonttools` et `brotli` pour les polices.
 
 ## Test rapide
 

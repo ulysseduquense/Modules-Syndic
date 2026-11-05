@@ -1,0 +1,38 @@
+{
+  "id": "syncura",
+  "alias": [
+    "syncura",
+    "syncura services"
+  ],
+  "nom_affiche": "Syncura",
+  "statut_charte": "a_completer",
+  "raison_sociale": null,
+  "bce": null,
+  "ipi": null,
+  "adresse": null,
+  "telephone": null,
+  "email": null,
+  "site": "syncura.be",
+  "signature": "managed with care",
+  "couleurs": null,
+  "police_titres": null,
+  "police_texte": null,
+  "titres_majuscules": false,
+  "logo": null,
+  "logo_largeur_cm": 4.0,
+  "logo_entete": null,
+  "logo_entete_largeur_cm": 2.4,
+  "logo_sur_fond": null,
+  "style": {},
+  "mentions_pied": [],
+  "sources": [
+    "www.syncura.be et la signature « managed with care » : en-tête d'un document notarial (immo.notaire.be)",
+    "Groupe VMRE : filiales Syncura et Easy Syndic (lalibre.be)"
+  ],
+  "a_verifier": [
+    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
+    "Couleurs, polices et éléments graphiques — à capturer sur le site",
+    "Entité juridique : Syncura Services SRL (BCE 0817.960.121, Gand) ou VM Vastgoedbeheer (BCE 0437.396.556) — à confirmer",
+    "Adresse, IPI, téléphone, e-mail"
+  ]
+}

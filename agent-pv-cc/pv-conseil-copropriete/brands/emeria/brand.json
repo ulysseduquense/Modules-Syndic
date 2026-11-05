@@ -1,6 +1,11 @@
 {
   "id": "emeria",
-  "alias": ["emeria", "emeria group", "emeriagroup", "groupe emeria"],
+  "alias": [
+    "emeria",
+    "emeria group",
+    "emeriagroup",
+    "groupe emeria"
+  ],
   "nom_affiche": "Emeria",
   "statut_charte": "complete",
   "raison_sociale": null,
@@ -32,7 +37,19 @@
   "mentions_pied": [],
   "sources": [
     "Charte Emeria 2026 — gabarit officiel « PowerPoint presentation edit 3 » (plugin emeria-slides, references/charte.md)",
-    "Logos : emeria-logo-tagline-navy.png et emeria-wordmark-navy.png du même plugin"
+    "Logos : emeria-logo-tagline-navy.png et emeria-wordmark-navy.png du même plugin",
+    "Signature : bandeau de pied navy à coin supérieur droit arrondi avec mot-symbole blanc (charte Emeria 2026)"
   ],
-  "a_verifier": []
+  "a_verifier": [],
+  "logo_sur_fond": "logo-blanc.png",
+  "style": {
+    "entete": "blanc",
+    "pied": "bandeau",
+    "pied_couleur": "primaire",
+    "pied_hauteur_cm": 1.3,
+    "pied_coins_arrondis": "tr",
+    "encadre": "bordure_gauche",
+    "tableau_entete": "plein",
+    "surtitre": true
+  }
 }

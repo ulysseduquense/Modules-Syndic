@@ -4,7 +4,8 @@ description: >-
   Rédige et met en page le procès-verbal d'une réunion du conseil de copropriété
   (PV de CC) à partir de notes prises en vrac dans le chat, et le livre en Word
   (.docx) et PDF à la charte de la marque ou du syndic qui gère l'immeuble
-  (Emeria, Noblué, DR Syndic, OP…). À utiliser dès qu'Ulysse ou un gestionnaire
+  (Emeria, Office des Propriétaires, Syncura, Easy Syndic, Gestea, Agigest,
+  Noblué, DR Syndic). À utiliser dès qu'Ulysse ou un gestionnaire
   parle de « PV de CC », « PV du conseil », « procès-verbal du conseil de
   copropriété », « compte rendu de la réunion du conseil », « rapport de
   réunion CC », colle des notes de réunion d'un conseil de copropriété, ou dit
@@ -24,8 +25,10 @@ charte du syndic, prêt à relire et à signer : `.docx` (modifiable) + `.pdf`.
 | chemin | rôle |
 |---|---|
 | `scripts/generate_pv.py` | JSON → DOCX (+ PDF, + aperçu PNG pour le QA) à la charte de la marque |
-| `scripts/extract_brand.py` | relève logo / couleurs / polices d'un site pour compléter une marque |
-| `brands/<id>/brand.json` | charte et mentions légales de chaque marque (+ `logo.png`) |
+| `scripts/capture_site.js` | capture la charte d'un site (logos, couleurs, polices, styles, captures d'écran) |
+| `scripts/brand_from_capture.py` | intègre une capture dans `brands/<id>/` (logos recadrés, polices TTF, style) |
+| `scripts/extract_brand.py` | relevé simplifié sans navigateur (HTML + CSS) |
+| `brands/<id>/` | charte de chaque marque : `brand.json`, logos, polices |
 | `references/redaction.md` | **style de rédaction** : passer des notes au PV, vocabulaire, pièges |
 | `references/structure-pv.md` | cadre légal belge du conseil de copropriété, plan type, signatures |
 | `references/schema.md` | format du JSON lu par le générateur |
@@ -39,12 +42,18 @@ charte du syndic, prêt à relire et à signer : `.docx` (modifiable) + `.pdf`.
 La marque = le syndic qui gère l'immeuble ; elle fixe logo, couleurs et pied de page.
 Si elle n'est pas dite, la déduire du contexte (nom du gestionnaire, de la société, de
 l'immeuble déjà vu) ; sinon la demander en une ligne. Marques et alias :
-`python3 SKILL_DIR/scripts/generate_pv.py --list-brands` (Noblué = `noblue`, DR Syndic =
-`dr-syndic`, Emeria = `emeria`, OP = `op`). Emeria par défaut si l'utilisateur le confirme.
+`python3 SKILL_DIR/scripts/generate_pv.py --list-brands` (Office des Propriétaires =
+`op`, avec l'entité `op-bruxelles` ou `op-wallonie` dans le champ `entite` ; Syncura =
+`syncura` ; Easy Syndic = `easy-syndic` ; Gestea = `gestea` ; Agigest = `agigest` ;
+Noblué = `noblue` ; DR Syndic = `dr-syndic` ; Emeria = `emeria`). Emeria par défaut si
+l'utilisateur le confirme. Agigest est luxembourgeoise : l'organe s'y appelle « conseil
+syndical » (géré par la marque).
 
 Si la charte de la marque est « à compléter » ou « partielle » (voir `--list-brands`),
 le dire **avant** de générer : le PV sortira sans logo et/ou en rendu neutre gris. Ne
-jamais inventer un logo ou des couleurs. Pour compléter : `references/marques.md`.
+jamais inventer un logo ou des couleurs. Si le site de la marque est joignable, proposer
+de capturer sa charte (`references/marques.md`, « Capturer la charte ») : capture,
+lecture des captures d'écran, intégration, PV de test comparé au site.
 
 ### 2. Recueillir les notes
 

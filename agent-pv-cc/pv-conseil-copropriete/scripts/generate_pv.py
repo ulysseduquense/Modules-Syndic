@@ -75,6 +75,20 @@ PRESENCE = {
 }
 
 MONTANT_RE = re.compile(r"-?\d{1,3}(?:[.\u202f\u00a0 ]\d{3})*(?:,\d{2})?\s?(?:€|EUR)(?:\s?(?:TVAC|HTVA))?", re.IGNORECASE)
+# Éléments graphiques de la charte (brand.json -> "style"), voir references/marques.md.
+STYLE_DEFAUT = {
+    "entete": "blanc",              # blanc | bandeau (bandeau de couleur à fond perdu en haut de la page 1)
+    "entete_couleur": "primaire",
+    "entete_hauteur_cm": 2.8,
+    "pied": "filet",                # filet | bandeau (bandeau de couleur à fond perdu en bas de chaque page)
+    "pied_couleur": "primaire",
+    "pied_hauteur_cm": 1.3,
+    "pied_coins_arrondis": "",      # ex. "tr" : coin supérieur droit arrondi (signature Emeria)
+    "encadre": "bordure_gauche",    # bordure_gauche | fond_plein | contour
+    "tableau_entete": "plein",      # plein | souligne
+    "accent_titre": False,          # petit filet de couleur sous le titre du document
+    "surtitre": True,               # « PROCÈS-VERBAL » au-dessus du titre
+}
 PLACEHOLDER_RE = re.compile(r"\[(?:À|A) COMPL[ÉE]TER[^\]]*\]", re.IGNORECASE)
 
 
@@ -355,6 +369,92 @@ def add_field(paragraph, instr, font, size, color):
     r5._element.append(fld("end"))
 
 
+def band_png(color_hex, w_cm, h_cm, corners="", radius_cm=0.0, dpi=200):
+    """Rectangle plein (PNG) aux couleurs de la marque, coins arrondis optionnels (tl, tr, br, bl)."""
+    import tempfile
+    from PIL import Image, ImageDraw
+    w, h = round(w_cm / 2.54 * dpi), round(h_cm / 2.54 * dpi)
+    rgb = tuple(int(color_hex.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4)) + (255,)
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    r = round(radius_cm / 2.54 * dpi)
+    if corners and r:
+        d.rounded_rectangle([0, 0, w - 1, h - 1], radius=r, fill=rgb,
+                            corners=tuple(c in corners for c in ("tl", "tr", "br", "bl")))
+    else:
+        d.rectangle([0, 0, w, h], fill=rgb)
+    f = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+    img.save(f.name)
+    return f.name
+
+
+def image_ratio(path):
+    from PIL import Image
+    with Image.open(path) as im:
+        return im.size[1] / im.size[0]
+
+
+def anchor_picture(paragraph, path, w_cm, h_cm, x_cm, y_cm, behind=True):
+    """Image positionnée par rapport à la page (bandeaux à fond perdu), derrière le texte."""
+    run = paragraph.add_run()
+    run.add_picture(str(path), width=Cm(w_cm), height=Cm(h_cm))
+    inline = run._r.find(".//" + qn("wp:inline"))
+    anchor = OxmlElement("wp:anchor")
+    for k, v in (("distT", "0"), ("distB", "0"), ("distL", "0"), ("distR", "0"), ("simplePos", "0"),
+                 ("relativeHeight", "251658240"), ("behindDoc", "1" if behind else "0"), ("locked", "0"),
+                 ("layoutInCell", "1"), ("allowOverlap", "1")):
+        anchor.set(k, v)
+    sp = OxmlElement("wp:simplePos")
+    sp.set("x", "0")
+    sp.set("y", "0")
+    anchor.append(sp)
+    for tag, val in (("wp:positionH", x_cm), ("wp:positionV", y_cm)):
+        el = OxmlElement(tag)
+        el.set("relativeFrom", "page")
+        off = OxmlElement("wp:posOffset")
+        off.text = str(int(Cm(val)))
+        el.append(off)
+        anchor.append(el)
+    anchor.append(inline.find(qn("wp:extent")))
+    ee = OxmlElement("wp:effectExtent")
+    for k in ("l", "t", "r", "b"):
+        ee.set(k, "0")
+    anchor.append(ee)
+    anchor.append(OxmlElement("wp:wrapNone"))
+    anchor.append(inline.find(qn("wp:docPr")))
+    cnv = inline.find(qn("wp:cNvGraphicFramePr"))
+    anchor.append(cnv if cnv is not None else OxmlElement("wp:cNvGraphicFramePr"))
+    anchor.append(inline.find(qn("a:graphic")))
+    inline.getparent().replace(inline, anchor)
+
+
+def renumber_docpr(doc):
+    """Identifiants d'images uniques dans tout le document (corps, en-têtes, pieds)."""
+    n = 1
+    for part in doc.part.package.iter_parts():
+        el = getattr(part, "_element", None)
+        if el is None:
+            continue
+        for d in el.iter(qn("wp:docPr")):
+            d.set("id", str(n))
+            n += 1
+
+
+def install_brand_fonts(brand):
+    """Installe les polices de la marque (brands/<id>/fonts/*.ttf|otf) pour le rendu PDF."""
+    src = brand["_dir"] / "fonts"
+    files = [f for f in src.glob("*") if f.suffix.lower() in (".ttf", ".otf")] if src.is_dir() else []
+    if not files:
+        return 0
+    dest = Path.home() / ".local" / "share" / "fonts" / "pv-cc" / brand["id"]
+    dest.mkdir(parents=True, exist_ok=True)
+    for f in files:
+        shutil.copy(f, dest / f.name)
+    if shutil.which("fc-cache"):
+        subprocess.run(["fc-cache", "-f", str(dest)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    return len(files)
+
+
 def no_space(paragraph, before=0, after=0):
     paragraph.paragraph_format.space_before = Pt(before)
     paragraph.paragraph_format.space_after = Pt(after)
@@ -370,6 +470,10 @@ class PV:
         self.font = brand.get("police_texte") or "Arial"
         self.font_t = brand.get("police_titres") or self.font
         self.caps = bool(brand.get("titres_majuscules"))
+        self.organe = brand.get("organe") or "conseil de copropriété"
+        st = dict(STYLE_DEFAUT)
+        st.update(brand.get("style") or {})
+        self.st = st
         self.placeholders = set()
         self.doc = Document()
         self.acp = data.get("acp", {}) or {}
@@ -420,6 +524,9 @@ class PV:
         sec.bottom_margin = Cm(2.2)
         sec.header_distance = Cm(0.9)
         sec.footer_distance = Cm(0.8)
+        if self.st["pied"] == "bandeau":
+            sec.bottom_margin = Cm(2.4 + self.st["pied_hauteur_cm"])
+            sec.footer_distance = Cm(0.2)
         sec.different_first_page_header_footer = True
 
         st = self.doc.styles
@@ -442,18 +549,24 @@ class PV:
         except KeyError:
             pass
 
-    def logo(self, container, which="logo", width_key="logo_largeur_cm", size_text=16):
-        f = self.b.get(which) or self.b.get("logo")
+    def logo(self, container, which="logo", width_key="logo_largeur_cm", size_text=16, blanc=False):
+        """Insère le logo ; renvoie sa hauteur en cm. blanc=True : version pour fond de couleur."""
+        f = self.b.get(which) if blanc else (self.b.get(which) or self.b.get("logo"))
         p = container.add_paragraph() if hasattr(container, "add_paragraph") else container
         no_space(p)
         if f and (self.b["_dir"] / f).exists():
+            path = self.b["_dir"] / f
             width = self.b.get(width_key) or self.b.get("logo_largeur_cm") or 4
-            p.add_run().add_picture(str(self.b["_dir"] / f), width=Cm(width))
-        else:
-            # Pas de logo fourni : nom de la marque en mot-symbole typographique.
-            r = p.add_run(self.b.get("nom_affiche", ""))
-            set_run_font(r, self.font_t, size_text, bold=True, color=self.pal["primaire"])
-        return p
+            ratio = image_ratio(path)
+            hmax = self.b.get("logo_hauteur_max_cm") or (1.4 if blanc else 2.0)
+            if width * ratio > hmax:
+                width = hmax / ratio
+            p.add_run().add_picture(str(path), width=Cm(width))
+            return width * ratio
+        # Pas de logo fourni : nom de la marque en mot-symbole typographique.
+        r = p.add_run(self.b.get("nom_affiche", ""))
+        set_run_font(r, self.font_t, size_text, bold=True, color="#FFFFFF" if blanc else self.pal["primaire"])
+        return size_text * 0.035
 
     def header_footer(self):
         sec = self.doc.sections[0]
@@ -461,9 +574,22 @@ class PV:
         h1 = sec.first_page_header
         p = h1.paragraphs[0]
         no_space(p)
-        self.logo(p, "logo", "logo_largeur_cm", 18)
+        if self.st["entete"] == "bandeau":
+            hb = float(self.st["entete_hauteur_cm"])
+            anchor_picture(p, band_png(self.pal.get(self.st["entete_couleur"], self.pal["primaire"]), 21.0, hb), 21.0, hb, 0, 0)
+            logo_h = self.logo(p, "logo_sur_fond", "logo_sur_fond_largeur_cm", 18, blanc=True)
+            spacer = h1.add_paragraph()
+            no_space(spacer, 0, 0)
+            spacer.paragraph_format.space_before = Pt(max(0.0, (hb + 0.5 - 0.9 - logo_h)) * 28.35)
+        else:
+            self.logo(p, "logo", "logo_largeur_cm", 18)
         # En-tête pages suivantes : petit logo + rappel du document.
         h = sec.header
+        if self.st["entete"] == "bandeau":
+            self.header_bandeau_suite(h)
+            for footer in (sec.first_page_footer, sec.footer):
+                self.footer(footer)
+            return
         t = h.add_table(1, 2, Cm(17))
         table_borders(t, None)
         table_widths(t, [6, 11])
@@ -472,12 +598,7 @@ class PV:
         rp = c1.paragraphs[0]
         rp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         no_space(rp)
-        rappel = "PV du conseil de copropriété"
-        if self.acp.get("nom"):
-            rappel += f" — {self.acp['nom']}"
-        if self.reu.get("date"):
-            rappel += f" — {fmt_date(self.reu['date'], long=False)}"
-        r = rp.add_run(rappel)
+        r = rp.add_run(self.rappel())
         set_run_font(r, self.font, 8, color=self.pal["texte_secondaire"])
         c1.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.BOTTOM
         if h.paragraphs and not h.paragraphs[0].text:
@@ -486,6 +607,52 @@ class PV:
 
         for footer in (sec.first_page_footer, sec.footer):
             self.footer(footer)
+
+    def rappel(self):
+        txt = f"PV du {self.organe}"
+        if self.acp.get("nom"):
+            txt += f" — {self.acp['nom']}"
+        if self.reu.get("date"):
+            txt += f" — {fmt_date(self.reu['date'], long=False)}"
+        return txt
+
+    def header_bandeau_suite(self, h):
+        """Pages 2+ des marques à bandeau : bandeau fin, logo blanc, rappel du document en blanc."""
+        hb = 1.7
+        p0 = h.paragraphs[0]
+        no_space(p0)
+        p0.paragraph_format.line_spacing = Pt(1)  # paragraphe porteur du bandeau : hauteur nulle
+        coul = self.pal.get(self.st["entete_couleur"], self.pal["primaire"])
+        anchor_picture(p0, band_png(coul, 21.0, hb), 21.0, hb, 0, 0)
+        sec = self.doc.sections[0]
+        t = h.add_table(1, 2, Cm(17))
+        table_borders(t, None)
+        table_widths(t, [6, 11])
+        row = t.rows[0]
+        trpr = row._tr.get_or_add_trPr()
+        trh = OxmlElement("w:trHeight")
+        # La ligne commence à header_distance (0,9 cm) : elle s'arrête au bas du bandeau.
+        trh.set(qn("w:val"), str(int((hb - 0.9 - 0.05) / 2.54 * 1440)))
+        trh.set(qn("w:hRule"), "exact")
+        trpr.append(trh)
+        c0, c1 = row.cells
+        for c in (c0, c1):
+            c.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
+            cell_margins(c, 0, 0, 0, 0)
+        pl = c0.paragraphs[0]
+        no_space(pl)
+        f = self.b.get("logo_sur_fond")
+        if f and (self.b["_dir"] / f).exists():
+            pl.add_run().add_picture(str(self.b["_dir"] / f), height=Cm(0.4))
+        else:
+            r = pl.add_run(self.b.get("nom_affiche", ""))
+            set_run_font(r, self.font_t, 10, bold=True, color="#FFFFFF")
+        pr = c1.paragraphs[0]
+        pr.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        no_space(pr)
+        r = pr.add_run(self.rappel())
+        set_run_font(r, self.font, 8, color="#FFFFFF")
+        sec.header_distance = Cm(0.9)
 
     def footer_lines(self):
         b = self.b
@@ -512,6 +679,8 @@ class PV:
         return lines
 
     def footer(self, footer):
+        if self.st["pied"] == "bandeau":
+            return self.footer_bandeau(footer)
         p0 = footer.paragraphs[0]
         no_space(p0)
         para_border(p0, "top", self.pal["filet"], 4, 1)
@@ -534,16 +703,70 @@ class PV:
         set_run_font(r, self.font, 7.5, color=self.pal["texte_secondaire"])
         add_field(pp, "NUMPAGES", self.font, 7.5, self.pal["texte_secondaire"])
 
+    def footer_bandeau(self, footer):
+        """Mentions légales au-dessus d'un bandeau de couleur à fond perdu (logo blanc + numéro de page)."""
+        hb = float(self.st["pied_hauteur_cm"])
+        p0 = footer.paragraphs[0]
+        no_space(p0)
+        coul = self.pal.get(self.st["pied_couleur"], self.pal["primaire"])
+        anchor_picture(p0, band_png(coul, 21.0, hb, self.st["pied_coins_arrondis"], hb / 2), 21.0, hb, 0, 29.7 - hb)
+        for i, line in enumerate(self.footer_lines()):
+            p = footer.add_paragraph()
+            no_space(p, 0, 0)
+            r = p.add_run(line)
+            set_run_font(r, self.font, 7.5, bold=(i == 0), color=self.pal["texte_secondaire"])
+        t = footer.add_table(1, 2, Cm(17))
+        table_borders(t, None)
+        table_widths(t, [12, 5])
+        row = t.rows[0]
+        trpr = row._tr.get_or_add_trPr()
+        trh = OxmlElement("w:trHeight")
+        trh.set(qn("w:val"), str(int((hb - 0.2) / 2.54 * 1440)))
+        trh.set(qn("w:hRule"), "exact")
+        trpr.append(trh)
+        c0, c1 = row.cells
+        for c in (c0, c1):
+            c.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
+            cell_margins(c, 0, 0, 0, 0)
+        pl = c0.paragraphs[0]
+        no_space(pl)
+        f = self.b.get("logo_pied") or self.b.get("logo_sur_fond")
+        if f and (self.b["_dir"] / f).exists():
+            path = self.b["_dir"] / f
+            h = min(0.42, hb * 0.38)
+            pl.add_run().add_picture(str(path), height=Cm(h))
+        else:
+            r = pl.add_run(self.b.get("nom_affiche", ""))
+            set_run_font(r, self.font_t, 10, bold=True, color="#FFFFFF")
+        pp = c1.paragraphs[0]
+        pp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        no_space(pp)
+        for txt, fld in (("Page ", None), (None, "PAGE"), (" / ", None), (None, "NUMPAGES")):
+            if fld:
+                add_field(pp, fld, self.font, 8, "#FFFFFF")
+            else:
+                r = pp.add_run(txt)
+                set_run_font(r, self.font, 8, color="#FFFFFF")
+
     # -- blocs
     def bloc_titre(self):
-        p = self.para(before=6, after=2)
-        r = p.add_run("PROCÈS-VERBAL")
-        set_run_font(r, self.font_t, 9, bold=True, color=self.pal["secondaire"])
-        char_spacing(r, 40)
-        type_reu = self.reu.get("intitule") or "Réunion du conseil de copropriété"
-        p = self.para(after=6)
+        if self.st["surtitre"]:
+            p = self.para(before=6, after=2)
+            r = p.add_run("PROCÈS-VERBAL")
+            set_run_font(r, self.font_t, 9, bold=True, color=self.pal["secondaire"])
+            char_spacing(r, 40)
+        type_reu = self.reu.get("intitule") or f"Réunion du {self.organe}"
+        p = self.para(before=0 if self.st["surtitre"] else 6, after=6)
         r = p.add_run(self.titre(type_reu))
         set_run_font(r, self.font_t, 19, bold=True, color=self.pal["primaire"])
+        if self.st["accent_titre"]:
+            # Filet court de couleur sous le titre : bordure basse d'un paragraphe vide de 2,2 cm.
+            p.paragraph_format.space_after = Pt(0)
+            pa = self.para(after=10)
+            pa.paragraph_format.right_indent = Cm(17 - 2.2)
+            para_border(pa, "bottom", self.pal["secondaire"], 30, 1)
+            r = pa.add_run()
+            r.font.size = Pt(2)
         nom = self.acp.get("nom") or "[À COMPLÉTER : nom de l'ACP]"
         prefix = "" if strip_accents(nom).lower().startswith(("acp", "association")) else "ACP "
         self.rich(self.para(after=1), f"{prefix}{nom}", 12.5, self.pal["texte"], bold=True)
@@ -620,16 +843,21 @@ class PV:
             return any(MONTANT_RE.fullmatch(v) for v in vals) and all(
                 MONTANT_RE.fullmatch(v) or v in ("", "—", "-") for v in vals)
         montant_cols = {i for i in range(n) if est_montant_col(i)}
+        souligne = self.st["tableau_entete"] == "souligne"
         for i, c in enumerate(colonnes):
             cell = hdr.cells[i]
-            shade(cell, self.pal["entete_tableau"])
+            if souligne:
+                cell_borders(cell, bottom=(14, self.pal["secondaire"]))
+            else:
+                shade(cell, self.pal["entete_tableau"])
             cell_margins(cell, 50, 50, 80, 80)
             p = cell.paragraphs[0]
             no_space(p)
             if i in montant_cols:
                 p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
             r = p.add_run(str(c))
-            set_run_font(r, self.font, 8.5, bold=True, color=self.pal["texte_entete_tableau"])
+            set_run_font(r, self.font, 8.5, bold=True,
+                         color=self.pal["primaire"] if souligne else self.pal["texte_entete_tableau"])
         for j, ligne in enumerate(lignes, start=1):
             row = t.rows[j]
             row_no_split(row)
@@ -659,8 +887,16 @@ class PV:
         table_widths(t, [17])
         cell = t.rows[0].cells[0]
         row_no_split(t.rows[0])
-        shade(cell, self.pal["fond_clair"])
-        cell_borders(cell, left=(18, self.pal["secondaire"]), top=None, bottom=None, right=None)
+        variante = self.st["encadre"]
+        if variante == "contour":
+            cell_borders(cell, left=(8, self.pal["primaire"]), top=(8, self.pal["primaire"]),
+                         bottom=(8, self.pal["primaire"]), right=(8, self.pal["primaire"]))
+        elif variante == "fond_plein":
+            shade(cell, self.pal["fond_clair"])
+            cell_borders(cell, left=None, top=None, bottom=None, right=None)
+        else:
+            shade(cell, self.pal["fond_clair"])
+            cell_borders(cell, left=(18, self.pal["secondaire"]), top=None, bottom=None, right=None)
         cell_margins(cell, 70, 70, 140, 100)
         p = cell.paragraphs[0]
         no_space(p, 0, 1)
@@ -825,7 +1061,7 @@ class PV:
             if isinstance(nx, str):
                 self.para(nx)
             else:
-                s = "La prochaine réunion du conseil de copropriété est fixée au "
+                s = f"La prochaine réunion du {self.organe} est fixée au "
                 s += fmt_date(nx.get("date")) or "[À COMPLÉTER : date]"
                 if nx.get("heure"):
                     s += f" à {fmt_heure(nx['heure'])}"
@@ -849,7 +1085,7 @@ class PV:
             pres = next((x for x in self.d.get("participants") or [] if "presid" in strip_accents(str(x.get("qualite", ""))).lower()), None)
             q = strip_accents(str(pres.get("qualite", ""))).lower() if pres else ""
             titre = "Présidente" if q.startswith("presidente") else ("Président" if q.startswith("president") else "Président(e)")
-            sig.append({"role": f"{titre} du conseil de copropriété", "nom": pres.get("nom") if pres else ""})
+            sig.append({"role": f"{titre} du {self.organe}", "nom": pres.get("nom") if pres else ""})
             sig.append({"role": "Pour le syndic", "nom": self.syn.get("representant", "")})
         sig = [s if isinstance(s, dict) else {"role": "", "nom": s} for s in sig]
         keep_with_next(self.para(self.titre("Signatures"), 10, self.pal["primaire"], bold=True, before=6, after=4))
@@ -894,9 +1130,10 @@ class PV:
         self.signatures()
         self.annexes()
         core = self.doc.core_properties
-        core.title = f"PV du conseil de copropriété — {self.acp.get('nom', '')}".strip(" —")
+        core.title = f"PV du {self.organe} — {self.acp.get('nom', '')}".strip(" —")
         core.author = self.b.get("raison_sociale") or self.b.get("nom_affiche")
-        core.subject = "Procès-verbal de réunion du conseil de copropriété"
+        core.subject = f"Procès-verbal de réunion du {self.organe}"
+        renumber_docpr(self.doc)
         self.doc.save(out)
 
 
@@ -958,6 +1195,13 @@ def main():
         out = Path(a.json).resolve().parent / name
     out.parent.mkdir(parents=True, exist_ok=True)
 
+    ent = data.get("entite")
+    if ent:
+        entites = brand.get("entites") or {}
+        cle = next((k for k in entites if strip_accents(k).lower() == strip_accents(str(ent)).lower()), None)
+        if cle is None:
+            sys.exit(f"Entité « {ent} » inconnue pour {brand['nom_affiche']}. Entités : {', '.join(entites) or 'aucune'}")
+        brand = {**brand, **entites[cle]}
     pv = PV(data, brand)
     pv.build(out)
     print(f"DOCX : {out}")
@@ -976,6 +1220,7 @@ def main():
 
     pdf = None
     if not a.no_pdf or a.render:
+        install_brand_fonts(brand)
         pdf = to_pdf(out)
         print(f"PDF  : {pdf}" if pdf else "PDF  : non généré (LibreOffice indisponible)")
     if a.render and pdf:

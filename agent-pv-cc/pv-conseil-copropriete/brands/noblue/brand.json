@@ -1,15 +1,26 @@
 {
   "id": "noblue",
-  "alias": ["noblue", "noblué", "noblue immobilier", "noblué immobilier", "nobluee", "nobluée", "nobluées"],
+  "alias": [
+    "noblue",
+    "noblué",
+    "noblue immobilier",
+    "noblué immobilier",
+    "noblue syndic",
+    "noblué syndic",
+    "nobluee",
+    "nobluée",
+    "nobluées",
+    "noblier"
+  ],
   "nom_affiche": "Noblué",
   "statut_charte": "a_completer",
   "raison_sociale": "Noblué Immobilier SRL",
   "bce": "0466.867.532",
-  "ipi": null,
+  "ipi": "513.309",
   "adresse": null,
   "telephone": null,
-  "email": null,
-  "site": null,
+  "email": "syndic@noblue.be",
+  "site": "syndic-noblue.be",
   "signature": null,
   "couleurs": null,
   "police_titres": null,
@@ -19,16 +30,19 @@
   "logo_largeur_cm": 4.0,
   "logo_entete": null,
   "logo_entete_largeur_cm": 2.4,
+  "logo_sur_fond": null,
+  "style": {},
   "mentions_pied": [],
   "sources": [
-    "Registre public des entreprises (fiche « NOBLUE IMMOBILIER », BCE 0466.867.532, SRL active) — relevé via busibee.be le 05/11/2026",
-    "PV d'AG 2020-2021 publié sur immo.notaire.be : syndic « SRL Noblué Immobilier », représentée par Luc Hamers"
+    "Site officiel https://www.syndic-noblue.be/fr/ (pages contact, services, noblue-groupe) — repéré par moteur de recherche le 05/11/2026, pas encore capturé",
+    "Registre public des entreprises : NOBLUE IMMOBILIER, BCE 0466.867.532, SRL active (busibee.be)",
+    "PV d'AG 2020-2021 (immo.notaire.be) : syndic « SRL Noblué Immobilier »"
   ],
   "a_verifier": [
-    "Site internet officiel (URL) — non joignable depuis la session de création",
-    "Logo (fichier PNG haute définition, fond transparent)",
-    "Couleurs de la charte (hex) et polices",
-    "Adresse du siège : un PV d'AG de 2020-2021 mentionne « rue de Battice 46 » (localité à confirmer)",
-    "Numéro IPI du syndic, téléphone, e-mail de contact"
+    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
+    "Couleurs, polices et éléments graphiques — à capturer sur le site",
+    "IPI 513.309 et syndic@noblue.be : relevés via moteur de recherche sur la page contact, à confirmer à la capture",
+    "Adresse du siège (bureau à Verviers selon le site ; un PV d'AG mentionne « rue de Battice 46 »)",
+    "Téléphone"
   ]
 }

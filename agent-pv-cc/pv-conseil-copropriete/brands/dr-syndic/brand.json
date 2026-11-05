@@ -1,15 +1,21 @@
 {
   "id": "dr-syndic",
-  "alias": ["dr-syndic", "dr syndic", "drsyndic", "dr", "d.r. syndic", "trevi rasquain syndic"],
+  "alias": [
+    "dr-syndic",
+    "dr syndic",
+    "drsyndic",
+    "d.r. syndic",
+    "trevi rasquain syndic"
+  ],
   "nom_affiche": "DR Syndic",
   "statut_charte": "a_completer",
   "raison_sociale": "DR Syndic SRL",
   "bce": "0740.869.271",
   "ipi": null,
   "adresse": "Rue des Brasseurs 1, 4500 Huy",
-  "telephone": null,
-  "email": "syndic@trevirasquain.be",
-  "site": null,
+  "telephone": "085 25 47 28",
+  "email": "info@drsyndic.be",
+  "site": "drsyndic.be",
   "signature": null,
   "couleurs": null,
   "police_titres": null,
@@ -19,17 +25,20 @@
   "logo_largeur_cm": 4.0,
   "logo_entete": null,
   "logo_entete_largeur_cm": 2.4,
-  "mentions_pied": [],
+  "logo_sur_fond": null,
+  "style": {},
+  "mentions_pied": [
+    "Bureau de Liège : Rue Charles Magnette 24/40, 4000 Liège"
+  ],
   "sources": [
-    "Registre public des entreprises (BCE 0740.869.271, SRL active, siège Rue des Brasseurs 1, 4500 Huy, constituée en janvier 2020) — relevé via companyweb.be et busibee.be le 05/11/2026",
-    "E-mail syndic@trevirasquain.be : annuaire tiers, lié à l'agence Trevi Rasquain",
-    "Skill postman-api-runner : instance Optipro « DR Syndic (SRL, Huy) »"
+    "Site officiel https://www.drsyndic.be/ (accueil, /contact, /legal) — repéré par moteur de recherche le 05/11/2026, pas encore capturé",
+    "Mentions légales du site : DR SYNDIC SRL, BCE 0740.869.271, siège Rue des Brasseurs 1, 4500 Huy, soumise au contrôle de l'IPI",
+    "Registre public des entreprises (companyweb.be, busibee.be)"
   ],
   "a_verifier": [
-    "Site internet officiel (URL) — non joignable depuis la session de création",
-    "Logo (fichier PNG haute définition, fond transparent)",
-    "Couleurs de la charte (hex) et polices",
-    "E-mail de contact (source : annuaire tiers)",
-    "Numéro IPI du syndic, téléphone"
+    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
+    "Couleurs, polices et éléments graphiques — à capturer sur le site",
+    "Numéro IPI (non relevé)",
+    "Téléphone 085 25 47 28 et info@drsyndic.be : relevés via moteur de recherche, à confirmer à la capture"
   ]
 }

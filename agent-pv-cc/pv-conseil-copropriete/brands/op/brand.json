@@ -1,6 +1,19 @@
 {
   "id": "op",
-  "alias": ["op", "o.p.", "office des proprietaires", "office des propriétaires", "opbrussels", "op brussels", "opbw", "op bw", "opwallonie", "op wallonie"],
+  "alias": [
+    "op",
+    "o.p.",
+    "office des proprietaires",
+    "office des propriétaires",
+    "office de propriétaire",
+    "opbrussels",
+    "op brussels",
+    "op bruxelles",
+    "opbw",
+    "op bw",
+    "opwallonie",
+    "op wallonie"
+  ],
   "nom_affiche": "OP",
   "statut_charte": "partielle",
   "raison_sociale": null,
@@ -22,13 +35,26 @@
   "logo_largeur_cm": 4.0,
   "logo_entete": null,
   "logo_entete_largeur_cm": 2.4,
+  "logo_sur_fond": null,
+  "style": {},
   "mentions_pied": [],
   "sources": [
-    "Couleurs OP (rouge #CA403B, bordeaux #9C0C24) : skills formation-scorm-emeria et formation-immersive-emeria"
+    "Couleurs OP (rouge #CA403B, bordeaux #9C0C24) : skills formation-scorm-emeria et formation-immersive-emeria",
+    "Entités : O.P. BRUXELLES (BCE 0841.885.269) et OFFICE DES PROPRIETAIRES WALLONIE (BCE 0432.691.858), registre public (companyweb.be, busibee.be)"
   ],
   "a_verifier": [
-    "Logo OP (fichier PNG haute définition, fond transparent)",
-    "Raison sociale, BCE, IPI et coordonnées de chaque entité (OP Brussels, OP BW, OP Wallonie)",
-    "Couleurs secondaires et polices officielles"
-  ]
+    "Logo OP (versions fond clair et fond de couleur) — à capturer sur op.be",
+    "Polices et éléments graphiques — à capturer sur op.be",
+    "Adresse et IPI de chaque entité ; entité OP BW (BCE à relever)"
+  ],
+  "entites": {
+    "op-bruxelles": {
+      "raison_sociale": "O.P. Bruxelles",
+      "bce": "0841.885.269"
+    },
+    "op-wallonie": {
+      "raison_sociale": "Office des Propriétaires Wallonie",
+      "bce": "0432.691.858"
+    }
+  }
 }
