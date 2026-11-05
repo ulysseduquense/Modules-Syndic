@@ -37,13 +37,18 @@ notes : le conseil n'a pas de pouvoir de décision propre (`structure-pv.md`).
 | `3 devis toiture: meuse 8740 / ourthe 7980 sans nacelle / batiplus 9320 → CC préfère meuse` | Tableau des trois devis + « Le conseil recommande le devis de Toitures Meuse SRL. » |
 | `lot 9 tjrs pas payé, relancer` | Le syndic informe que l'arriéré du lot 9 n'est pas régularisé. Le conseil demande au syndic de poursuivre le recouvrement. → action Syndic |
 | `marc regarde bornes recharge` | M. Dubois se propose d'étudier l'installation de bornes de recharge. → action M. Dubois |
-| `PV précédent ok` | Le procès-verbal de la réunion du [date] est approuvé à l'unanimité des membres présents. |
+| `PV précédent ok` | Le procès-verbal de la réunion du [date] est approuvé. (« à l'unanimité » seulement si les notes le disent) |
+| `CC ok pour mise en demeure par avocat` | Le conseil émet un avis favorable à l'envoi d'une mise en demeure au propriétaire du lot 7 par l'intermédiaire d'un avocat. → action Syndic |
+| `FR à 12k` | Le fonds [de roulement / de réserve : à demander] s'élève à 12.000 €. |
 
 - Chaque note doit atterrir quelque part ; une note incompréhensible → question.
 - Une même idée répétée dans les notes → une seule mention, au bon point.
 - Une échéance relative (« dans 15 jours », « avant l'AG ») → date absolue si la date
   de la réunion le permet, sinon garder la formulation.
-- Un « ok » ou « vu » sans précision → « Le conseil prend acte. », pas « approuve ».
+- Un « ok » ou « vu » sur une information → « Le conseil prend acte. » ; « CC ok pour
+  [une démarche] » → avis favorable ; seul le PV précédent est « approuvé ».
+- Montants arrondis dans les notes (« 12k », « env. 20.000 ») : `12.000 €`, « environ
+  20.000 € » — ne pas ajouter de décimales que les notes n'ont pas.
 
 ## Abréviations courantes
 
@@ -68,9 +73,12 @@ notes : le conseil n'a pas de pouvoir de décision propre (`structure-pv.md`).
 - Heures : `18h00` (le générateur formate `18:00`).
 - Montants : `8.740,00 €` (point des milliers, virgule décimale), avec TVAC/HTVA si
   connu. Les colonnes de montants sont alignées à droite automatiquement.
-- Personnes : civilité + prénom + nom à la première mention (« M. Marc Dubois »),
-  ensuite civilité + nom (« M. Dubois »). Les fournisseurs : raison sociale exacte.
-- Lots : « lot 9 » ou « appartement 4B » selon l'usage de l'immeuble ; rester constant.
+- Personnes : civilité + prénom + nom à la première mention quand ils sont connus
+  (« M. Marc Dubois »), ensuite civilité + nom (« M. Dubois »). Civilité ou prénom
+  inconnus : le nom seul, tel que dans les notes — jamais de `[À COMPLÉTER]` pour ça.
+  Présence d'une personne dont le genre est inconnu : « présent(e) », « excusé(e) ».
+- Fournisseurs : raison sociale exacte si connue, sinon le nom des notes.
+- Lots : reprendre la désignation des notes (« lot 7 », « app. 2B »).
 
 ## Données personnelles
 

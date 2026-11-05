@@ -370,7 +370,7 @@ class PV:
         self.font = brand.get("police_texte") or "Arial"
         self.font_t = brand.get("police_titres") or self.font
         self.caps = bool(brand.get("titres_majuscules"))
-        self.placeholders = 0
+        self.placeholders = set()
         self.doc = Document()
         self.acp = data.get("acp", {}) or {}
         self.reu = data.get("reunion", {}) or {}
@@ -392,7 +392,7 @@ class PV:
                 tok, i = tok[1:-1], True
             elif PLACEHOLDER_RE.fullmatch(tok):
                 hl = True
-                self.placeholders += 1
+                self.placeholders.add(tok.strip())
             r = paragraph.add_run(tok)
             set_run_font(r, self.font, size, bold=b or hl, italic=i, color=color)
             if hl:
@@ -653,7 +653,7 @@ class PV:
         self.para(after=3)
         return t
 
-    def encadre(self, label, text):
+    def encadre(self, label, text, actions=None):
         t = self.doc.add_table(1, 1)
         table_borders(t, None)
         table_widths(t, [17])
@@ -672,6 +672,22 @@ class PV:
             pp = cell.add_paragraph()
             no_space(pp, 0, 1)
             self.rich(pp, tx, 10)
+        if actions:
+            # Suites à donner dans le même encadré : une ligne de tableau insécable,
+            # donc jamais séparées de la position du conseil par un saut de page.
+            pp = cell.add_paragraph()
+            no_space(pp, 5, 1)
+            r = pp.add_run("SUITES À DONNER")
+            set_run_font(r, self.font, 8, bold=True, color=self.pal["secondaire"])
+            char_spacing(r, 15)
+            for it in actions:
+                try:
+                    pp = cell.add_paragraph(style="List Bullet")
+                except KeyError:
+                    pp = cell.add_paragraph()
+                    it = f"– {it}"
+                no_space(pp, 0, 1)
+                self.rich(pp, it, 9.5)
         self.para(after=2)
 
     def puces(self, items, size=10):
@@ -775,21 +791,21 @@ class PV:
             num = pt.get("numero", n)
             self.h1(f"{num}. {pt.get('titre', '')}")
             self.contenu(pt.get("contenu"))
+            acts = pt.get("actions") or []
+            items = []
+            for a in acts:
+                s = a.get("action", "")
+                meta = [m for m in (a.get("responsable"), fmt_date(a.get("echeance"), long=False)) if m]
+                if meta:
+                    s += f" — *{' · '.join(meta)}*"
+                items.append(s)
+                self.actions.append((str(num), a))
             dec = pt.get("decision") or pt.get("position")
             if dec:
                 label = pt.get("label_decision") or self.d.get("label_decision") or "POSITION DU CONSEIL"
-                self.encadre(label.upper(), dec)
-            acts = pt.get("actions") or []
-            if acts:
+                self.encadre(label.upper(), dec, items)
+            elif items:
                 keep_with_next(self.para("Suites à donner :", 9.5, self.pal["primaire"], bold=True, before=2, after=2))
-                items = []
-                for a in acts:
-                    s = a.get("action", "")
-                    meta = [m for m in (a.get("responsable"), fmt_date(a.get("echeance"), long=False)) if m]
-                    if meta:
-                        s += f" — *{' · '.join(meta)}*"
-                    items.append(s)
-                    self.actions.append((str(num), a))
                 self.puces(items, 9.5)
 
     def recap_actions(self):
@@ -955,7 +971,8 @@ def main():
         for v in brand.get("a_verifier", []):
             warnings.append(f"À vérifier ({brand['nom_affiche']}) : {v}")
     if pv.placeholders:
-        warnings.append(f"{pv.placeholders} champ(s) [À COMPLÉTER] surligné(s) en jaune dans le document.")
+        warnings.append(f"{len(pv.placeholders)} information(s) à compléter (surlignées en jaune) : "
+                        + " ; ".join(sorted(pv.placeholders)))
 
     pdf = None
     if not a.no_pdf or a.render:

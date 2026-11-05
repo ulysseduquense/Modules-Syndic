@@ -39,7 +39,7 @@ simplement pas affiché ; les champs indispensables manquants sont remplacés pa
     {"nom": "M. Karim Haddad", "qualite": "Membre", "lot": "App. 6C", "presence": "excusé"},
     {"nom": "M. Luc Simon", "qualite": "Membre", "lot": "12", "presence": "représenté", "represente_par": "Mme Lambert"}
   ],                                   // presence : présent(e) | excusé(e) | absent(e) | représenté(e) | visio
-  "afficher_quorum": true,             // « 3 membres sur 4 présents ou représentés »
+  "afficher_quorum": true,             // « 3 membres sur 4 présents ou représentés » — false si la liste des membres est incomplète
 
   "invites": [                         // autres participants (commissaire, expert, fournisseur…)
     {"nom": "M. Paul Renard", "qualite": "commissaire aux comptes", "presence": "présent"}
