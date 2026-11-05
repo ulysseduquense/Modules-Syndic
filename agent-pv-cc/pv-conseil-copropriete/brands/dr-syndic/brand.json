@@ -11,7 +11,7 @@
   "statut_charte": "a_completer",
   "raison_sociale": "DR Syndic SRL",
   "bce": "0740.869.271",
-  "ipi": null,
+  "ipi": "800.039",
   "adresse": "Rue des Brasseurs 1, 4500 Huy",
   "telephone": "085 25 47 28",
   "email": "info@drsyndic.be",
@@ -33,12 +33,12 @@
   "sources": [
     "Site officiel https://www.drsyndic.be/ (accueil, /contact, /legal) — repéré par moteur de recherche le 05/11/2026, pas encore capturé",
     "Mentions légales du site : DR SYNDIC SRL, BCE 0740.869.271, siège Rue des Brasseurs 1, 4500 Huy, soumise au contrôle de l'IPI",
-    "Registre public des entreprises (companyweb.be, busibee.be)"
+    "Registre public des entreprises (companyweb.be, busibee.be)",
+    "Mentions légales du site (via moteur de recherche, 05/11/2026) : agréée IPI n° 800.039 comme agent immobilier intermédiaire et syndic"
   ],
   "a_verifier": [
     "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
     "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "Numéro IPI (non relevé)",
     "Téléphone 085 25 47 28 et info@drsyndic.be : relevés via moteur de recherche, à confirmer à la capture"
   ]
 }

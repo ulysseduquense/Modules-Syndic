@@ -35,13 +35,13 @@ dans le chat (« ajoute M. X excusé », « reformule le point 3 »).
 | marque | site | état |
 |---|---|---|
 | Emeria | emeriagroup.com | charte complète : logos officiels, bandeau de pied navy à coin arrondi |
-| Office des Propriétaires (OP Bruxelles, OP Wallonie) | op.be | couleurs connues ; logo et éléments graphiques à capturer |
-| Syncura | syncura.be | à capturer |
-| Easy Syndic | à confirmer | à capturer |
-| Gestea | à confirmer | à capturer |
-| Agigest (Luxembourg, « conseil syndical ») | agigest.lu (à confirmer) | à capturer |
-| Noblué | syndic-noblue.be | identité légale renseignée ; charte à capturer |
-| DR Syndic | drsyndic.be | identité légale et contacts renseignés ; charte à capturer |
+| Office des Propriétaires (OP Bruxelles, OP Wallonie) | op.be | coordonnées et IPI renseignés, couleurs connues ; logo et éléments graphiques à capturer |
+| Syncura | syncura.be | coordonnées et BIV renseignés ; charte à capturer |
+| Easy Syndic | easysyndic.be | coordonnées renseignées ; charte à capturer |
+| Gestea | gestea.be | coordonnées et IPI renseignés ; charte à capturer |
+| Agigest (Luxembourg, « conseil syndical ») | agigest.lu | coordonnées renseignées ; charte à capturer |
+| Noblué | syndic-noblue.be | coordonnées et IPI renseignés ; charte à capturer |
+| DR Syndic | drsyndic.be | coordonnées et IPI renseignés ; charte à capturer |
 
 Le générateur reproduit la charte de chaque marque : logo sur fond clair, logo blanc
 sur bandeau de couleur à fond perdu (en-tête et/ou pied de page), couleurs, police de la

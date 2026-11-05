@@ -10,10 +10,10 @@
   "raison_sociale": "Easy Syndic SRL",
   "bce": "0506.828.166",
   "ipi": null,
-  "adresse": null,
-  "telephone": null,
-  "email": null,
-  "site": null,
+  "adresse": "Rue Vilain XIIII 53-55, 1000 Bruxelles",
+  "telephone": "+32 2 219 04 51",
+  "email": "info@easysyndic.be",
+  "site": "easysyndic.be",
   "signature": null,
   "couleurs": null,
   "police_titres": null,
@@ -28,13 +28,13 @@
   "mentions_pied": [],
   "sources": [
     "Registre public des entreprises : EASY SYNDIC, BCE 0506.828.166, SRL (busibee.be)",
-    "Groupe VMRE (lalibre.be) ; activité au Luxembourg (paperjam.lu)"
+    "Groupe VMRE (lalibre.be) ; activité au Luxembourg (paperjam.lu)",
+    "Site easysyndic.be (via moteur de recherche, 05/11/2026) : siège administratif Rue Vilain XIIII 53-55, 1000 Bruxelles, BE 0506.828.166 ; info@easysyndic.be ; +32 2 219 04 51 ; bureaux à Bruxelles, Liège, Namur, Gand, Anvers, Hasselt, Mons, Marche, Arlon, Luxembourg"
   ],
   "a_verifier": [
-    "Site internet officiel (URL non trouvée)",
     "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
     "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "Adresse du siège (Bruxelles ou Gand selon les annuaires)",
-    "IPI, téléphone, e-mail"
+    "Numéro IPI (non relevé)",
+    "Coordonnées du bureau régional du gestionnaire : à passer dans le champ « syndic » du PV"
   ]
 }

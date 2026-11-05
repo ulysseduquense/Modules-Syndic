@@ -660,9 +660,9 @@ class PV:
         if b.get("adresse"):
             l1.append(b["adresse"])
         if b.get("bce"):
-            l1.append(f"BCE {b['bce']}")
+            l1.append(f"{b.get('libelle_bce') or 'BCE'} {b['bce']}")
         if b.get("ipi"):
-            l1.append(f"IPI {b['ipi']}")
+            l1.append(f"{b.get('libelle_ipi') or 'IPI'} {b['ipi']}")
         l2 = []
         tel = self.syn.get("telephone") or b.get("telephone")
         mail = self.syn.get("email") or b.get("email")

@@ -17,8 +17,8 @@
   "raison_sociale": "Noblué Immobilier SRL",
   "bce": "0466.867.532",
   "ipi": "513.309",
-  "adresse": null,
-  "telephone": null,
+  "adresse": "Rue de Battice 46, 4800 Petit-Rechain",
+  "telephone": "087 44 64 09",
   "email": "syndic@noblue.be",
   "site": "syndic-noblue.be",
   "signature": null,
@@ -36,13 +36,12 @@
   "sources": [
     "Site officiel https://www.syndic-noblue.be/fr/ (pages contact, services, noblue-groupe) — repéré par moteur de recherche le 05/11/2026, pas encore capturé",
     "Registre public des entreprises : NOBLUE IMMOBILIER, BCE 0466.867.532, SRL active (busibee.be)",
-    "PV d'AG 2020-2021 (immo.notaire.be) : syndic « SRL Noblué Immobilier »"
+    "PV d'AG 2020-2021 (immo.notaire.be) : syndic « SRL Noblué Immobilier »",
+    "Page contact du site (via moteur de recherche, 05/11/2026) : Rue de Battice 46, 4800 Petit-Rechain ; 087/44 64 09 ; syndic@noblue.be ; agréée IPI n° 513.309 ; BCE 0466.867.532"
   ],
   "a_verifier": [
     "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
     "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "IPI 513.309 et syndic@noblue.be : relevés via moteur de recherche sur la page contact, à confirmer à la capture",
-    "Adresse du siège (bureau à Verviers selon le site ; un PV d'AG mentionne « rue de Battice 46 »)",
-    "Téléphone"
+    "Coordonnées relevées sur des pages anciennes du site : à reconfirmer à la capture"
   ]
 }

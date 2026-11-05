@@ -6,13 +6,13 @@
   ],
   "nom_affiche": "Agigest",
   "statut_charte": "a_completer",
-  "raison_sociale": "Agigest SA",
+  "raison_sociale": "Agigest S.A.",
   "bce": null,
   "ipi": null,
   "adresse": "55, rue de Luxembourg, L-8077 Bertrange",
-  "telephone": null,
-  "email": null,
-  "site": null,
+  "telephone": "+352 203 047 00",
+  "email": "info@agigest.lu",
+  "site": "agigest.lu",
   "signature": null,
   "couleurs": null,
   "police_titres": null,
@@ -28,14 +28,14 @@
     "RCS Luxembourg B87094 · TVA LU19153507"
   ],
   "sources": [
-    "Annuaire Paperjam : Agigest SA, 55 rue de Luxembourg, L-8077 Bertrange, RCS B87094, TVA LU19153507 ; domaine e-mail agigest.lu"
+    "Annuaire Paperjam : Agigest SA, 55 rue de Luxembourg, L-8077 Bertrange, RCS B87094, TVA LU19153507 ; domaine e-mail agigest.lu",
+    "Site agigest.lu (via moteur de recherche, 05/11/2026) : AGIGEST S.A., 55 rue de Luxembourg, L-8077 Bertrange ; (+352) 203 047 00 ; info@agigest.lu ; le site emploie le terme « conseil syndical »"
   ],
   "a_verifier": [
-    "Site internet officiel (agigest.lu probable, non confirmé)",
     "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
     "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "Société luxembourgeoise : vérifier la terminologie (« conseil syndical ») et le cadre légal, différents du droit belge",
-    "Téléphone, e-mail"
+    "Cadre légal luxembourgeois (loi du 16 mai 1975) : relire references/structure-pv.md, écrit pour le droit belge",
+    "Bureaux Sud et Est (adresses différentes selon les pages)"
   ],
   "organe": "conseil syndical"
 }

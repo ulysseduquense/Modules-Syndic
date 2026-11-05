@@ -16,12 +16,12 @@
   ],
   "nom_affiche": "OP",
   "statut_charte": "partielle",
-  "raison_sociale": null,
-  "bce": null,
-  "ipi": null,
-  "adresse": null,
-  "telephone": null,
-  "email": null,
+  "raison_sociale": "Office des Propriétaires SA",
+  "bce": "0841.885.269",
+  "ipi": "508.167",
+  "adresse": "Rue Vilain XIIII 53-55, 1000 Bruxelles",
+  "telephone": "+32 2 626 08 26",
+  "email": "reception@op.be",
   "site": "op.be",
   "signature": null,
   "couleurs": {
@@ -40,16 +40,17 @@
   "mentions_pied": [],
   "sources": [
     "Couleurs OP (rouge #CA403B, bordeaux #9C0C24) : skills formation-scorm-emeria et formation-immersive-emeria",
-    "Entités : O.P. BRUXELLES (BCE 0841.885.269) et OFFICE DES PROPRIETAIRES WALLONIE (BCE 0432.691.858), registre public (companyweb.be, busibee.be)"
+    "Entités : O.P. BRUXELLES (BCE 0841.885.269) et OFFICE DES PROPRIETAIRES WALLONIE (BCE 0432.691.858), registre public (companyweb.be, busibee.be)",
+    "Mentions légales de op.be (via moteur de recherche, 05/11/2026) : Office des Propriétaires SA, rue Vilain XIIII 53-55, 1000 Bruxelles, BCE 0841.885.269, +32 2 626 08 26, reception@op.be, IPI 508 167"
   ],
   "a_verifier": [
     "Logo OP (versions fond clair et fond de couleur) — à capturer sur op.be",
     "Polices et éléments graphiques — à capturer sur op.be",
-    "Adresse et IPI de chaque entité ; entité OP BW (BCE à relever)"
+    "Coordonnées propres à OP Wallonie et aux bureaux régionaux (téléphones différents selon les pages)"
   ],
   "entites": {
     "op-bruxelles": {
-      "raison_sociale": "O.P. Bruxelles",
+      "raison_sociale": "Office des Propriétaires SA",
       "bce": "0841.885.269"
     },
     "op-wallonie": {

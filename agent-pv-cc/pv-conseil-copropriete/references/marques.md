@@ -19,10 +19,10 @@ brands/<id>/
 | `noblue` | Noblué — Noblué Immobilier SRL (Verviers / Liège) | syndic-noblue.be | à capturer |
 | `dr-syndic` | DR Syndic — DR Syndic SRL (Huy, bureau à Liège) | drsyndic.be | à capturer |
 | `op` | Office des Propriétaires (entités `op-bruxelles`, `op-wallonie`) | op.be | partielle : couleurs connues, logo à capturer |
-| `syncura` | Syncura | syncura.be | à capturer |
-| `easy-syndic` | Easy Syndic SRL | à confirmer | à capturer |
-| `gestea` | Gestea SRL | à confirmer | à capturer |
-| `agigest` | Agigest SA (Luxembourg) | agigest.lu (à confirmer) | à capturer ; organe « conseil syndical » |
+| `syncura` | Syncura — VM Vastgoedbeheer BV (Gand, néerlandophone) | syncura.be | à capturer |
+| `easy-syndic` | Easy Syndic SRL | easysyndic.be | à capturer |
+| `gestea` | Gestea SRL | gestea.be | à capturer |
+| `agigest` | Agigest S.A. (Luxembourg) | agigest.lu | à capturer ; organe « conseil syndical » |
 
 Tant qu'une marque n'a pas de couleurs, le PV sort en **rendu neutre gris** ; sans
 logo, le nom de la marque est écrit en texte à la place. Le générateur l'annonce
@@ -105,7 +105,7 @@ que pour les titres.
 | `nom_affiche` | nom court (mot-symbole de secours) |
 | `statut_charte` | `complete` · `partielle` · `a_completer` |
 | `organe` | nom de l'organe (défaut « conseil de copropriété » ; « conseil syndical » au Luxembourg) |
-| `raison_sociale`, `adresse`, `bce`, `ipi`, `telephone`, `email`, `site` | pied de page |
+| `raison_sociale`, `adresse`, `bce`, `ipi`, `telephone`, `email`, `site` | pied de page (`libelle_ipi` / `libelle_bce` : « BIV » / « KBO » pour une marque néerlandophone) |
 | `entites` | sociétés distinctes d'une même marque : `{"op-wallonie": {"raison_sociale": …, "bce": …}}`, choisies par le champ `entite` du PV |
 | `couleurs.primaire` | titres, en-têtes de tableau, bandeaux |
 | `couleurs.secondaire` | surtitre, filet d'accent, encadrés, sous-titres |
