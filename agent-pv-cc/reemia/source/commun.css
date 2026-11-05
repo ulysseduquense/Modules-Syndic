@@ -1,0 +1,77 @@
+*{box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;font-family:var(--police-texte);font-size:10pt;line-height:var(--interligne);color:var(--texte);background:#fff}
+@media screen{body{background:#9aa0a6;display:flex;flex-direction:column;align-items:center;padding:12px 0}.cadre{width:210mm;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.3)}.haut-suite{display:none}.pied{position:static;order:2;width:210mm;box-shadow:0 2px 10px rgba(0,0,0,.3)}}
+table.cadre{width:100%;border-collapse:collapse}
+table.cadre>thead>tr>td,table.cadre>tfoot>tr>td,table.cadre>tbody>tr>td{padding:0}
+.esp-haut{height:var(--esp-haut)}
+.esp-bas{height:var(--esp-bas)}
+.haut-suite{position:fixed;top:0;left:0;right:0;height:var(--haut-h);padding:0 20mm;display:flex;align-items:center;justify-content:space-between;z-index:1}
+.haut-suite .rappel{font-size:7.5pt}
+.pied{position:fixed;bottom:-0.4mm;left:0;right:0;height:var(--pied-h);padding:0 20mm;display:flex;align-items:center;justify-content:space-between;gap:8mm;font-size:7pt;line-height:1.35;z-index:1}
+.pied .mentions p{margin:0}
+.pied .mentions p:first-child{font-weight:700}
+.entete-p1{position:relative;z-index:3;margin-top:calc(-1 * var(--esp-haut));min-height:var(--p1-h);background:#fff}
+.logo{background-repeat:no-repeat;background-position:left center;background-size:contain}
+.contenu{padding:0 20mm}
+.surtitre{font-family:var(--police-surtitre);font-weight:700;font-size:8.5pt;letter-spacing:.22em;text-transform:uppercase;color:var(--secondaire);margin:0 0 2pt}
+h1.titre{font-family:var(--police-titres);font-weight:var(--graisse-titre);font-size:calc(19pt * var(--echelle-titres));line-height:1.15;color:var(--primaire);margin:0 0 6pt}
+h1.titre .point{color:var(--accent)}
+.filet-accent{width:var(--filet-accent-l);height:3.5pt;background:var(--accent);margin:2pt 0 12pt}
+.acp{font-weight:700;font-size:12.5pt;color:var(--texte);margin:0 0 1pt}
+.acp.accent{font-family:var(--police-accent);font-style:italic;font-weight:400;font-size:14.5pt;color:var(--accent)}
+.acp-sous{font-size:9pt;color:var(--texte-2);margin:0 0 10pt;padding-bottom:7pt;border-bottom:1px solid var(--filet)}
+table.infos{width:100%;border-collapse:collapse;margin:0 0 6pt;font-size:9.5pt}
+table.infos th{width:4.2cm;text-align:left;vertical-align:top;font-weight:700;font-size:9pt;color:var(--primaire);padding:3pt 6pt 3pt 4pt}
+table.infos td{padding:3pt 4pt}
+table.infos tr+tr th,table.infos tr+tr td{border-top:1px solid var(--filet)}
+h2.section{font-family:var(--police-titres);font-weight:var(--graisse-h2);font-size:calc(12.5pt * var(--echelle-titres));line-height:1.2;color:var(--primaire);margin:16pt 0 5pt;break-after:avoid;page-break-after:avoid}
+h3.sous-titre{font-size:10.5pt;font-weight:700;color:var(--secondaire);margin:8pt 0 3pt;break-after:avoid}
+.garde{break-inside:avoid;page-break-inside:avoid}
+p{margin:0 0 5pt}
+ul{margin:0 0 5pt;padding-left:16pt}
+li{margin:0 0 2pt}
+.quorum{font-style:italic;font-size:9pt;color:var(--texte-2)}
+.intro-liste{font-weight:700;margin:3pt 0 2pt}
+table.donnees{width:100%;border-collapse:collapse;margin:3pt 0 8pt;font-size:9pt;border:1px solid var(--filet)}
+table.donnees th{background:var(--entete-tableau);color:var(--texte-entete-tableau);font-size:8.5pt;font-weight:700;text-align:left;padding:4pt 6pt}
+table.donnees td{padding:3.5pt 6pt;border-top:1px solid var(--filet);vertical-align:top}
+table.donnees tbody tr:nth-child(even) td{background:var(--fond-clair)}
+table.donnees tr{break-inside:avoid;page-break-inside:avoid}
+table.donnees .num{text-align:right;white-space:nowrap}
+table.donnees .pt{width:1cm}
+table.recap td:nth-child(n+3),table.recap th:nth-child(n+3){white-space:nowrap}
+.tableau-souligne table.donnees th{background:none;color:var(--primaire);border-bottom:2pt solid var(--secondaire)}
+.titre-tableau{font-weight:700;font-size:9.5pt;color:var(--primaire);margin:4pt 0 2pt;break-after:avoid}
+.encadre{background:var(--fond-clair);border-left:4.5pt solid var(--accent);padding:6pt 10pt 6pt 9pt;margin:4pt 0 8pt;break-inside:avoid;page-break-inside:avoid}
+.encadre-fond .encadre{border-left:0}
+.encadre-contour .encadre{background:none;border:1pt solid var(--primaire)}
+.encadre .lbl{font-size:7.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--secondaire);margin:0 0 1pt}
+.encadre .lbl.suites{margin-top:5pt}
+.encadre p{margin:0 0 2pt}
+.encadre ul{margin:0;font-size:9.5pt}
+.meta{font-style:italic}
+.signatures{display:flex;gap:1cm;margin-top:6pt;break-inside:avoid;page-break-inside:avoid}
+.signatures .sig{flex:1}
+.signatures .role{font-size:8.5pt;font-weight:700;color:var(--primaire);margin:0}
+.signatures .nom{margin:0}
+.signatures .ligne{border-bottom:1px solid var(--filet);height:34pt}
+.bloc-fin{break-inside:avoid;page-break-inside:avoid}
+.diffusion{font-style:italic;font-size:8.5pt;color:var(--texte-2);margin-top:6pt}
+mark.a-completer{background:#FFF200;color:inherit;font-weight:700;padding:0 1pt}
+.p1-blanc{padding:10mm 20mm 4mm}
+.p1-blanc .logo{width:var(--logo-p1-l);height:var(--logo-p1-h)}
+.p1-bandeau{height:var(--p1-h);background:var(--entete-fond);padding:0 20mm;display:flex;align-items:center;margin-bottom:9mm}
+.p1-bandeau .logo{width:var(--logo-p1-l);height:var(--logo-p1-h)}
+.pastille{flex:1;height:var(--pastille-h);background:#fff;border-radius:999px;display:flex;align-items:center;padding:0 7mm}
+.suite-blanc{background:#fff;align-items:flex-end;padding-bottom:2.5mm}
+.suite-blanc::after{content:"";position:absolute;left:20mm;right:20mm;bottom:0;border-bottom:1px solid var(--filet)}
+.suite-blanc .rappel{color:var(--texte-2)}
+.suite-bandeau{background:var(--entete-fond);color:#fff}
+.haut-suite .logo{width:var(--logo-suite-l);height:var(--logo-suite-h)}
+.pied-bandeau{background:var(--pied-fond);color:var(--texte-pied)}
+.pied-filet{background:#fff;color:var(--texte-2)}
+.pied-filet::before{content:"";position:absolute;left:20mm;right:20mm;top:0;border-top:1px solid var(--filet)}
+.pied .logo{flex:none;width:var(--logo-pied-l);height:var(--logo-pied-h);background-position:right center}
+p:has(+ .encadre),.garde:has(+ .encadre),ul:has(+ .encadre){break-after:avoid;page-break-after:avoid}
+.intro-liste{break-after:avoid;page-break-after:avoid}
