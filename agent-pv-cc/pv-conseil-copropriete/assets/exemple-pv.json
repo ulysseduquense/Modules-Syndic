@@ -1,0 +1,114 @@
+{
+  "marque": "emeria",
+  "acp": {
+    "nom": "Résidence Les Coteaux",
+    "adresse": "Rue de l'Exemple 12, 4000 Liège",
+    "bce": "0800.000.000"
+  },
+  "reunion": {
+    "date": "2026-11-05",
+    "heure_debut": "18:00",
+    "heure_fin": "19:50",
+    "lieu": "Salle commune du rez-de-chaussée",
+    "mode": "présentiel"
+  },
+  "syndic": {
+    "representant": "Julie Martin",
+    "fonction": "Gestionnaire de copropriété",
+    "email": "gestion@exemple.be",
+    "telephone": "04 000 00 00"
+  },
+  "president_seance": "Mme Anne Lambert, présidente du conseil",
+  "secretaire": "Julie Martin, pour le syndic",
+  "participants": [
+    {"nom": "Mme Anne Lambert", "qualite": "Présidente", "lot": "App. 4B", "presence": "présente"},
+    {"nom": "M. Marc Dubois", "qualite": "Membre", "lot": "App. 2A", "presence": "présent"},
+    {"nom": "M. Karim Haddad", "qualite": "Membre", "lot": "App. 6C", "presence": "excusé"},
+    {"nom": "Mme Sofie Peeters", "qualite": "Membre", "lot": "App. 1D", "presence": "présente"}
+  ],
+  "invites": [
+    {"nom": "M. Paul Renard", "qualite": "commissaire aux comptes", "presence": "présent"}
+  ],
+  "points": [
+    {
+      "titre": "Approbation du procès-verbal de la réunion du 10 septembre 2026",
+      "contenu": ["Le procès-verbal de la réunion du 10 septembre 2026 a été transmis aux membres le 18 septembre 2026. Aucune remarque n'est formulée."],
+      "decision": "Le procès-verbal est approuvé à l'unanimité des membres présents."
+    },
+    {
+      "titre": "Suivi des actions de la réunion précédente",
+      "contenu": [
+        {"liste": [
+          "Remplacement de l'éclairage du parking par des luminaires LED : **réalisé** le 14 octobre 2026.",
+          "Relance du copropriétaire du lot 9 pour l'arriéré de charges : mise en demeure envoyée le 2 octobre 2026, plan d'apurement accepté.",
+          "Vérification des détecteurs de fumée des communs : en cours, passage du technicien prévu le 20 novembre 2026."
+        ]}
+      ]
+    },
+    {
+      "titre": "Situation financière et contrôle des comptes",
+      "contenu": [
+        "Le syndic présente la situation de trésorerie au 31 octobre 2026 :",
+        {"tableau": {
+          "colonnes": ["Poste", "Montant"],
+          "lignes": [["Fonds de roulement", "18.420,35 €"], ["Fonds de réserve", "42.910,00 €"], ["Arriérés de charges (3 lots)", "3.215,60 €"]],
+          "largeurs_cm": [11, 6]
+        }},
+        "M. Renard, commissaire aux comptes, a procédé au contrôle des factures du troisième trimestre et n'a relevé aucune anomalie."
+      ],
+      "decision": "Le conseil prend acte de la situation financière et demande au syndic de poursuivre le recouvrement des arriérés."
+    },
+    {
+      "titre": "Toiture : remplacement des descentes d'eau pluviale",
+      "contenu": [
+        "Suite aux infiltrations constatées au 6e étage, trois devis ont été demandés :",
+        {"tableau": {
+          "colonnes": ["Entreprise", "Montant TVAC", "Délai", "Remarque"],
+          "lignes": [
+            ["Toitures Meuse SRL", "8.740,00 €", "4 semaines", "Garantie 10 ans"],
+            ["Zinguerie Ourthe", "7.980,50 €", "6 semaines", "Nacelle non comprise"],
+            ["Batiplus", "9.320,00 €", "3 semaines", "—"]
+          ],
+          "largeurs_cm": [5, 3.6, 3, 5.4]
+        }},
+        "Le devis de Zinguerie Ourthe n'inclut pas la location de la nacelle, estimée à [À COMPLÉTER : coût de la nacelle]."
+      ],
+      "decision": "Le conseil recommande le devis de Toitures Meuse SRL. Le montant dépassant le seuil fixé par l'assemblée générale, le point sera inscrit à l'ordre du jour de la prochaine AG.",
+      "actions": [
+        {"action": "Demander à Zinguerie Ourthe un devis complet incluant la nacelle", "responsable": "Syndic", "echeance": "2026-11-20"},
+        {"action": "Inscrire le remplacement des descentes d'eau à l'ordre du jour de l'AG", "responsable": "Syndic", "echeance": "2027-02-15"}
+      ]
+    },
+    {
+      "titre": "Ascenseur : panne du 22 octobre 2026",
+      "contenu": [
+        "L'ascenseur a été immobilisé du 22 au 24 octobre 2026 (carte de commande défectueuse). Le remplacement est couvert par le contrat omnium.",
+        "Mme Peeters signale que le délai d'intervention a dépassé les 24 heures prévues au contrat."
+      ],
+      "decision": "Le conseil demande au syndic d'interroger l'ascensoriste sur le non-respect du délai d'intervention contractuel.",
+      "actions": [
+        {"action": "Adresser un courrier à l'ascensoriste concernant le délai d'intervention", "responsable": "Syndic", "echeance": "2026-11-15"}
+      ]
+    },
+    {
+      "titre": "Divers",
+      "contenu": [
+        {"liste": [
+          "Les membres signalent des dépôts sauvages récurrents dans le local poubelles. Le syndic affichera un rappel du règlement d'ordre intérieur.",
+          "M. Dubois propose d'étudier l'installation de bornes de recharge au parking."
+        ]}
+      ],
+      "actions": [
+        {"action": "Afficher un rappel du ROI dans le local poubelles", "responsable": "Syndic", "echeance": "2026-11-12"},
+        {"action": "Se renseigner sur les primes et le coût d'une étude pour des bornes de recharge", "responsable": "M. Dubois", "echeance": "2027-01-14"}
+      ]
+    }
+  ],
+  "prochaine_reunion": {"date": "2027-01-14", "heure": "18:00", "lieu": "salle commune"},
+  "signataires": [
+    {"role": "Présidente du conseil de copropriété", "nom": "Mme Anne Lambert"},
+    {"role": "Pour le syndic", "nom": "Julie Martin"}
+  ],
+  "annexes": ["Devis comparatifs — remplacement des descentes d'eau pluviale"],
+  "diffusion": "membres du conseil de copropriété et commissaire aux comptes"
+}

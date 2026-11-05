@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+pv-conseil-copropriete/brands/*/candidats/
+pv-conseil-copropriete/brands/*/brand.proposition.json

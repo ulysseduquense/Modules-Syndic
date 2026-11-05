@@ -1,0 +1,34 @@
+{
+  "id": "noblue",
+  "alias": ["noblue", "noblué", "noblue immobilier", "noblué immobilier", "nobluee", "nobluée", "nobluées"],
+  "nom_affiche": "Noblué",
+  "statut_charte": "a_completer",
+  "raison_sociale": "Noblué Immobilier SRL",
+  "bce": "0466.867.532",
+  "ipi": null,
+  "adresse": null,
+  "telephone": null,
+  "email": null,
+  "site": null,
+  "signature": null,
+  "couleurs": null,
+  "police_titres": null,
+  "police_texte": null,
+  "titres_majuscules": false,
+  "logo": null,
+  "logo_largeur_cm": 4.0,
+  "logo_entete": null,
+  "logo_entete_largeur_cm": 2.4,
+  "mentions_pied": [],
+  "sources": [
+    "Registre public des entreprises (fiche « NOBLUE IMMOBILIER », BCE 0466.867.532, SRL active) — relevé via busibee.be le 05/11/2026",
+    "PV d'AG 2020-2021 publié sur immo.notaire.be : syndic « SRL Noblué Immobilier », représentée par Luc Hamers"
+  ],
+  "a_verifier": [
+    "Site internet officiel (URL) — non joignable depuis la session de création",
+    "Logo (fichier PNG haute définition, fond transparent)",
+    "Couleurs de la charte (hex) et polices",
+    "Adresse du siège : un PV d'AG de 2020-2021 mentionne « rue de Battice 46 » (localité à confirmer)",
+    "Numéro IPI du syndic, téléphone, e-mail de contact"
+  ]
+}

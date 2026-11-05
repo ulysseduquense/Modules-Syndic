@@ -1,0 +1,38 @@
+{
+  "id": "emeria",
+  "alias": ["emeria", "emeria group", "emeriagroup", "groupe emeria"],
+  "nom_affiche": "Emeria",
+  "statut_charte": "complete",
+  "raison_sociale": null,
+  "bce": null,
+  "ipi": null,
+  "adresse": null,
+  "telephone": null,
+  "email": null,
+  "site": "emeriagroup.com",
+  "signature": "Powering better living",
+  "couleurs": {
+    "primaire": "#06187D",
+    "secondaire": "#2440FF",
+    "texte": "#06187D",
+    "texte_secondaire": "#262D98",
+    "fond_clair": "#F1F5FF",
+    "filet": "#D1DFFF",
+    "entete_tableau": "#262D98",
+    "texte_entete_tableau": "#FFFFFF",
+    "alerte": "#F36F1D"
+  },
+  "police_titres": "Arial",
+  "police_texte": "Arial",
+  "titres_majuscules": true,
+  "logo": "logo.png",
+  "logo_largeur_cm": 4.2,
+  "logo_entete": "logo-entete.png",
+  "logo_entete_largeur_cm": 2.4,
+  "mentions_pied": [],
+  "sources": [
+    "Charte Emeria 2026 — gabarit officiel « PowerPoint presentation edit 3 » (plugin emeria-slides, references/charte.md)",
+    "Logos : emeria-logo-tagline-navy.png et emeria-wordmark-navy.png du même plugin"
+  ],
+  "a_verifier": []
+}
