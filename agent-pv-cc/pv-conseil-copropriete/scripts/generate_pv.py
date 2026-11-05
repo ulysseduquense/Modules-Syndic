@@ -89,7 +89,73 @@ STYLE_DEFAUT = {
     "accent_titre": False,          # petit filet de couleur sous le titre du document
     "surtitre": True,               # « PROCÈS-VERBAL » au-dessus du titre
 }
-PLACEHOLDER_RE = re.compile(r"\[(?:À|A) COMPL[ÉE]TER[^\]]*\]", re.IGNORECASE)
+PLACEHOLDER_RE = re.compile(r"\[(?:(?:À|A) COMPL[ÉE]TER|AAN TE VULLEN)[^\]]*\]", re.IGNORECASE)
+
+MOIS_NL = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus",
+           "september", "oktober", "november", "december"]
+JOURS_NL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"]
+
+# Libellés fixes du PV par langue (brand.json ou PV : "langue": "fr" | "nl").
+TXT = {
+    "fr": {
+        "organe": "conseil de copropriété", "surtitre": "PROCÈS-VERBAL", "titre": "Réunion du {organe}",
+        "prefixe_acp": "ACP ", "prefixes_acp": ("acp", "association"), "bce": "BCE", "ref": "Réf.",
+        "manque_acp": "[À COMPLÉTER : nom de l'ACP]", "manque_date": "[À COMPLÉTER : date]",
+        "manque_heure": "[À COMPLÉTER : heure]", "manque_lieu": "[À COMPLÉTER : lieu]",
+        "l_date": "Date", "l_horaire": "Horaire", "l_lieu": "Lieu", "l_presidence": "Présidence de séance",
+        "l_secretariat": "Secrétariat", "l_syndic": "Syndic", "represente_par": ", représentée par {nom}{fct}",
+        "presences": "Présences", "cols_presence": ["Membre du conseil", "Qualité", "Lot", "Présence"],
+        "qualite_defaut": "Membre du conseil", "represente_base": "Représenté(e)", "par": "par",
+        "manque_presences": "[À COMPLÉTER : membres du conseil présents, excusés, absents]",
+        "invites": "Assistent également à la réunion :",
+        "ouverture": "La séance est ouverte", "a_heure": " à {h}", "sous_presidence": " sous la présidence de {p}",
+        "label_decision": "POSITION DU CONSEIL", "suites": "SUITES À DONNER", "suites_liste": "Suites à donner :",
+        "recap": "Récapitulatif des actions", "cols_recap": ["Pt", "Action", "Responsable", "Échéance", "Statut"],
+        "statut_defaut": "À faire", "prochaine": "Prochaine réunion",
+        "prochaine_txt": "La prochaine réunion du {organe} est fixée au {date}",
+        "cloture": "L'ordre du jour étant épuisé, la séance est levée",
+        "signatures": "Signatures", "pour_syndic": "Pour le syndic", "annexes": "Annexes :", "diffusion": "Diffusion : {x}",
+        "rappel": "PV du {organe}", "page": "Page ", "tel": "Tél. {x}",
+        "sujet": "Procès-verbal de réunion du {organe}",
+    },
+    "nl": {
+        "organe": "raad van mede-eigendom", "surtitre": "VERSLAG", "titre": "Vergadering van de {organe}",
+        "prefixe_acp": "VME ", "prefixes_acp": ("vme", "vereniging", "acp"), "bce": "KBO", "ref": "Ref.",
+        "manque_acp": "[AAN TE VULLEN: naam van de VME]", "manque_date": "[AAN TE VULLEN: datum]",
+        "manque_heure": "[AAN TE VULLEN: uur]", "manque_lieu": "[AAN TE VULLEN: plaats]",
+        "l_date": "Datum", "l_horaire": "Uur", "l_lieu": "Plaats", "l_presidence": "Voorzitter van de vergadering",
+        "l_secretariat": "Secretariaat", "l_syndic": "Syndicus", "represente_par": ", vertegenwoordigd door {nom}{fct}",
+        "presences": "Aanwezigheden", "cols_presence": ["Lid van de raad", "Hoedanigheid", "Kavel", "Aanwezigheid"],
+        "qualite_defaut": "Lid van de raad", "represente_base": "Vertegenwoordigd", "par": "door",
+        "manque_presences": "[AAN TE VULLEN: aanwezige, verontschuldigde en afwezige leden van de raad]",
+        "invites": "Wonen de vergadering eveneens bij:",
+        "ouverture": "De vergadering wordt geopend", "a_heure": " om {h}", "sous_presidence": " onder voorzitterschap van {p}",
+        "label_decision": "STANDPUNT VAN DE RAAD", "suites": "OPVOLGING", "suites_liste": "Opvolging:",
+        "recap": "Overzicht van de acties", "cols_recap": ["Pt", "Actie", "Verantwoordelijke", "Termijn", "Status"],
+        "statut_defaut": "Te doen", "prochaine": "Volgende vergadering",
+        "prochaine_txt": "De volgende vergadering van de {organe} vindt plaats op {date}",
+        "cloture": "Na afhandeling van de agenda wordt de vergadering gesloten",
+        "signatures": "Handtekeningen", "pour_syndic": "Voor de syndicus", "annexes": "Bijlagen:", "diffusion": "Verspreiding: {x}",
+        "rappel": "Verslag {organe}", "page": "Pagina ", "tel": "Tel. {x}",
+        "sujet": "Verslag van de vergadering van de {organe}",
+    },
+}
+
+# Présence normalisée (saisie en français ou en néerlandais) -> rang de tri et libellé néerlandais.
+PRESENCE_NL = (("present", 0, "Aanwezig"), ("aanwezig", 0, "Aanwezig"), ("visio", 0, "Aanwezig (online)"),
+               ("online", 0, "Aanwezig (online)"), ("represent", 1, "Vertegenwoordigd"),
+               ("vertegenw", 1, "Vertegenwoordigd"), ("excus", 2, "Verontschuldigd"), ("veront", 2, "Verontschuldigd"),
+               ("absent", 3, "Afwezig"), ("afwezig", 3, "Afwezig"))
+
+
+def presence_info(raw, lang):
+    """(rang de tri, libellé affiché) d'une présence saisie en français ou en néerlandais."""
+    raw = str(raw or "present")
+    s = strip_accents(raw).lower().strip()
+    for prefix, rang, nl in PRESENCE_NL:
+        if s.startswith(prefix):
+            return rang, (nl if lang == "nl" else PRESENCE.get(raw.lower(), raw))
+    return 4, (PRESENCE.get(raw.lower(), raw) if lang == "fr" else raw)
 
 
 # --------------------------------------------------------------------------- utilitaires
@@ -117,8 +183,8 @@ def mix(h, pct_white):
     return f"#{r:02X}{g:02X}{b:02X}"
 
 
-def fmt_date(value, long=True):
-    """'2026-11-05' -> 'jeudi 5 novembre 2026' (long) ou '05/11/2026'. Texte libre conservé."""
+def fmt_date(value, long=True, lang="fr"):
+    """'2026-11-05' -> 'jeudi 5 novembre 2026' / 'donderdag 5 november 2026' (long) ou '05/11/2026'."""
     if not value:
         return ""
     s = str(value).strip()
@@ -128,21 +194,24 @@ def fmt_date(value, long=True):
     d = dt.date(int(m[1]), int(m[2]), int(m[3]))
     if not long:
         return d.strftime("%d/%m/%Y")
+    if lang == "nl":
+        return f"{JOURS_NL[d.weekday()]} {d.day} {MOIS_NL[d.month - 1]} {d.year}"
     jour = "1er" if d.day == 1 else str(d.day)
     return f"{JOURS[d.weekday()]} {jour} {MOIS[d.month - 1]} {d.year}"
 
 
-def fmt_heure(value):
-    """'18:00' -> '18h00' ; '18:30' -> '18h30'. Texte libre conservé."""
+def fmt_heure(value, lang="fr"):
+    """'18:00' -> '18h00' (fr) / '18u00' (nl). Texte libre conservé."""
     if not value:
         return ""
     s = str(value).strip()
-    m = re.fullmatch(r"(\d{1,2})[:hH.](\d{2})", s)
+    sep = "u" if lang == "nl" else "h"
+    m = re.fullmatch(r"(\d{1,2})[:hHuU.](\d{2})", s)
     if m:
-        return f"{int(m[1])}h{m[2]}"
-    m = re.fullmatch(r"(\d{1,2})[hH]?", s)
+        return f"{int(m[1])}{sep}{m[2]}"
+    m = re.fullmatch(r"(\d{1,2})[hHuU]?", s)
     if m:
-        return f"{int(m[1])}h00"
+        return f"{int(m[1])}{sep}00"
     return s
 
 
@@ -470,7 +539,11 @@ class PV:
         self.font = brand.get("police_texte") or "Arial"
         self.font_t = brand.get("police_titres") or self.font
         self.caps = bool(brand.get("titres_majuscules"))
-        self.organe = brand.get("organe") or "conseil de copropriété"
+        self.lang = data.get("langue") or brand.get("langue") or "fr"
+        if self.lang not in TXT:
+            sys.exit(f"Langue « {self.lang} » non gérée (fr, nl)")
+        self.t = TXT[self.lang]
+        self.organe = brand.get("organe") or self.t["organe"]
         st = dict(STYLE_DEFAUT)
         st.update(brand.get("style") or {})
         self.st = st
@@ -485,7 +558,7 @@ class PV:
     def rich(self, paragraph, text, size=10, color=None, bold=False, italic=False):
         color = color or self.pal["texte"]
         text = "" if text is None else str(text)
-        tokens = re.split(r"(\*\*[^*]+\*\*|\*[^*]+\*|\[(?:À|A) COMPL[ÉE]TER[^\]]*\])", text, flags=re.IGNORECASE)
+        tokens = re.split(r"(\*\*[^*]+\*\*|\*[^*]+\*|\[(?:(?:À|A) COMPL[ÉE]TER|AAN TE VULLEN)[^\]]*\])", text, flags=re.IGNORECASE)
         for tok in tokens:
             if not tok:
                 continue
@@ -511,6 +584,12 @@ class PV:
         if text:
             self.rich(p, text, size, color, bold, italic)
         return p
+
+    def fdate(self, value, long=True):
+        return fmt_date(value, long, self.lang)
+
+    def fheure(self, value):
+        return fmt_heure(value, self.lang)
 
     def titre(self, text):
         return text.upper() if self.caps else text
@@ -609,11 +688,11 @@ class PV:
             self.footer(footer)
 
     def rappel(self):
-        txt = f"PV du {self.organe}"
+        txt = self.t["rappel"].format(organe=self.organe)
         if self.acp.get("nom"):
             txt += f" — {self.acp['nom']}"
         if self.reu.get("date"):
-            txt += f" — {fmt_date(self.reu['date'], long=False)}"
+            txt += f" — {self.fdate(self.reu['date'], long=False)}"
         return txt
 
     def header_bandeau_suite(self, h):
@@ -667,7 +746,7 @@ class PV:
         tel = self.syn.get("telephone") or b.get("telephone")
         mail = self.syn.get("email") or b.get("email")
         if tel:
-            l2.append(f"Tél. {tel}")
+            l2.append(self.t["tel"].format(x=tel))
         if mail:
             l2.append(mail)
         if b.get("site"):
@@ -696,7 +775,7 @@ class PV:
         pp = c1.paragraphs[0]
         pp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         no_space(pp)
-        r = pp.add_run("Page ")
+        r = pp.add_run(self.t["page"])
         set_run_font(r, self.font, 7.5, color=self.pal["texte_secondaire"])
         add_field(pp, "PAGE", self.font, 7.5, self.pal["texte_secondaire"])
         r = pp.add_run(" / ")
@@ -741,7 +820,7 @@ class PV:
         pp = c1.paragraphs[0]
         pp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         no_space(pp)
-        for txt, fld in (("Page ", None), (None, "PAGE"), (" / ", None), (None, "NUMPAGES")):
+        for txt, fld in ((self.t["page"], None), (None, "PAGE"), (" / ", None), (None, "NUMPAGES")):
             if fld:
                 add_field(pp, fld, self.font, 8, "#FFFFFF")
             else:
@@ -752,10 +831,10 @@ class PV:
     def bloc_titre(self):
         if self.st["surtitre"]:
             p = self.para(before=6, after=2)
-            r = p.add_run("PROCÈS-VERBAL")
+            r = p.add_run(self.t["surtitre"])
             set_run_font(r, self.font_t, 9, bold=True, color=self.pal["secondaire"])
             char_spacing(r, 40)
-        type_reu = self.reu.get("intitule") or f"Réunion du {self.organe}"
+        type_reu = self.reu.get("intitule") or self.t["titre"].format(organe=self.organe)
         p = self.para(before=0 if self.st["surtitre"] else 6, after=6)
         r = p.add_run(self.titre(type_reu))
         set_run_font(r, self.font_t, 19, bold=True, color=self.pal["primaire"])
@@ -767,38 +846,38 @@ class PV:
             para_border(pa, "bottom", self.pal["secondaire"], 30, 1)
             r = pa.add_run()
             r.font.size = Pt(2)
-        nom = self.acp.get("nom") or "[À COMPLÉTER : nom de l'ACP]"
-        prefix = "" if strip_accents(nom).lower().startswith(("acp", "association")) else "ACP "
+        nom = self.acp.get("nom") or self.t["manque_acp"]
+        prefix = "" if strip_accents(nom).lower().startswith(self.t["prefixes_acp"]) or nom.startswith("[") else self.t["prefixe_acp"]
         self.rich(self.para(after=1), f"{prefix}{nom}", 12.5, self.pal["texte"], bold=True)
         sub = []
         if self.acp.get("adresse"):
             sub.append(self.acp["adresse"])
         if self.acp.get("bce"):
-            sub.append(f"BCE {self.acp['bce']}")
+            sub.append(f"{self.t['bce']} {self.acp['bce']}")
         if self.acp.get("reference"):
-            sub.append(f"Réf. {self.acp['reference']}")
+            sub.append(f"{self.t['ref']} {self.acp['reference']}")
         p = self.para(" · ".join(sub), 9.5, self.pal["texte_secondaire"], after=8) if sub else self.para(after=8)
         para_border(p, "bottom", self.pal["filet"], 6, 6)
 
     def grille_infos(self):
         r = self.reu
-        horaire = fmt_heure(r.get("heure_debut"))
+        horaire = self.fheure(r.get("heure_debut"))
         if r.get("heure_fin"):
-            horaire = f"{horaire} – {fmt_heure(r['heure_fin'])}" if horaire else fmt_heure(r["heure_fin"])
+            horaire = f"{horaire} – {self.fheure(r['heure_fin'])}" if horaire else self.fheure(r["heure_fin"])
         lieu = r.get("lieu") or ""
-        if r.get("mode") and strip_accents(r["mode"]).lower() not in ("presentiel", ""):
+        if r.get("mode") and strip_accents(r["mode"]).lower() not in ("presentiel", "fysiek", "ter plaatse", ""):
             lieu = f"{lieu} ({r['mode']})" if lieu else str(r["mode"]).capitalize()
         syndic = self.b.get("raison_sociale") or self.b.get("nom_affiche")
         if self.syn.get("representant"):
             fct = f", {self.syn['fonction'].lower()}" if self.syn.get("fonction") else ""
-            syndic += f", représentée par {self.syn['representant']}{fct}"
+            syndic += self.t["represente_par"].format(nom=self.syn["representant"], fct=fct)
         rows = [
-            ("Date", fmt_date(r.get("date")) or "[À COMPLÉTER : date]"),
-            ("Horaire", horaire or "[À COMPLÉTER : heure]"),
-            ("Lieu", lieu or "[À COMPLÉTER : lieu]"),
-            ("Présidence de séance", self.d.get("president_seance") or ""),
-            ("Secrétariat", self.d.get("secretaire") or ""),
-            ("Syndic", syndic),
+            (self.t["l_date"], self.fdate(r.get("date")) or self.t["manque_date"]),
+            (self.t["l_horaire"], horaire or self.t["manque_heure"]),
+            (self.t["l_lieu"], lieu or self.t["manque_lieu"]),
+            (self.t["l_presidence"], self.d.get("president_seance") or ""),
+            (self.t["l_secretariat"], self.d.get("secretaire") or ""),
+            (self.t["l_syndic"], syndic),
         ]
         rows = [x for x in rows if x[1]]
         t = self.doc.add_table(len(rows), 2)
@@ -913,7 +992,7 @@ class PV:
             # donc jamais séparées de la position du conseil par un saut de page.
             pp = cell.add_paragraph()
             no_space(pp, 5, 1)
-            r = pp.add_run("SUITES À DONNER")
+            r = pp.add_run(self.t["suites"])
             set_run_font(r, self.font, 8, bold=True, color=self.pal["secondaire"])
             char_spacing(r, 15)
             for it in actions:
@@ -961,59 +1040,59 @@ class PV:
     def presences(self):
         parts = self.d.get("participants") or []
         invites = self.d.get("invites") or []
-        self.h1("Présences")
+        self.h1(self.t["presences"])
         if parts:
             def k(x):
-                pr = strip_accents(str(x.get("presence", "present"))).lower()
-                for prefix, rang in (("present", 0), ("visio", 0), ("represent", 1), ("excus", 2), ("absent", 3)):
-                    if pr.startswith(prefix):
-                        return rang
-                return 4
+                return presence_info(x.get("presence"), self.lang)[0]
 
             avec_lot = any(x.get("lot") for x in parts)
             lignes = []
             for x in sorted(parts, key=k):
-                pr = str(x.get("presence", "present"))
-                pr_txt = PRESENCE.get(pr.lower(), pr)
+                rang, pr_txt = presence_info(x.get("presence"), self.lang)
                 if x.get("represente_par"):
-                    base = pr_txt if pr_txt.lower().startswith("représenté") else "Représenté(e)"
-                    pr_txt = f"{base} par {x['represente_par']}"
-                ligne = [x.get("nom", ""), x.get("qualite", "Membre du conseil")]
+                    base = pr_txt if rang == 1 else self.t["represente_base"]
+                    pr_txt = f"{base} {self.t['par']} {x['represente_par']}"
+                ligne = [x.get("nom", ""), x.get("qualite", self.t["qualite_defaut"])]
                 if avec_lot:
                     ligne.append(x.get("lot", ""))
                 lignes.append(ligne + [pr_txt])
+            cols = self.t["cols_presence"]
             if avec_lot:
-                self.tableau(["Membre du conseil", "Qualité", "Lot", "Présence"], lignes, [5.6, 4.4, 2.6, 4.4])
+                self.tableau(cols, lignes, [5.6, 4.4, 2.6, 4.4])
             else:
-                self.tableau(["Membre du conseil", "Qualité", "Présence"], lignes, [6.6, 5, 5.4])
+                self.tableau([cols[0], cols[1], cols[3]], lignes, [6.6, 5, 5.4])
             tot = len(parts)
-            pres = sum(1 for x in parts if strip_accents(str(x.get("presence", "present"))).lower().startswith(("present", "visio", "represent")))
+            pres = sum(1 for x in parts if presence_info(x.get("presence"), self.lang)[0] <= 1)
             if self.d.get("afficher_quorum", True):
-                self.para(f"{pres} membre{'s' if pres > 1 else ''} sur {tot} présent{'s' if pres > 1 else ''} ou représenté{'s' if pres > 1 else ''}.",
-                          9.5, self.pal["texte_secondaire"], italic=True, after=4)
+                if self.lang == "nl":
+                    q = f"{pres} van de {tot} leden aanwezig of vertegenwoordigd."
+                else:
+                    pl = "s" if pres > 1 else ""
+                    q = f"{pres} membre{pl} sur {tot} présent{pl} ou représenté{pl}."
+                self.para(q, 9.5, self.pal["texte_secondaire"], italic=True, after=4)
         else:
-            self.para("[À COMPLÉTER : membres du conseil présents, excusés, absents]")
+            self.para(self.t["manque_presences"])
         if invites:
-            keep_with_next(self.para("Assistent également à la réunion :", 10, bold=True, before=2, after=2))
+            keep_with_next(self.para(self.t["invites"], 10, bold=True, before=2, after=2))
             items = []
             for x in invites:
                 s = x.get("nom", "")
                 if x.get("qualite"):
                     s += f" ({x['qualite']})"
-                if x.get("presence") and strip_accents(x["presence"]).lower() not in ("present", "presente"):
-                    s += f" — {PRESENCE.get(x['presence'].lower(), x['presence'])}"
+                if x.get("presence") and presence_info(x["presence"], self.lang)[0] != 0:
+                    s += f" — {presence_info(x['presence'], self.lang)[1]}"
                 items.append(s)
             self.puces(items)
 
     def ouverture(self):
         txt = self.d.get("ouverture")
         if not txt:
-            h = fmt_heure(self.reu.get("heure_debut"))
-            txt = "La séance est ouverte"
+            h = self.fheure(self.reu.get("heure_debut"))
+            txt = self.t["ouverture"]
             if h:
-                txt += f" à {h}"
+                txt += self.t["a_heure"].format(h=h)
             if self.d.get("president_seance"):
-                txt += f" sous la présidence de {self.d['president_seance']}"
+                txt += self.t["sous_presidence"].format(p=self.d["president_seance"])
             txt += "."
         self.para(txt, before=6, after=4)
         if self.d.get("introduction"):
@@ -1031,49 +1110,48 @@ class PV:
             items = []
             for a in acts:
                 s = a.get("action", "")
-                meta = [m for m in (a.get("responsable"), fmt_date(a.get("echeance"), long=False)) if m]
+                meta = [m for m in (a.get("responsable"), self.fdate(a.get("echeance"), long=False)) if m]
                 if meta:
                     s += f" — *{' · '.join(meta)}*"
                 items.append(s)
                 self.actions.append((str(num), a))
             dec = pt.get("decision") or pt.get("position")
             if dec:
-                label = pt.get("label_decision") or self.d.get("label_decision") or "POSITION DU CONSEIL"
+                label = pt.get("label_decision") or self.d.get("label_decision") or self.t["label_decision"]
                 self.encadre(label.upper(), dec, items)
             elif items:
-                keep_with_next(self.para("Suites à donner :", 9.5, self.pal["primaire"], bold=True, before=2, after=2))
+                keep_with_next(self.para(self.t["suites_liste"], 9.5, self.pal["primaire"], bold=True, before=2, after=2))
                 self.puces(items, 9.5)
 
     def recap_actions(self):
         if not self.actions or self.d.get("recapitulatif_actions") is False:
             return
-        self.h1("Récapitulatif des actions")
+        self.h1(self.t["recap"])
         lignes = []
         for num, a in self.actions:
             lignes.append([num, a.get("action", ""), a.get("responsable", ""),
-                           fmt_date(a.get("echeance"), long=False) or "—", a.get("statut", "À faire")])
-        self.tableau(["Pt", "Action", "Responsable", "Échéance", "Statut"], lignes, [1.1, 8.1, 3.2, 2.3, 2.3])
+                           self.fdate(a.get("echeance"), long=False) or "—", a.get("statut", self.t["statut_defaut"])])
+        self.tableau(self.t["cols_recap"], lignes, [1.1, 8.1, 3.2, 2.3, 2.3])
 
     def cloture(self):
         nx = self.d.get("prochaine_reunion")
         if nx:
-            self.h1("Prochaine réunion")
+            self.h1(self.t["prochaine"])
             if isinstance(nx, str):
                 self.para(nx)
             else:
-                s = f"La prochaine réunion du {self.organe} est fixée au "
-                s += fmt_date(nx.get("date")) or "[À COMPLÉTER : date]"
+                s = self.t["prochaine_txt"].format(organe=self.organe, date=self.fdate(nx.get("date")) or self.t["manque_date"])
                 if nx.get("heure"):
-                    s += f" à {fmt_heure(nx['heure'])}"
+                    s += self.t["a_heure"].format(h=self.fheure(nx["heure"]))
                 if nx.get("lieu"):
                     s += f", {nx['lieu']}"
                 s += "."
                 self.para(s)
         txt = self.d.get("cloture_texte")
         if not txt:
-            h = fmt_heure(self.d.get("cloture") or self.reu.get("heure_fin"))
-            txt = "L'ordre du jour étant épuisé, la séance est levée"
-            txt += f" à {h}." if h else "."
+            h = self.fheure(self.d.get("cloture") or self.reu.get("heure_fin"))
+            txt = self.t["cloture"]
+            txt += self.t["a_heure"].format(h=h) + "." if h else "."
         self.para(txt, before=10, after=8)
 
     def signatures(self):
@@ -1083,12 +1161,18 @@ class PV:
         if not sig:
             sig = []
             pres = next((x for x in self.d.get("participants") or [] if "presid" in strip_accents(str(x.get("qualite", ""))).lower()), None)
+            if pres is None:
+                pres = next((x for x in self.d.get("participants") or [] if "voorzit" in str(x.get("qualite", "")).lower()), None)
             q = strip_accents(str(pres.get("qualite", ""))).lower() if pres else ""
-            titre = "Présidente" if q.startswith("presidente") else ("Président" if q.startswith("president") else "Président(e)")
-            sig.append({"role": f"{titre} du {self.organe}", "nom": pres.get("nom") if pres else ""})
-            sig.append({"role": "Pour le syndic", "nom": self.syn.get("representant", "")})
+            if self.lang == "nl":
+                role = f"Voorzitter van de {self.organe}"
+            else:
+                titre = "Présidente" if q.startswith("presidente") else ("Président" if q.startswith("president") else "Président(e)")
+                role = f"{titre} du {self.organe}"
+            sig.append({"role": role, "nom": pres.get("nom") if pres else ""})
+            sig.append({"role": self.t["pour_syndic"], "nom": self.syn.get("representant", "")})
         sig = [s if isinstance(s, dict) else {"role": "", "nom": s} for s in sig]
-        keep_with_next(self.para(self.titre("Signatures"), 10, self.pal["primaire"], bold=True, before=6, after=4))
+        keep_with_next(self.para(self.titre(self.t["signatures"]), 10, self.pal["primaire"], bold=True, before=6, after=4))
         cols = 2
         rows = (len(sig) + cols - 1) // cols
         t = self.doc.add_table(rows, cols)
@@ -1112,10 +1196,10 @@ class PV:
     def annexes(self):
         ann = self.d.get("annexes") or []
         if ann:
-            keep_with_next(self.para("Annexes :", 9.5, self.pal["primaire"], bold=True, before=10, after=2))
+            keep_with_next(self.para(self.t["annexes"], 9.5, self.pal["primaire"], bold=True, before=10, after=2))
             self.puces(ann, 9.5)
         if self.d.get("diffusion"):
-            self.para(f"Diffusion : {self.d['diffusion']}", 8.5, self.pal["texte_secondaire"], italic=True, before=6)
+            self.para(self.t["diffusion"].format(x=self.d["diffusion"]), 8.5, self.pal["texte_secondaire"], italic=True, before=6)
 
     def build(self, out):
         self.setup()
@@ -1130,9 +1214,9 @@ class PV:
         self.signatures()
         self.annexes()
         core = self.doc.core_properties
-        core.title = f"PV du {self.organe} — {self.acp.get('nom', '')}".strip(" —")
+        core.title = f"{self.t['rappel'].format(organe=self.organe)} — {self.acp.get('nom', '')}".strip(" —")
         core.author = self.b.get("raison_sociale") or self.b.get("nom_affiche")
-        core.subject = f"Procès-verbal de réunion du {self.organe}"
+        core.subject = self.t["sujet"].format(organe=self.organe)
         renumber_docpr(self.doc)
         self.doc.save(out)
 
@@ -1185,7 +1269,8 @@ def main():
 
     acp = (data.get("acp") or {}).get("nom") or "acp"
     date = (data.get("reunion") or {}).get("date") or "sans-date"
-    name = f"PV_CC_{slug(acp)}_{slug(date)}.docx"
+    lang = data.get("langue") or brand.get("langue") or "fr"
+    name = f"{'Verslag_RME' if lang == 'nl' else 'PV_CC'}_{slug(acp)}_{slug(date)}.docx"
     if a.out:
         out = Path(a.out)
         if out.suffix.lower() != ".docx":

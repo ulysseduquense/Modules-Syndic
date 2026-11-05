@@ -6,6 +6,8 @@
   ],
   "nom_affiche": "Syncura",
   "statut_charte": "a_completer",
+  "langue": "nl",
+  "organe": "raad van mede-eigendom",
   "raison_sociale": "Syncura (VM Vastgoedbeheer BV)",
   "bce": "0437.396.556",
   "ipi": "508.167",
@@ -28,12 +30,12 @@
   "sources": [
     "www.syncura.be et la signature « managed with care » : en-tête d'un document notarial (immo.notaire.be)",
     "Groupe VMRE : filiales Syncura et Easy Syndic (lalibre.be)",
-    "Page contact de syncura.be (via moteur de recherche, 05/11/2026) : Syncura (VM Vastgoedbeheer BV), BIV 508167, RPR Gent 0437.396.556 ; Poortakkerstraat 91/501, 9051 Gent ; +32 9 280 80 34"
+    "Page contact de syncura.be (via moteur de recherche, 05/11/2026) : Syncura (VM Vastgoedbeheer BV), BIV 508167, RPR Gent 0437.396.556 ; Poortakkerstraat 91/501, 9051 Gent ; +32 9 280 80 34",
+    "Langue des PV : néerlandais (confirmé par Ulysse le 05/11/2026)"
   ],
   "a_verifier": [
     "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
     "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "Marque néerlandophone : PV en néerlandais probablement attendu (« verslag raad van mede-eigendom ») — à confirmer",
     "E-mail général"
   ],
   "libelle_ipi": "BIV",

@@ -1,0 +1,153 @@
+{
+  "marque": "syncura",
+  "acp": {
+    "nom": "Residentie De Linde",
+    "adresse": "Voorbeeldstraat 12, 9000 Gent",
+    "bce": "0800.000.000"
+  },
+  "reunion": {
+    "date": "2026-11-05",
+    "heure_debut": "18:00",
+    "heure_fin": "19:45",
+    "lieu": "Gemeenschappelijke ruimte op het gelijkvloers"
+  },
+  "syndic": {
+    "representant": "Sofie Claes",
+    "fonction": "Beheerder",
+    "email": "gent@exemple.be",
+    "telephone": "09 000 00 00"
+  },
+  "president_seance": "Dhr. Pieter Janssens, voorzitter van de raad",
+  "secretaire": "Sofie Claes, voor de syndicus",
+  "participants": [
+    {
+      "nom": "Dhr. Pieter Janssens",
+      "qualite": "Voorzitter",
+      "lot": "App. 3A",
+      "presence": "aanwezig"
+    },
+    {
+      "nom": "Mevr. An Peeters",
+      "qualite": "Lid",
+      "lot": "App. 1B",
+      "presence": "aanwezig"
+    },
+    {
+      "nom": "Dhr. Koen De Smet",
+      "qualite": "Lid",
+      "lot": "App. 5C",
+      "presence": "verontschuldigd"
+    }
+  ],
+  "points": [
+    {
+      "titre": "Goedkeuring van het verslag van de vergadering van 10 september 2026",
+      "contenu": [
+        "Het verslag werd op 18 september 2026 aan de leden bezorgd. Er worden geen opmerkingen geformuleerd."
+      ],
+      "decision": "Het verslag wordt goedgekeurd."
+    },
+    {
+      "titre": "Financiële toestand",
+      "contenu": [
+        "De syndicus geeft een overzicht van de financiële toestand op 31 oktober 2026:",
+        {
+          "tableau": {
+            "colonnes": [
+              "Post",
+              "Bedrag"
+            ],
+            "lignes": [
+              [
+                "Werkkapitaal",
+                "18.420,35 €"
+              ],
+              [
+                "Reservekapitaal",
+                "42.910,00 €"
+              ],
+              [
+                "Achterstallige lasten (2 kavels)",
+                "2.150,00 €"
+              ]
+            ],
+            "largeurs_cm": [
+              11,
+              6
+            ]
+          }
+        }
+      ],
+      "decision": "De raad neemt kennis van de financiële toestand en vraagt de syndicus de invordering van de achterstallige lasten voort te zetten.",
+      "actions": [
+        {
+          "action": "Een ingebrekestelling sturen aan de eigenaar van kavel 7",
+          "responsable": "Syndicus",
+          "echeance": "2026-11-20"
+        }
+      ]
+    },
+    {
+      "titre": "Dak: vervanging van de regenafvoeren",
+      "contenu": [
+        "Er werden twee offertes ontvangen:",
+        {
+          "tableau": {
+            "colonnes": [
+              "Aannemer",
+              "Bedrag excl. btw",
+              "Opmerking"
+            ],
+            "lignes": [
+              [
+                "Dakwerken Leie BV",
+                "8.740,00 €",
+                "Stelling inbegrepen"
+              ],
+              [
+                "Zinkwerk Schelde",
+                "7.980,50 €",
+                "Stelling niet inbegrepen"
+              ]
+            ],
+            "largeurs_cm": [
+              6,
+              4,
+              7
+            ]
+          }
+        }
+      ],
+      "decision": "De raad wenst een derde offerte en vraagt de syndicus die aan te vragen.",
+      "actions": [
+        {
+          "action": "Een derde offerte aanvragen voor de vervanging van de regenafvoeren",
+          "responsable": "Syndicus",
+          "echeance": "2026-12-15"
+        }
+      ]
+    },
+    {
+      "titre": "Varia",
+      "contenu": [
+        {
+          "liste": [
+            "Mevr. Peeters meldt dat de verlichting in de kelder defect is."
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "action": "Een elektricien inschakelen voor de kelderverlichting",
+          "responsable": "Syndicus",
+          "echeance": "2026-11-12"
+        }
+      ]
+    }
+  ],
+  "prochaine_reunion": {
+    "date": "2027-01-14",
+    "heure": "18:00",
+    "lieu": "gemeenschappelijke ruimte"
+  }
+}

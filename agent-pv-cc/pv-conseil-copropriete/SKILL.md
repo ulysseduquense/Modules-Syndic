@@ -30,10 +30,12 @@ charte du syndic, prêt à relire et à signer : `.docx` (modifiable) + `.pdf`.
 | `scripts/extract_brand.py` | relevé simplifié sans navigateur (HTML + CSS) |
 | `brands/<id>/` | charte de chaque marque : `brand.json`, logos, polices |
 | `references/redaction.md` | **style de rédaction** : passer des notes au PV, vocabulaire, pièges |
+| `references/redactie-nl.md` | rédaction en néerlandais (marques néerlandophones : Syncura) |
 | `references/structure-pv.md` | cadre légal belge du conseil de copropriété, plan type, signatures |
 | `references/schema.md` | format du JSON lu par le générateur |
 | `references/marques.md` | marques disponibles, état de leur charte, ajout d'une marque |
 | `assets/exemple-pv.json` | exemple complet (6 points, tableaux, actions) |
+| `assets/voorbeeld-verslag-nl.json` | exemple en néerlandais (Syncura) |
 
 ## Déroulé
 
@@ -48,6 +50,12 @@ l'immeuble déjà vu) ; sinon la demander en une ligne. Marques et alias :
 Noblué = `noblue` ; DR Syndic = `dr-syndic` ; Emeria = `emeria`). Emeria par défaut si
 l'utilisateur le confirme. Agigest est luxembourgeoise : l'organe s'y appelle « conseil
 syndical » (géré par la marque).
+
+**Langue du PV** : celle de la marque (`langue` dans `brand.json`). Syncura → PV en
+**néerlandais**, même si les notes sont en français : lire `references/redactie-nl.md`
+et écrire tout le contenu du JSON en néerlandais. Pour un immeuble qui demande l'autre
+langue, mettre `"langue": "fr"` ou `"nl"` dans le JSON du PV. Les messages dans le chat
+restent dans la langue de l'utilisateur.
 
 Si la charte de la marque est « à compléter » ou « partielle » (voir `--list-brands`),
 le dire **avant** de générer : le PV sortira sans logo et/ou en rendu neutre gris. Ne
@@ -84,7 +92,8 @@ déjà commandé ?). Ne pas questionner la forme : c'est le travail de l'agent.
 
 ### 4. Rédiger
 
-Lire `references/redaction.md` (obligatoire) et `references/structure-pv.md`, puis écrire
+Lire `references/redaction.md` (obligatoire ; en plus `references/redactie-nl.md` pour un
+PV en néerlandais) et `references/structure-pv.md`, puis écrire
 le JSON du PV (`references/schema.md`, modèle `assets/exemple-pv.json`) :
 
 - un point de l'ordre du jour = un `point` ; regrouper sous un même point les notes

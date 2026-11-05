@@ -36,7 +36,7 @@ dans le chat (« ajoute M. X excusé », « reformule le point 3 »).
 |---|---|---|
 | Emeria | emeriagroup.com | charte complète : logos officiels, bandeau de pied navy à coin arrondi |
 | Office des Propriétaires (OP Bruxelles, OP Wallonie) | op.be | coordonnées et IPI renseignés, couleurs connues ; logo et éléments graphiques à capturer |
-| Syncura | syncura.be | coordonnées et BIV renseignés ; charte à capturer |
+| Syncura (PV en néerlandais) | syncura.be | coordonnées et BIV renseignés ; charte à capturer |
 | Easy Syndic | easysyndic.be | coordonnées renseignées ; charte à capturer |
 | Gestea | gestea.be | coordonnées et IPI renseignés ; charte à capturer |
 | Agigest (Luxembourg, « conseil syndical ») | agigest.lu | coordonnées renseignées ; charte à capturer |
