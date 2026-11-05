@@ -15,38 +15,46 @@
     "op wallonie"
   ],
   "nom_affiche": "OP",
-  "statut_charte": "partielle",
+  "statut_charte": "complete",
   "raison_sociale": "Office des Propriétaires SA",
   "bce": "0841.885.269",
-  "ipi": "508.167",
+  "ipi": "508 167",
   "adresse": "Rue Vilain XIIII 53-55, 1000 Bruxelles",
   "telephone": "+32 2 626 08 26",
   "email": "reception@op.be",
   "site": "op.be",
   "signature": null,
   "couleurs": {
-    "primaire": "#9C0C24",
-    "secondaire": "#CA403B"
+    "primaire": "#1C242B",
+    "secondaire": "#D44036",
+    "accent": "#D44036",
+    "texte": "#1C242B",
+    "texte_secondaire": "#333333",
+    "fond_clair": "#F6F3EF",
+    "filet": "#E2DAD0",
+    "entete_tableau": "#1C242B",
+    "texte_entete_tableau": "#FFFFFF",
+    "logo": "#A40C21"
   },
-  "police_titres": "Arial",
-  "police_texte": "Arial",
+  "police_titres": "Inter",
+  "police_texte": "Inter",
   "titres_majuscules": false,
-  "logo": null,
-  "logo_largeur_cm": 4.0,
-  "logo_entete": null,
-  "logo_entete_largeur_cm": 2.4,
+  "logo": "logo.png",
+  "logo_largeur_cm": 1.55,
+  "logo_entete": "logo.png",
+  "logo_entete_largeur_cm": 0.62,
   "logo_sur_fond": null,
-  "style": {},
-  "mentions_pied": [],
-  "sources": [
-    "Couleurs OP (rouge #CA403B, bordeaux #9C0C24) : skills formation-scorm-emeria et formation-immersive-emeria",
-    "Entités : O.P. BRUXELLES (BCE 0841.885.269) et OFFICE DES PROPRIETAIRES WALLONIE (BCE 0432.691.858), registre public (companyweb.be, busibee.be)",
-    "Mentions légales de op.be (via moteur de recherche, 05/11/2026) : Office des Propriétaires SA, rue Vilain XIIII 53-55, 1000 Bruxelles, BCE 0841.885.269, +32 2 626 08 26, reception@op.be, IPI 508 167"
-  ],
-  "a_verifier": [
-    "Logo OP (versions fond clair et fond de couleur) — à capturer sur op.be",
-    "Polices et éléments graphiques — à capturer sur op.be",
-    "Coordonnées propres à OP Wallonie et aux bureaux régionaux (téléphones différents selon les pages)"
+  "style": {
+    "entete": "blanc",
+    "pied": "filet",
+    "encadre": "bordure_gauche",
+    "tableau_entete": "plein",
+    "surtitre": true,
+    "titre_gras": false,
+    "acp_accent": true
+  },
+  "mentions_pied": [
+    "Autorité de contrôle : Institut Professionnel de l'Immobilier (IPI), rue du Luxembourg 16B, 1000 Bruxelles · RC professionnelle : Axa, police n° 730.390.160"
   ],
   "entites": {
     "op-bruxelles": {
@@ -54,8 +62,63 @@
       "bce": "0841.885.269"
     },
     "op-wallonie": {
-      "raison_sociale": "Office des Propriétaires Wallonie",
-      "bce": "0432.691.858"
+      "raison_sociale": "Office des Propriétaires Wallonie SRL",
+      "bce": "0432.691.858",
+      "libelle_bce": "BCE",
+      "adresse": "Rue Vilain XIIII 53-55, 1000 Bruxelles",
+      "telephone": null,
+      "email": null
     }
-  }
+  },
+  "libelle_bce": "TVA BE",
+  "libelle_ipi": "IPI n°",
+  "police_accent": "Source Serif 4",
+  "logo_hauteur_max_cm": 1.95,
+  "bureaux": [
+    {
+      "nom": "OP Bruxelles Sud",
+      "adresse": "Rue Vilain XIIII 53-55, 1000 Bruxelles",
+      "telephone": "+32 2 626 08 26",
+      "email": "reception@op.be"
+    },
+    {
+      "nom": "OP Bruxelles Est",
+      "adresse": "Boulevard Brand Whitlock 87, 1200 Woluwe-Saint-Lambert",
+      "telephone": "+32 2 268 17 77",
+      "email": "reception@op.be"
+    },
+    {
+      "nom": "OP Brabant Wallon (Nivelles)",
+      "adresse": "Avenue de France 26, 1400 Nivelles",
+      "telephone": "+32 67 84 23 00",
+      "email": "syndic.brabantwallon@op.be"
+    },
+    {
+      "nom": "OP Louvain-la-Neuve",
+      "adresse": "Place de l'Equerre 33, 1348 Ottignies-Louvain-la-Neuve",
+      "telephone": "+32 10 45 39 90",
+      "email": "syndic.brabantwallon@op.be"
+    },
+    {
+      "nom": "OP Namur (Jambes)",
+      "adresse": "Chaussée de Liège 652, 5100 Namur",
+      "telephone": "+32 81 84 14 84",
+      "email": "syndic.brabantwallon@op.be"
+    }
+  ],
+  "interligne": 1.05,
+  "sources": [
+    "Charte relevée sur https://www.op.be/ le 05/11/2026 (capture Playwright : accueil, pied de page, page contact, feuille de style du thème op-be)",
+    "Logo : https://www.op.be/wp-content/themes/op-be/public/build/assets/logo-Dp3-hyoD.svg (seule version publiée, rouge #A40C21 ; pas de version blanche sur le site) rendu en PNG transparent 2 400 px",
+    "Couleurs (jetons CSS du thème) : --color-dark #1C242B (titres, bandeau d'appel) → primaire du PV ; --color-primary/accent #D44036 (boutons, accents, étiquettes « FOCUS ») → secondaire et accent ; --color-light #F6F3EF ; --color-border #E2DAD0",
+    "Polices : --font-sans « Inter » (titres H1/H2 en graisse normale, H3 en demi-gras), --font-serif « Source Serif 4 » en italique rouge pour les mots mis en avant — Google Fonts, licence OFL",
+    "Éléments graphiques : en-tête blanc, pied de page blanc à filets, encadrés « Focus » à barre rouge à gauche sur fond beige",
+    "Mentions : pied de page de op.be (05/11/2026) — Office des Propriétaires SA, Rue Vilain XIIII 53-55, 1000 Bruxelles, TVA BE 0841.885.269, IPI n° 508 167, RC Axa police n° 730.390.160 ; page contact (bureaux, téléphones, e-mails) ; https://www.op.be/en/legal-information",
+    "Entité OP Wallonie : OFFICE DES PROPRIETAIRES WALLONIE SRL, BCE 0432.691.858, siège Rue Vilain XIIII 53-55, 1000 Bruxelles — registre public (busibee.be), non mentionnée sur op.be"
+  ],
+  "a_verifier": [],
+  "points_ouverts": [
+    "Pas de version blanche du logo sur op.be : en-tête blanc et pied de page à filets, comme le site",
+    "OP Wallonie : rattachement des bureaux de Nivelles, Louvain-la-Neuve et Namur à cette société à confirmer ; coordonnées du bureau à passer dans le bloc « syndic » du PV (liste dans « bureaux »)"
+  ]
 }

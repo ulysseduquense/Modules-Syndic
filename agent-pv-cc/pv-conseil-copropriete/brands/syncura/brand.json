@@ -5,39 +5,83 @@
     "syncura services"
   ],
   "nom_affiche": "Syncura",
-  "statut_charte": "a_completer",
+  "statut_charte": "complete",
   "langue": "nl",
   "organe": "raad van mede-eigendom",
   "raison_sociale": "Syncura (VM Vastgoedbeheer BV)",
   "bce": "0437.396.556",
-  "ipi": "508.167",
+  "ipi": null,
   "adresse": "Poortakkerstraat 91/501, 9051 Gent",
   "telephone": "+32 9 280 80 34",
-  "email": null,
+  "email": "gent@syncura.be",
   "site": "syncura.be",
   "signature": "managed with care",
-  "couleurs": null,
-  "police_titres": null,
-  "police_texte": null,
+  "couleurs": {
+    "primaire": "#211747",
+    "secondaire": "#CF4861",
+    "accent": "#CF4861",
+    "texte": "#211747",
+    "fond_clair": "#F6F5F7",
+    "filet": "#EBE6FF",
+    "entete_tableau": "#211747",
+    "texte_entete_tableau": "#FFFFFF"
+  },
+  "police_titres": "Hanken Grotesk ExtraBold",
+  "police_texte": "Hanken Grotesk",
   "titres_majuscules": false,
-  "logo": null,
+  "logo": "logo.png",
   "logo_largeur_cm": 4.0,
   "logo_entete": null,
   "logo_entete_largeur_cm": 2.4,
-  "logo_sur_fond": null,
-  "style": {},
-  "mentions_pied": [],
-  "sources": [
-    "www.syncura.be et la signature « managed with care » : en-tête d'un document notarial (immo.notaire.be)",
-    "Groupe VMRE : filiales Syncura et Easy Syndic (lalibre.be)",
-    "Page contact de syncura.be (via moteur de recherche, 05/11/2026) : Syncura (VM Vastgoedbeheer BV), BIV 508167, RPR Gent 0437.396.556 ; Poortakkerstraat 91/501, 9051 Gent ; +32 9 280 80 34",
-    "Langue des PV : néerlandais (confirmé par Ulysse le 05/11/2026)"
-  ],
-  "a_verifier": [
-    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
-    "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "E-mail général"
+  "logo_sur_fond": "logo-blanc.png",
+  "style": {
+    "entete": "bandeau",
+    "entete_hauteur_cm": 3.0,
+    "entete_pastille": {
+      "hauteur_cm": 1.55,
+      "largeur_cm": 17.0,
+      "logo_hauteur_cm": 0.95
+    },
+    "entete_degrade": {
+      "angle": 116.56,
+      "arrets": [
+        [
+          "#211747",
+          0.6272
+        ],
+        [
+          "#985192",
+          1.1711
+        ]
+      ]
+    },
+    "pied": "bandeau",
+    "pied_mentions": "dans_bandeau",
+    "encadre": "bordure_gauche",
+    "tableau_entete": "plein",
+    "surtitre": true,
+    "titres_gras": false,
+    "titre_gras": false
+  },
+  "mentions_pied": [
+    "Guillaume Pinte (BIV 508167) · BA en borgstelling: NV AXA Belgium, polisnr. 730.390.160",
+    "In geval van nood: +32 9 280 80 30"
   ],
   "libelle_ipi": "BIV",
-  "libelle_bce": "KBO"
+  "libelle_bce": "RPR Gent",
+  "logo_sur_fond_largeur_cm": 4.0,
+  "interligne": 1.0,
+  "sources": [
+    "Charte relevée sur https://www.syncura.be/ le 05/11/2026 (capture Playwright : accueil, pied de page, /contact/, /kantoren/gent/, kit Elementor post-6.css)",
+    "Logo couleur : https://www.syncura.be/wp-content/uploads/2026/05/Syncura-Logo-RGB.webp (1 808 px, fond blanc d'origine conservé) ; logo blanc : https://www.syncura.be/wp-content/uploads/2026/06/syncura-logo-white.svg (pied de page) rendu en PNG transparent 2 400 px",
+    "Couleurs (kit Elementor) : --e-global-color-text #211747 (titres, texte, pied de page) → primaire ; --e-global-color-accent #CF4861 (boutons « Offerte aanvragen ») → secondaire et accent ; #F6F5F7 (fond) ; #EBE6FF (lavande) → filets ; #985192 (dégradé)",
+    "Dégradé de l'en-tête du site : linear-gradient(116.56deg, #211747 62.72%, #985192 117.11%) ; header = pastille blanche arrondie contenant le logo couleur, posée sur ce fond",
+    "Police : Hanken Grotesk (titres 700–800, texte 300–400) — Google Fonts, licence OFL",
+    "Pied de page du site : fond #211747, logo blanc, mentions en blanc",
+    "Mentions : pied de page et page contact (05/11/2026) — Syncura (VM Vastgoedbeheer BV), Guillaume Pinte (BIV 508167), RPR Gent 0437.396.556, BA en borgstelling NV AXA Belgium polisnr. 730.390.160, noodnummer +32 9 280 80 30 ; kantoor Gent (/kantoren/gent/) : Poortakkerstraat 91/501, 9051 Gent, +32 9 280 80 34, gent@syncura.be",
+    "Groupe VMRE : filiales Syncura et Easy Syndic (lalibre.be)",
+    "Langue des PV : néerlandais (confirmé par Ulysse le 05/11/2026)"
+  ],
+  "a_verifier": [],
+  "points_ouverts": []
 }

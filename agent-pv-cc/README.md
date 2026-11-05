@@ -15,6 +15,7 @@ agent-pv-cc/
     scripts/capture_site.js    capture la charte d'un site (Playwright)
     scripts/brand_from_capture.py  intègre une capture dans brands/<id>/
     scripts/extract_brand.py   relevé simplifié sans navigateur
+    scripts/google_fonts.py    polices Google Fonts (libres) en TTF pour une marque
     assets/exemple-pv.json     exemple complet
   build.sh                     fabrique dist/pv-conseil-copropriete.zip
 ```
@@ -32,20 +33,21 @@ dans le chat (« ajoute M. X excusé », « reformule le point 3 »).
 
 ## Marques
 
-| marque | site | état |
+| marque | site | état (relevé le 05/11/2026) |
 |---|---|---|
 | Emeria | emeriagroup.com | charte complète : logos officiels, bandeau de pied navy à coin arrondi |
-| Office des Propriétaires (OP Bruxelles, OP Wallonie) | op.be | coordonnées et IPI renseignés, couleurs connues ; logo et éléments graphiques à capturer |
-| Syncura (PV en néerlandais) | syncura.be | coordonnées et BIV renseignés ; charte à capturer |
-| Easy Syndic | easysyndic.be | coordonnées renseignées ; charte à capturer |
-| Gestea | gestea.be | coordonnées et IPI renseignés ; charte à capturer |
-| Agigest (Luxembourg, « conseil syndical ») | agigest.lu | coordonnées renseignées ; charte à capturer |
-| Noblué | syndic-noblue.be | coordonnées et IPI renseignés ; charte à capturer |
-| DR Syndic | drsyndic.be | coordonnées et IPI renseignés ; charte à capturer |
+| Office des Propriétaires (OP Bruxelles, OP Wallonie) | op.be | charte complète : emblème rouge, Inter + Source Serif 4, pied à filets |
+| Syncura (PV en néerlandais) | syncura.be | charte complète : bandeau en dégradé avec pastille et logo couleur, Hanken Grotesk |
+| Easy Syndic | easysyndic.be | charte complète : logo SVG, Hanken Grotesk Black, filet orange, pied bleu nuit |
+| Gestea | gestea.be | charte complète (logo 300 px seulement sur le site) |
+| Agigest (Luxembourg, « conseil syndical ») | agigest.lu | charte complète : Cormorant Garamond, menthe, pied gris ; cadre légal : `references/luxembourg.md` |
+| Noblué | syndic-noblue.be | charte complète : bandeau bleu nuit, logo blanc et jaune |
+| DR Syndic | drsyndic.be | charte complète (logo 400 px, blanc uniquement) |
 
 Le générateur reproduit la charte de chaque marque : logo sur fond clair, logo blanc
 sur bandeau de couleur à fond perdu (en-tête et/ou pied de page), couleurs, police de la
-marque (embarquée pour le PDF), style des titres, des encadrés et des tableaux. Tant
+marque (embarquée dans le .docx et le PDF quand elle est libre), style des titres, des
+encadrés et des tableaux, dégradés et pastille d'en-tête, mentions dans le bandeau de pied. Tant
 qu'une charte n'est pas capturée, le PV sort en gris neutre avec le nom de la marque
 en texte, et l'agent le signale.
 
@@ -68,9 +70,10 @@ Importer `dist/pv-conseil-copropriete.zip` comme skill dans Claude (paramètres 
 l'organisation ou du compte, rubrique Skills). En local avec Claude Code : copier le
 dossier `pv-conseil-copropriete/` dans `~/.claude/skills/`.
 
-Dépendances d'exécution : Python 3 + `python-docx` + Pillow ; LibreOffice pour le PDF
-et `pdftoppm` pour l'aperçu de contrôle (sans eux, seul le .docx est produit). Capture
-des chartes : Node + Playwright (Chromium), `fonttools` et `brotli` pour les polices.
+Dépendances d'exécution : Python 3 + `python-docx` + Pillow + `fonttools` (embarquement
+des polices) ; LibreOffice pour le PDF et `pdftoppm` pour l'aperçu de contrôle (sans
+eux, seul le .docx est produit). Capture des chartes : Node + Playwright (Chromium),
+`fonttools` et `brotli` pour les polices.
 
 ## Test rapide
 

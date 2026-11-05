@@ -6,7 +6,7 @@
     "easysyndic"
   ],
   "nom_affiche": "Easy Syndic",
-  "statut_charte": "a_completer",
+  "statut_charte": "complete",
   "raison_sociale": "Easy Syndic SRL",
   "bce": "0506.828.166",
   "ipi": null,
@@ -14,27 +14,52 @@
   "telephone": "+32 2 219 04 51",
   "email": "info@easysyndic.be",
   "site": "easysyndic.be",
-  "signature": null,
-  "couleurs": null,
-  "police_titres": null,
-  "police_texte": null,
+  "signature": "you live, we care",
+  "couleurs": {
+    "primaire": "#211746",
+    "secondaire": "#18A2AC",
+    "accent": "#FF832E",
+    "texte": "#211746",
+    "fond_clair": "#F5EBE4",
+    "entete_tableau": "#211746",
+    "texte_entete_tableau": "#FFFFFF"
+  },
+  "police_titres": "Hanken Grotesk Black",
+  "police_texte": "Hanken Grotesk",
   "titres_majuscules": false,
-  "logo": null,
-  "logo_largeur_cm": 4.0,
-  "logo_entete": null,
-  "logo_entete_largeur_cm": 2.4,
-  "logo_sur_fond": null,
-  "style": {},
-  "mentions_pied": [],
-  "sources": [
-    "Registre public des entreprises : EASY SYNDIC, BCE 0506.828.166, SRL (busibee.be)",
-    "Groupe VMRE (lalibre.be) ; activité au Luxembourg (paperjam.lu)",
-    "Site easysyndic.be (via moteur de recherche, 05/11/2026) : siège administratif Rue Vilain XIIII 53-55, 1000 Bruxelles, BE 0506.828.166 ; info@easysyndic.be ; +32 2 219 04 51 ; bureaux à Bruxelles, Liège, Namur, Gand, Anvers, Hasselt, Mons, Marche, Arlon, Luxembourg"
+  "logo": "logo.png",
+  "logo_largeur_cm": 4.6,
+  "logo_entete": "logo.png",
+  "logo_entete_largeur_cm": 2.8,
+  "logo_sur_fond": "logo-blanc.png",
+  "style": {
+    "entete": "blanc",
+    "pied": "bandeau",
+    "pied_mentions": "dans_bandeau",
+    "encadre": "bordure_gauche",
+    "tableau_entete": "plein",
+    "accent_titre": true,
+    "accent_titre_longueur_cm": 3.2,
+    "surtitre": true,
+    "titres_gras": false,
+    "titre_gras": false
+  },
+  "mentions_pied": [
+    "IPI : Guillaume Pinte 508167 · Luc Vander Meeren 200957 · Léandre Harmegnies 512354"
   ],
-  "a_verifier": [
-    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
-    "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "Numéro IPI (non relevé)",
-    "Coordonnées du bureau régional du gestionnaire : à passer dans le champ « syndic » du PV"
+  "libelle_bce": "BE",
+  "interligne": 1.0,
+  "sources": [
+    "Charte relevée sur https://easysyndic.be/ le 05/11/2026 (capture Playwright : accueil, pied de page, /contact/, feuille de style du thème easysyndic)",
+    "Logos : https://easysyndic.be/wp-content/themes/easysyndic/public/build/assets/logo-pOjo4QiA.svg (header) et logo-white-BkGgK2HP.svg (pied de page), rendus en PNG transparent 2 400 px",
+    "Couleurs (jetons CSS du thème) : --color-dark #211746 (titres, texte, pied de page) → primaire ; --color-primary #18A2AC (bouton « Contact », H3) → secondaire ; --color-secondary #FF832E (bouton « Offre gratuite », soulignement des titres) → accent ; --color-lightSecondary #F5EBE4 (carte du hero) → fond des encadrés ; --color-light #EEF4F5",
+    "Police : Hanken Grotesk (titres 900, texte 400) — Google Fonts, licence OFL",
+    "Éléments graphiques : header blanc, titres très gras avec soulignement orange, pied de page bleu nuit #211746 avec logo blanc et mentions en blanc",
+    "Mentions : pied de page (05/11/2026) — Siège administratif : Easy Syndic, Rue Vilain XIIII 53-55, 1000 Bruxelles, BE 0506.828.166 ; info@easysyndic.be ; + 32 2 219 04 51 ; agents IPI : Guillaume Pinte 508167, Luc Vander Meeren 200957, Léandre Harmegnies 512354",
+    "Registre public des entreprises : EASY SYNDIC, BCE 0506.828.166, SRL (busibee.be)"
+  ],
+  "a_verifier": [],
+  "points_ouverts": [
+    "Bureau du gestionnaire (Bruxelles, Liège, Namur, Gand, Anvers, Hasselt, Mons, Marche, Arlon, Luxembourg) : passer ses coordonnées dans le bloc « syndic » du PV"
   ]
 }

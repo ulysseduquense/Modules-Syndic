@@ -28,10 +28,13 @@ charte du syndic, prêt à relire et à signer : `.docx` (modifiable) + `.pdf`.
 | `scripts/capture_site.js` | capture la charte d'un site (logos, couleurs, polices, styles, captures d'écran) |
 | `scripts/brand_from_capture.py` | intègre une capture dans `brands/<id>/` (logos recadrés, polices TTF, style) |
 | `scripts/extract_brand.py` | relevé simplifié sans navigateur (HTML + CSS) |
-| `brands/<id>/` | charte de chaque marque : `brand.json`, logos, polices |
+| `scripts/google_fonts.py` | télécharge une police Google Fonts (libre) en TTF dans `brands/<id>/fonts/` |
+| `scripts/planche_charte.py` | planche de contrôle : capture du site à côté de la page 1 du PV |
+| `brands/<id>/` | charte de chaque marque : `brand.json`, logos, polices (embarquées dans le .docx) |
 | `references/redaction.md` | **style de rédaction** : passer des notes au PV, vocabulaire, pièges |
 | `references/redactie-nl.md` | rédaction en néerlandais (marques néerlandophones : Syncura) |
 | `references/structure-pv.md` | cadre légal belge du conseil de copropriété, plan type, signatures |
+| `references/luxembourg.md` | **Agigest** : conseil syndical et cadre légal luxembourgeois (ce qui change) |
 | `references/schema.md` | format du JSON lu par le générateur |
 | `references/marques.md` | marques disponibles, état de leur charte, ajout d'une marque |
 | `assets/exemple-pv.json` | exemple complet (6 points, tableaux, actions) |
@@ -49,7 +52,13 @@ l'immeuble déjà vu) ; sinon la demander en une ligne. Marques et alias :
 `syncura` ; Easy Syndic = `easy-syndic` ; Gestea = `gestea` ; Agigest = `agigest` ;
 Noblué = `noblue` ; DR Syndic = `dr-syndic` ; Emeria = `emeria`). Emeria par défaut si
 l'utilisateur le confirme. Agigest est luxembourgeoise : l'organe s'y appelle « conseil
-syndical » (géré par la marque).
+syndical » (géré par la marque) et le cadre légal diffère — lire `references/luxembourg.md`
+(entités `agigest-sud`, `agigest-est` pour les bureaux de Belvaux et d'Echternach).
+
+**Bureau du gestionnaire** : le pied de page porte les coordonnées du siège de la marque.
+Pour un gestionnaire d'un autre bureau (OP, Easy Syndic, Syncura), mettre son téléphone et
+son e-mail dans le bloc `syndic` du PV ; pour OP, les bureaux relevés sur le site sont dans
+`brands/op/brand.json > bureaux`.
 
 **Langue du PV** : celle de la marque (`langue` dans `brand.json`). Syncura → PV en
 **néerlandais**, même si les notes sont en français : lire `references/redactie-nl.md`
@@ -87,13 +96,14 @@ préside aussi la séance. Dans les phrases générées (fonction du représenta
 secrétariat, lieu), ne mettre que ce qui est dans les notes ou le contexte certain.
 
 Poser aussi une question si une note est **ambiguë sur le fond** (ex. « FR » = fonds de
-roulement ou fonds de réserve ? « ok devis X » = le conseil recommande ou le syndic a
+roulement ou fonds de réserve ? — au Luxembourg : avance de trésorerie ou fonds de travaux ? « ok devis X » = le conseil recommande ou le syndic a
 déjà commandé ?). Ne pas questionner la forme : c'est le travail de l'agent.
 
 ### 4. Rédiger
 
 Lire `references/redaction.md` (obligatoire ; en plus `references/redactie-nl.md` pour un
-PV en néerlandais) et `references/structure-pv.md`, puis écrire
+PV en néerlandais) et `references/structure-pv.md` (`references/luxembourg.md` pour
+Agigest), puis écrire
 le JSON du PV (`references/schema.md`, modèle `assets/exemple-pv.json`) :
 
 - un point de l'ordre du jour = un `point` ; regrouper sous un même point les notes
@@ -138,10 +148,13 @@ et regénérer le même fichier, sans repartir de zéro.
 
 - Fidélité aux notes : reformuler, structurer, corriger la langue — jamais ajouter un
   fait. Un doute → question ou `[À COMPLÉTER]`.
-- Le conseil de copropriété **contrôle et conseille** ; il ne « décide » que sur
-  délégation expresse de l'AG (à citer). Voir `references/structure-pv.md`.
+- Le conseil de copropriété (conseil syndical au Luxembourg) **contrôle et conseille** ;
+  il ne « décide » que sur délégation expresse de l'AG (à citer). Voir
+  `references/structure-pv.md` et `references/luxembourg.md`.
 - Données personnelles : un copropriétaire en défaut de paiement est désigné par son
   lot, pas par son nom ; aucune donnée de santé ou de vie privée dans le PV.
 - Charte : uniquement les couleurs, polices et logos de `brands/<id>/` ; ne pas
-  redessiner, recolorer ni déformer un logo ; pas de logo inventé.
+  redessiner, recolorer ni déformer un logo ; pas de logo inventé. Les `points_ouverts`
+  d'une marque (logo basse définition, police remplacée…) se signalent si l'utilisateur
+  interroge la charte, pas à chaque PV.
 - Format : A4 portrait, Word modifiable ; le PDF n'est qu'une copie de lecture.

@@ -15,6 +15,8 @@
  *   capture.json              synthèse : couleurs proposées, polices, logos, coordonnées repérées
  *
  * Le résultat sert à remplir brands/<id>/brand.json (voir references/marques.md).
+ * Attention : pour un logo PNG/JPG, le « -rendu.png » de 2000 px n'est qu'un agrandissement ; garder le fichier
+ * d'origine (logos/logo-N-zone.png) et chercher une version plus grande (srcset, URL sans paramètres de taille).
  */
 const fs = require("fs");
 const path = require("path");
@@ -31,21 +33,33 @@ fs.mkdirSync(path.join(OUT, "fonts"), { recursive: true });
 const COOKIE_TEXTS = /^(tout accepter|accepter( tout)?|j'accepte|accept( all)?|ok|alle accepteren|accepteren|akkoord|autoriser)$/i;
 
 async function dismissCookies(page) {
-  for (const frame of page.frames()) {
-    try {
-      const buttons = await frame.$$("button, a[role=button], [class*=accept], [id*=accept]");
-      for (const b of buttons) {
-        const t = ((await b.innerText().catch(() => "")) || "").trim();
-        if (COOKIE_TEXTS.test(t) && (await b.isVisible().catch(() => false))) {
-          await b.click({ timeout: 2000 }).catch(() => {});
-          await page.waitForTimeout(600);
-          return true;
-        }
-      }
-    } catch (e) { /* cadre inaccessible */ }
-  }
-  return false;
+  // Un seul aller-retour dans la page (rapide même si le site est lourd), budget de 5 s.
+  const click = async (frame) => frame.evaluate((src) => {
+    const re = new RegExp(src, "i");
+    for (const b of document.querySelectorAll("button, a[role=button], [class*=accept], [id*=accept]")) {
+      const r = b.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0 && re.test((b.innerText || "").trim())) { b.click(); return true; }
+    }
+    return false;
+  }, COOKIE_TEXTS.source);
+  const run = (async () => {
+    for (const frame of page.frames()) {
+      if (await click(frame).catch(() => false)) { await page.waitForTimeout(600); return true; }
+    }
+    return false;
+  })();
+  return Promise.race([run, new Promise((r) => setTimeout(() => r(false), 5000))]);
 }
+
+// Texte brut d'une page sans la rendre (repli quand le navigateur est bloqué par le site).
+async function pageText(context, url) {
+  const resp = await context.request.get(url, { timeout: 20000 });
+  return (await resp.text()).replace(/<(script|style)[\s\S]*?<\/\1>/gi, " ").replace(/<br\s*\/?>|<\/(p|div|li|h\d|tr)>/gi, "\n")
+    .replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&#039;|&rsquo;/g, "'")
+    .replace(/[ \t]+/g, " ").replace(/\n\s*\n+/g, "\n");
+}
+
+const withTimeout = (p, ms, label) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error(`${label} : délai dépassé`)), ms))]);
 
 async function open(page, url) {
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
@@ -78,12 +92,25 @@ function extOf(url, contentType) {
   const result = { url: page.url(), titre: await page.title() };
 
   // --- captures d'écran
-  await page.screenshot({ path: path.join(OUT, "accueil-haut.png") });
+  // Certains sites bloquent la capture Playwright (polices qui ne finissent jamais de charger) :
+  // délai court, puis capture par le protocole DevTools, qui n'attend pas les polices.
+  const cdp = await context.newCDPSession(page);
+  const shot = async (file, opts = {}) => {
+    try { await page.screenshot({ path: path.join(OUT, file), timeout: 20000, ...opts }); return; } catch (e) { /* repli */ }
+    const clip = opts.clip || (opts.fullPage ? { x: 0, y: 0, width: 1440, height: await page.evaluate(() => Math.min(document.documentElement.scrollHeight, 9000)) } : null);
+    const r = await cdp.send("Page.captureScreenshot", clip ? { format: "png", clip: { ...clip, scale: 1 }, captureBeyondViewport: true } : { format: "png" });
+    fs.writeFileSync(path.join(OUT, file), Buffer.from(r.data, "base64"));
+  };
+  await shot("accueil-haut.png");
+  // Défilement complet pour déclencher les images chargées à la demande, puis page entière.
   const fullH = await page.evaluate(() => document.documentElement.scrollHeight);
-  await page.screenshot({ path: path.join(OUT, "accueil-complet.png"), clip: { x: 0, y: 0, width: 1440, height: Math.min(fullH, 6000) } });
+  for (let y = 0; y < fullH; y += 700) { await page.evaluate((v) => window.scrollTo(0, v), y); await page.waitForTimeout(120); }
+  await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(600);
+  await shot("accueil-complet.png", { fullPage: true });
   const footer = await page.$("footer, [class*=footer], #footer");
-  if (footer) await footer.screenshot({ path: path.join(OUT, "pied.png") }).catch(() => {});
+  if (footer) await footer.screenshot({ path: path.join(OUT, "pied.png"), timeout: 15000 }).catch(() => {});
 
+  console.error("· styles");
   // --- styles calculés des éléments clés
   result.styles = await page.evaluate(() => {
     const props = ["color", "backgroundColor", "backgroundImage", "fontFamily", "fontSize", "fontWeight",
@@ -148,6 +175,7 @@ function extOf(url, contentType) {
     return { fonds: fond, textes: texte, bordures: bord };
   });
 
+  console.error("· logos");
   // --- logos
   const candidates = await page.evaluate(() => {
     const hasLogo = (e) => {
@@ -181,7 +209,7 @@ function extOf(url, contentType) {
       fs.writeFileSync(path.join(OUT, "logos", `${base}.svg`), svg); entry.fichiers.push(`logos/${base}.svg`);
     } else if (c.src && !c.src.startsWith("data:")) {
       try {
-        const resp = await context.request.get(c.src);
+        const resp = await context.request.get(c.src, { timeout: 15000 });
         const ext = extOf(c.src, resp.headers()["content-type"]);
         fs.writeFileSync(path.join(OUT, "logos", `${base}.${ext}`), await resp.body()); entry.fichiers.push(`logos/${base}.${ext}`);
       } catch (e) { entry.erreur = String(e.message || e); }
@@ -195,37 +223,40 @@ function extOf(url, contentType) {
         ? c.svg.replace(/<svg([^>]*)>/, (m, a) => `<svg${a.replace(/\s(width|height)="[^"]*"/g, "")} width="${width}" height="${height}">`)
         : `<img src="${src}" style="width:${width}px;height:${height}px;object-fit:contain">`;
       await hd.setViewportSize({ width, height });
-      await hd.setContent(`<html><body style="margin:0;background:transparent">${inner}</body></html>`, { waitUntil: "networkidle" });
-      await hd.screenshot({ path: path.join(OUT, "logos", `${base}-rendu.png`), omitBackground: true, clip: { x: 0, y: 0, width, height } });
+      await hd.setContent(`<html><body style="margin:0;background:transparent">${inner}</body></html>`, { waitUntil: "load", timeout: 20000 });
+      await hd.screenshot({ path: path.join(OUT, "logos", `${base}-rendu.png`), omitBackground: true, clip: { x: 0, y: 0, width, height }, timeout: 20000 });
       entry.fichiers.push(`logos/${base}-rendu.png`); await hd.close();
     } catch (e) { entry.erreur_rendu = String(e.message || e); }
     // Capture du logo dans son contexte (montre la version claire/foncée utilisée).
     const el = await page.$(`[data-capture-logo="${c.n}"]`);
-    if (el) { await el.screenshot({ path: path.join(OUT, "logos", `${base}-contexte.png`) }).catch(() => {}); }
+    if (el) { await el.screenshot({ path: path.join(OUT, "logos", `${base}-contexte.png`), timeout: 15000 }).catch(() => {}); }
     result.logos.push(entry);
   }
+  console.error("· icônes");
   // Favicon / apple-touch-icon / og:image
   const icons = await page.evaluate(() => [...document.querySelectorAll("link[rel*=icon], meta[property='og:image']")]
     .map((e) => e.href || e.content).filter(Boolean).slice(0, 4));
   result.icones = [];
   for (const [k, u] of icons.entries()) {
     try {
-      const resp = await context.request.get(u);
+      const resp = await context.request.get(u, { timeout: 15000 });
       const f = `logos/icone-${k + 1}.${extOf(u, resp.headers()["content-type"])}`;
       fs.writeFileSync(path.join(OUT, f), await resp.body()); result.icones.push({ source: u, fichier: f });
     } catch (e) { /* ignore */ }
   }
 
+  console.error("· polices");
   // --- polices : fichiers chargés
   result.polices_fichiers = [];
   for (const u of fontUrls) {
     try {
-      const resp = await context.request.get(u);
+      const resp = await context.request.get(u, { timeout: 15000 });
       const name = decodeURIComponent(u.split("?")[0].split("/").pop()).replace(/[^\w.-]/g, "_");
       fs.writeFileSync(path.join(OUT, "fonts", name), await resp.body()); result.polices_fichiers.push({ source: u, fichier: `fonts/${name}` });
     } catch (e) { /* ignore */ }
   }
 
+  console.error("· mentions");
   // --- textes : pied de page, contact, mentions légales
   let mentions = `# Pied de page — ${result.url}\n` + (await page.evaluate(() => {
     const f = document.querySelector("footer, [class*=footer], #footer"); return f ? f.innerText : "";
@@ -233,10 +264,17 @@ function extOf(url, contentType) {
   for (const [label, u] of [["Contact", URL_CONTACT], ["Mentions légales", URL_LEGAL]]) {
     if (!u) continue;
     try {
-      await open(page, u);
-      if (label === "Contact") await page.screenshot({ path: path.join(OUT, "contact.png") });
-      mentions += `\n# ${label} — ${page.url()}\n` + (await page.evaluate(() => (document.querySelector("main") || document.body).innerText)) + "\n";
-    } catch (e) { mentions += `\n# ${label} — échec : ${e.message}\n`; }
+      const txt = await withTimeout((async () => {
+        await open(page, u);
+        if (label === "Contact") await shot("contact.png");
+        return page.evaluate(() => (document.querySelector("main") || document.body).innerText);
+      })(), 60000, label);
+      mentions += `\n# ${label} — ${page.url()}\n` + txt + "\n";
+    } catch (e) {
+      // Page bloquée dans le navigateur : texte relu directement (HTML sans rendu).
+      try { mentions += `\n# ${label} — ${u} (texte brut)\n` + (await pageText(context, u)) + "\n"; }
+      catch (e2) { mentions += `\n# ${label} — échec : ${e.message}\n`; }
+    }
   }
   fs.writeFileSync(path.join(OUT, "mentions.txt"), mentions);
   const flat = mentions.replace(/\s+/g, " ");
@@ -247,6 +285,7 @@ function extOf(url, contentType) {
     telephones: [...new Set(flat.match(/(?:\+32\s?|0)\d{1,3}[\s./]?\d{2,3}[\s./]?\d{2}[\s./]?\d{2,3}/g) || [])].slice(0, 6),
   };
 
+  console.error("· synthèse");
   // --- synthèse couleurs proposées
   const isBrand = (h) => {
     const [r, g, b] = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);

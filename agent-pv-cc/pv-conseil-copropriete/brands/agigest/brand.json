@@ -5,37 +5,95 @@
     "agigest sa"
   ],
   "nom_affiche": "Agigest",
-  "statut_charte": "a_completer",
-  "raison_sociale": "Agigest S.A.",
+  "statut_charte": "complete",
+  "raison_sociale": "AGIGEST S.A.",
   "bce": null,
   "ipi": null,
   "adresse": "55, rue de Luxembourg, L-8077 Bertrange",
-  "telephone": "+352 203 047 00",
+  "telephone": "(+352) 203 047 00",
   "email": "info@agigest.lu",
   "site": "agigest.lu",
-  "signature": null,
-  "couleurs": null,
-  "police_titres": null,
-  "police_texte": null,
+  "signature": "Syndic de copropriété & gestion immobilière",
+  "couleurs": {
+    "primaire": "#243853",
+    "secondaire": "#0059A6",
+    "accent": "#77E8CA",
+    "texte": "#243853",
+    "texte_secondaire": "#3B4C66",
+    "fond_clair": "#E6E9EB",
+    "filet": "#D0D0D0",
+    "entete_tableau": "#0059A6",
+    "texte_entete_tableau": "#FFFFFF",
+    "texte_pied": "#243853",
+    "alerte": "#EB6209"
+  },
+  "police_titres": "Cormorant Garamond SemiBold",
+  "police_texte": "Arial",
   "titres_majuscules": false,
-  "logo": null,
-  "logo_largeur_cm": 4.0,
-  "logo_entete": null,
-  "logo_entete_largeur_cm": 2.4,
+  "logo": "logo.png",
+  "logo_largeur_cm": 4.6,
+  "logo_entete": "logo.png",
+  "logo_entete_largeur_cm": 2.8,
   "logo_sur_fond": null,
-  "style": {},
+  "style": {
+    "entete": "blanc",
+    "pied": "bandeau",
+    "pied_couleur": "filet",
+    "pied_mentions": "dans_bandeau",
+    "pied_logo": false,
+    "encadre": "bordure_gauche",
+    "tableau_entete": "plein",
+    "accent_titre": true,
+    "accent_titre_longueur_cm": 3.6,
+    "surtitre": true,
+    "titre_gras": false,
+    "titres_gras": false,
+    "titres_echelle": 1.25,
+    "surtitre_police": "texte"
+  },
   "mentions_pied": [
-    "RCS Luxembourg B87094 · TVA LU19153507"
+    "TVA LU 19153507 · RCS Luxembourg B87094"
   ],
+  "organe": "conseil syndical",
+  "police_texte_site": "Avenir LT (licence commerciale) — remplacée par Arial",
+  "entites": {
+    "agigest-sud": {
+      "raison_sociale": "AGIGEST S.A. Sud",
+      "adresse": "6, Boulevard des Lumières, L-4369 Belvaux",
+      "telephone": "(+352) 203 048 00",
+      "email": "info-sud@agigest.lu"
+    },
+    "agigest-est": {
+      "raison_sociale": "AGIGEST S.A. Est",
+      "adresse": "10, rue du Pont, L-6471 Echternach",
+      "telephone": "(+352) 203 049 00",
+      "email": "info-est@agigest.lu"
+    }
+  },
+  "libelles": {
+    "prefixe_acp": "Copropriété ",
+    "prefixes_acp": [
+      "copropriete",
+      "residence",
+      "syndicat",
+      "immeuble"
+    ],
+    "manque_acp": "[À COMPLÉTER : nom de la copropriété]",
+    "bce": "N°"
+  },
   "sources": [
-    "Annuaire Paperjam : Agigest SA, 55 rue de Luxembourg, L-8077 Bertrange, RCS B87094, TVA LU19153507 ; domaine e-mail agigest.lu",
-    "Site agigest.lu (via moteur de recherche, 05/11/2026) : AGIGEST S.A., 55 rue de Luxembourg, L-8077 Bertrange ; (+352) 203 047 00 ; info@agigest.lu ; le site emploie le terme « conseil syndical »"
+    "Charte relevée sur https://www.agigest.lu/ le 05/11/2026 (capture Playwright : accueil, pied de page, /contact, /syndic, politique de confidentialité)",
+    "Logo : fichier d'origine du header https://static.wixstatic.com/media/d3af29_0657cd820ffe4f228f51d45a768888ba~mv2.png (1 015 px, transparent) ; aucune version blanche publiée",
+    "Couleurs (styles calculés et fonds) : titres #243853 → primaire ; bleu du hero #0059A6 → secondaire et en-têtes de tableau ; vert menthe #77E8CA (barres sous le hero, liens) → accent ; pied de page gris #D0D0D0 ; bouton « Devis » orange #EB6209",
+    "Polices du site : Cormorant Garamond SemiBold (titres, Google Fonts, licence OFL) ; Avenir LT 35 Light / 85 Heavy (texte, licence commerciale) remplacée par Arial",
+    "Éléments graphiques : header blanc, grands titres serif, barres menthe, pied de page gris clair avec adresses en texte bleu nuit et sans logo",
+    "Mentions : pied de page (05/11/2026) — AGIGEST S.A., 55, rue de Luxembourg, L-8077 Bertrange, T. (+352) 203 047 00, info@agigest.lu ; AGIGEST S.A. Sud (Belvaux) et Est (Echternach) ; politique de confidentialité : numéro LU 19.153.507 ; le site emploie « conseil syndical »",
+    "RCS Luxembourg B87094 : annuaire Paperjam (non affiché sur agigest.lu)"
   ],
-  "a_verifier": [
-    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
-    "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "Cadre légal luxembourgeois (loi du 16 mai 1975) : relire references/structure-pv.md, écrit pour le droit belge",
-    "Bureaux Sud et Est (adresses différentes selon les pages)"
-  ],
-  "organe": "conseil syndical"
+  "a_verifier": [],
+  "points_ouverts": [
+    "Cadre légal luxembourgeois : references/luxembourg.md",
+    "RCS B87094 relevé dans l'annuaire Paperjam (non affiché sur agigest.lu)",
+    "Police de texte du site (Avenir LT) non redistribuable : Arial dans le PV"
+  ]
 }

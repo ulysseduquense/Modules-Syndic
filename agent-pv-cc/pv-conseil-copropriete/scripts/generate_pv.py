@@ -80,14 +80,28 @@ STYLE_DEFAUT = {
     "entete": "blanc",              # blanc | bandeau (bandeau de couleur à fond perdu en haut de la page 1)
     "entete_couleur": "primaire",
     "entete_hauteur_cm": 2.8,
+    "entete_coins_arrondis": "",    # ex. "bl,br" : coins inférieurs arrondis (carte du header d'un site)
+    "entete_degrade": None,         # {"angle": 116.56, "arrets": [["#211747", 0.63], ["#985192", 1.17]]} (CSS)
+    "entete_pastille": False,       # pastille blanche arrondie dans le bandeau, logo couleur dedans
     "pied": "filet",                # filet | bandeau (bandeau de couleur à fond perdu en bas de chaque page)
     "pied_couleur": "primaire",
     "pied_hauteur_cm": 1.3,
     "pied_coins_arrondis": "",      # ex. "tr" : coin supérieur droit arrondi (signature Emeria)
+    "pied_degrade": None,           # même format que entete_degrade
+    "pied_mentions": "dessus",      # dessus (mentions au-dessus du bandeau) | dans_bandeau (texte clair dans le bandeau)
+    "pied_logo": True,              # logo blanc dans le bandeau de pied
     "encadre": "bordure_gauche",    # bordure_gauche | fond_plein | contour
     "tableau_entete": "plein",      # plein | souligne
-    "accent_titre": False,          # petit filet de couleur sous le titre du document
+    "accent_titre": False,          # petit filet de couleur (accent) sous le titre du document
+    "accent_titre_longueur_cm": 2.2,
     "surtitre": True,               # « PROCÈS-VERBAL » au-dessus du titre
+    "surtitre_police": "titres",    # titres | texte (police du surtitre)
+    "titre_gras": True,            # titre du document en gras (false : graisse de la police, ex. Inter Regular)
+    "titres_gras": True,            # titres de section en gras (false si police_titres est déjà une graisse forte)
+    "titres_echelle": 1.0,          # facteur de taille des titres (polices à petit œil, ex. Cormorant : 1.15)
+    "titre_point": False,           # point final de couleur (accent) après le titre du document
+    "acp_accent": False,            # nom de l'ACP dans police_accent, couleur accent
+    "acp_accent_italique": True,
 }
 PLACEHOLDER_RE = re.compile(r"\[(?:(?:À|A) COMPL[ÉE]TER|AAN TE VULLEN)[^\]]*\]", re.IGNORECASE)
 
@@ -247,21 +261,35 @@ def brand_palette(brand):
         "primaire": p,
         "secondaire": s,
         "texte": src.get("texte", "#1A1A1A"),
-        "texte_secondaire": src.get("texte_secondaire", "#4D4D4D"),
+        # Texte secondaire absent de la charte : teinte éclaircie du texte (pas une couleur inventée).
+        "texte_secondaire": src.get("texte_secondaire", mix(src.get("texte", "#1A1A1A"), 0.28)),
         "fond_clair": src.get("fond_clair", mix(p, 0.93)),
         "filet": src.get("filet", mix(p, 0.78)),
         "entete_tableau": src.get("entete_tableau", p),
         "texte_entete_tableau": src.get("texte_entete_tableau", "#FFFFFF"),
         "alerte": src.get("alerte", s),
+        # accent : filets décoratifs (sous le titre, bord des encadrés, point final) ; défaut = secondaire.
+        "accent": src.get("accent", s),
+        # texte_pied : mentions et numéro de page posés sur le bandeau de pied (défaut blanc).
+        "texte_pied": src.get("texte_pied", "#FFFFFF"),
     }
     return pal, False
+
+
+def has_logo(brand):
+    """Vrai si la marque a un logo utilisable : logo fond clair, ou logo blanc quand l'en-tête est un bandeau."""
+    d = brand["_dir"]
+    if brand.get("logo") and (d / brand["logo"]).exists():
+        return True
+    st = brand.get("style") or {}
+    return st.get("entete") == "bandeau" and bool(brand.get("logo_sur_fond")) and (d / brand["logo_sur_fond"]).exists()
 
 
 def list_brands():
     brands = load_brands()
     etat = {"complete": "charte complète", "partielle": "charte partielle", "a_completer": "charte à compléter"}
     for b in brands.values():
-        logo = "logo ✓" if b.get("logo") and (b["_dir"] / b["logo"]).exists() else "pas de logo"
+        logo = "logo ✓" if has_logo(b) else "pas de logo"
         print(f"- {b['id']:<10} {b['nom_affiche']:<12} {etat.get(b.get('statut_charte'), b.get('statut_charte'))} · {logo}")
         for v in b.get("a_verifier", []):
             print(f"      à vérifier : {v}")
@@ -438,23 +466,146 @@ def add_field(paragraph, instr, font, size, color):
     r5._element.append(fld("end"))
 
 
-def band_png(color_hex, w_cm, h_cm, corners="", radius_cm=0.0, dpi=200):
-    """Rectangle plein (PNG) aux couleurs de la marque, coins arrondis optionnels (tl, tr, br, bl)."""
+def gradient_image(w, h, degrade):
+    """Dégradé linéaire calculé comme en CSS : {"angle": degrés, "arrets": [[hex, position 0-1+], …]}."""
+    import math
+    from PIL import Image
+    ang = math.radians(float(degrade.get("angle", 90)))
+    stops = sorted(((float(p), tuple(int(c.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4)))
+                    for c, p in degrade["arrets"]), key=lambda x: x[0])
+    dx, dy = math.sin(ang), -math.cos(ang)          # 0° = vers le haut, 90° = vers la droite
+    length = abs(w * dx) + abs(h * dy)              # longueur de la ligne de dégradé (spécification CSS)
+    cx, cy = w / 2, h / 2
+    # Calcul par colonne/ligne échantillonné puis agrandi : rapide et suffisant pour un aplat de bandeau.
+    sw, sh = max(2, w // 4), max(2, h // 4)
+    small = Image.new("RGB", (sw, sh))
+    sp = small.load()
+    for y in range(sh):
+        for x in range(sw):
+            X, Y = (x + 0.5) * w / sw - cx, (y + 0.5) * h / sh - cy
+            t = 0.5 + (X * dx + Y * dy) / length
+            if t <= stops[0][0]:
+                col = stops[0][1]
+            elif t >= stops[-1][0]:
+                col = stops[-1][1]
+            else:
+                for (p0, c0), (p1, c1) in zip(stops, stops[1:]):
+                    if p0 <= t <= p1:
+                        k = (t - p0) / (p1 - p0) if p1 > p0 else 0
+                        col = tuple(round(a + (b - a) * k) for a, b in zip(c0, c1))
+                        break
+            sp[x, y] = col
+    return small.resize((w, h), Image.BILINEAR)
+
+
+def band_png(color_hex, w_cm, h_cm, corners="", radius_cm=0.0, dpi=200, degrade=None, pastille=None):
+    """Bandeau (PNG) aux couleurs de la marque : aplat ou dégradé CSS, coins arrondis optionnels (tl, tr, br, bl),
+    pastille blanche optionnelle contenant le logo couleur : pastille = {"logo": chemin, "x_cm", "w_cm", "h_cm",
+    "logo_h_cm"}."""
     import tempfile
     from PIL import Image, ImageDraw
     w, h = round(w_cm / 2.54 * dpi), round(h_cm / 2.54 * dpi)
     rgb = tuple(int(color_hex.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4)) + (255,)
-    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    d = ImageDraw.Draw(img)
+    fill = gradient_image(w, h, degrade).convert("RGBA") if degrade else Image.new("RGBA", (w, h), rgb)
+    mask = Image.new("L", (w, h), 0)
+    d = ImageDraw.Draw(mask)
     r = round(radius_cm / 2.54 * dpi)
     if corners and r:
-        d.rounded_rectangle([0, 0, w - 1, h - 1], radius=r, fill=rgb,
+        d.rounded_rectangle([0, 0, w - 1, h - 1], radius=r, fill=255,
                             corners=tuple(c in corners for c in ("tl", "tr", "br", "bl")))
     else:
-        d.rectangle([0, 0, w, h], fill=rgb)
+        d.rectangle([0, 0, w, h], fill=255)
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    img.paste(fill, (0, 0), mask)
+    if pastille:
+        px_cm = dpi / 2.54
+        pw, ph = round(pastille["w_cm"] * px_cm), round(pastille["h_cm"] * px_cm)
+        x0, y0 = round(pastille["x_cm"] * px_cm), (h - ph) // 2
+        ImageDraw.Draw(img).rounded_rectangle([x0, y0, x0 + pw, y0 + ph], radius=ph // 2, fill=(255, 255, 255, 255))
+        logo = Image.open(pastille["logo"]).convert("RGBA")
+        lh = round(pastille["logo_h_cm"] * px_cm)
+        lw = round(lh * logo.width / logo.height)
+        logo = logo.resize((lw, lh), Image.LANCZOS)
+        img.alpha_composite(logo, (x0 + round(ph * 0.42), y0 + (ph - lh) // 2))
     f = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
     img.save(f.name)
     return f.name
+
+
+# --------------------------------------------------------------------------- polices embarquées dans le .docx
+
+FONT_SLOTS = {(False, False): "embedRegular", (True, False): "embedBold",
+              (False, True): "embedItalic", (True, True): "embedBoldItalic"}
+
+
+def embed_fonts(doc, brand):
+    """Embarque dans le .docx les polices TrueType de brands/<id>/fonts/ (licence libre, fsType 0) :
+    Word et LibreOffice affichent la police de la marque même si elle n'est pas installée sur le poste.
+    Format ECMA-376 §17.8 : police « obfusquée » (32 premiers octets XOR avec une clé GUID)."""
+    import uuid
+    from lxml import etree
+    from docx.opc.constants import RELATIONSHIP_TYPE as RT
+    from docx.opc.packuri import PackURI
+    from docx.opc.part import Part
+    try:
+        from fontTools.ttLib import TTFont
+    except ImportError:
+        return []
+    src = brand["_dir"] / "fonts"
+    if not src.is_dir():
+        return []
+    ft_part = next((p for p in doc.part.package.iter_parts() if p.partname == "/word/fontTable.xml"), None)
+    if ft_part is None:
+        return []
+    W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    root = etree.fromstring(ft_part.blob)
+    done = []
+    order = ["altName", "panose1", "charset", "family", "notTrueType", "pitch", "sig",
+             "embedRegular", "embedBold", "embedItalic", "embedBoldItalic"]
+    for i, f in enumerate(sorted(src.glob("*.ttf")), start=1):
+        try:
+            tt = TTFont(str(f))
+        except Exception:  # noqa: BLE001
+            continue
+        if "glyf" not in tt or (tt["OS/2"].fsType & 0x0002):  # TrueType seulement, embarquement autorisé
+            continue
+        fam = tt["name"].getDebugName(1)
+        sub = (tt["name"].getDebugName(2) or "Regular").lower()
+        slot = FONT_SLOTS[("bold" in sub, "italic" in sub)]
+        key = uuid.uuid4()
+        kb = key.bytes  # octets dans l'ordre d'affichage du GUID
+        k = bytes(reversed(kb))
+        data = bytearray(f.read_bytes())
+        for j in range(32):
+            data[j] ^= k[j % 16]
+        part = Part(PackURI(f"/word/fonts/font{i}.odttf"),
+                    "application/vnd.openxmlformats-officedocument.obfuscatedFont", bytes(data), doc.part.package)
+        rid = ft_part.relate_to(part, RT.FONT)
+        node = next((n for n in root.findall(f"{{{W}}}font") if n.get(f"{{{W}}}name") == fam), None)
+        if node is None:
+            node = etree.SubElement(root, f"{{{W}}}font")
+            node.set(f"{{{W}}}name", fam)
+        if node.find(f"{{{W}}}{slot}") is not None:
+            continue
+        el = etree.Element(f"{{{W}}}{slot}")
+        el.set(f"{{{R}}}id", rid)
+        el.set(f"{{{W}}}fontKey", "{" + str(key).upper() + "}")
+        node.append(el)
+        kids = sorted(node, key=lambda e: order.index(etree.QName(e).localname) if etree.QName(e).localname in order else 99)
+        node[:] = kids
+        done.append(f"{fam} {slot[5:]}")
+    if done:
+        ft_part._blob = etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone=True)
+        st = doc.settings.element
+        if st.find(qn("w:embedTrueTypeFonts")) is None:
+            el = OxmlElement("w:embedTrueTypeFonts")
+            anchor = st.find(qn("w:zoom"))
+            if anchor is not None:
+                anchor.addnext(el)
+            else:
+                st.insert(0, el)
+    return done
 
 
 def image_ratio(path):
@@ -538,15 +689,21 @@ class PV:
         self.pal, self.neutre = brand_palette(brand)
         self.font = brand.get("police_texte") or "Arial"
         self.font_t = brand.get("police_titres") or self.font
+        self.font_acc = brand.get("police_accent") or self.font_t
         self.caps = bool(brand.get("titres_majuscules"))
         self.lang = data.get("langue") or brand.get("langue") or "fr"
         if self.lang not in TXT:
             sys.exit(f"Langue « {self.lang} » non gérée (fr, nl)")
-        self.t = TXT[self.lang]
+        self.t = dict(TXT[self.lang])
+        # Libellés propres à la marque (ex. Agigest, Luxembourg : pas d'« ACP » ni de « BCE »).
+        self.t.update(brand.get("libelles") or {})
+        self.t["prefixes_acp"] = tuple(self.t["prefixes_acp"])
         self.organe = brand.get("organe") or self.t["organe"]
         st = dict(STYLE_DEFAUT)
         st.update(brand.get("style") or {})
         self.st = st
+        self.ech = float(st.get("titres_echelle") or 1.0)
+        self.polices_embarquees = []
         self.placeholders = set()
         self.doc = Document()
         self.acp = data.get("acp", {}) or {}
@@ -604,20 +761,23 @@ class PV:
         sec.header_distance = Cm(0.9)
         sec.footer_distance = Cm(0.8)
         if self.st["pied"] == "bandeau":
-            sec.bottom_margin = Cm(2.4 + self.st["pied_hauteur_cm"])
+            hb = self.pied_hauteur()
+            sec.bottom_margin = Cm((1.1 if self.st["pied_mentions"] == "dans_bandeau" else 2.4) + hb)
             sec.footer_distance = Cm(0.2)
         sec.different_first_page_header_footer = True
 
         st = self.doc.styles
         style_font(st["Normal"], self.font, 10, self.pal["texte"])
         st["Normal"].paragraph_format.space_after = Pt(4)
-        st["Normal"].paragraph_format.line_spacing = 1.12
+        # Interligne : 1,12 pour Arial ; à réduire pour les polices à grand interligne natif (Hanken Grotesk : 1,0).
+        st["Normal"].paragraph_format.line_spacing = float(self.b.get("interligne") or 1.12)
         for name, size, color, before, after in (
-            ("Heading 1", 12.5, self.pal["primaire"], 14, 5),
+            ("Heading 1", 12.5 * self.ech, self.pal["primaire"], 14, 5),
             ("Heading 2", 10.5, self.pal["secondaire"], 8, 3),
         ):
             s = st[name]
-            style_font(s, self.font_t, size, color, bold=True)
+            style_font(s, self.font_t if name == "Heading 1" else self.font, size, color,
+                       bold=bool(self.st["titres_gras"]) if name == "Heading 1" else True)
             s.paragraph_format.space_before = Pt(before)
             s.paragraph_format.space_after = Pt(after)
             s.paragraph_format.keep_with_next = True
@@ -655,8 +815,24 @@ class PV:
         no_space(p)
         if self.st["entete"] == "bandeau":
             hb = float(self.st["entete_hauteur_cm"])
-            anchor_picture(p, band_png(self.pal.get(self.st["entete_couleur"], self.pal["primaire"]), 21.0, hb), 21.0, hb, 0, 0)
-            logo_h = self.logo(p, "logo_sur_fond", "logo_sur_fond_largeur_cm", 18, blanc=True)
+            coul = self.pal.get(self.st["entete_couleur"], self.pal["primaire"])
+            coins = self.st["entete_coins_arrondis"] or ""
+            pastille = None
+            logo_couleur = self.b.get("logo")
+            if self.st["entete_pastille"] and logo_couleur and (self.b["_dir"] / logo_couleur).exists():
+                opt = self.st["entete_pastille"] if isinstance(self.st["entete_pastille"], dict) else {}
+                ph = float(opt.get("hauteur_cm", min(1.6, hb * 0.55)))
+                pastille = {"logo": self.b["_dir"] / logo_couleur, "x_cm": 2.0,
+                            "w_cm": float(opt.get("largeur_cm", 17.0)), "h_cm": ph,
+                            "logo_h_cm": float(opt.get("logo_hauteur_cm", ph * 0.56))}
+            img = band_png(coul, 21.0, hb, coins, float(self.st.get("entete_rayon_cm", 0.6)),
+                           dpi=300 if pastille else 200, degrade=self.st["entete_degrade"], pastille=pastille)
+            anchor_picture(p, img, 21.0, hb, 0, 0)
+            if pastille:
+                logo_h = 0.0
+                p.paragraph_format.line_spacing = Pt(1)
+            else:
+                logo_h = self.logo(p, "logo_sur_fond", "logo_sur_fond_largeur_cm", 18, blanc=True)
             spacer = h1.add_paragraph()
             no_space(spacer, 0, 0)
             spacer.paragraph_format.space_before = Pt(max(0.0, (hb + 0.5 - 0.9 - logo_h)) * 28.35)
@@ -702,7 +878,7 @@ class PV:
         no_space(p0)
         p0.paragraph_format.line_spacing = Pt(1)  # paragraphe porteur du bandeau : hauteur nulle
         coul = self.pal.get(self.st["entete_couleur"], self.pal["primaire"])
-        anchor_picture(p0, band_png(coul, 21.0, hb), 21.0, hb, 0, 0)
+        anchor_picture(p0, band_png(coul, 21.0, hb, degrade=self.st["entete_degrade"]), 21.0, hb, 0, 0)
         sec = self.doc.sections[0]
         t = h.add_table(1, 2, Cm(17))
         table_borders(t, None)
@@ -784,19 +960,24 @@ class PV:
 
     def footer_bandeau(self, footer):
         """Mentions légales au-dessus d'un bandeau de couleur à fond perdu (logo blanc + numéro de page)."""
-        hb = float(self.st["pied_hauteur_cm"])
+        hb = self.pied_hauteur()
+        dans = self.st["pied_mentions"] == "dans_bandeau"
+        clair = self.pal["texte_pied"]
         p0 = footer.paragraphs[0]
         no_space(p0)
         coul = self.pal.get(self.st["pied_couleur"], self.pal["primaire"])
-        anchor_picture(p0, band_png(coul, 21.0, hb, self.st["pied_coins_arrondis"], hb / 2), 21.0, hb, 0, 29.7 - hb)
-        for i, line in enumerate(self.footer_lines()):
-            p = footer.add_paragraph()
-            no_space(p, 0, 0)
-            r = p.add_run(line)
-            set_run_font(r, self.font, 7.5, bold=(i == 0), color=self.pal["texte_secondaire"])
+        anchor_picture(p0, band_png(coul, 21.0, hb, self.st["pied_coins_arrondis"], min(hb / 2, 0.65),
+                                    degrade=self.st["pied_degrade"]), 21.0, hb, 0, 29.7 - hb)
+        lines = self.footer_lines()
+        if not dans:
+            for i, line in enumerate(lines):
+                p = footer.add_paragraph()
+                no_space(p, 0, 0)
+                r = p.add_run(line)
+                set_run_font(r, self.font, 7.5, bold=(i == 0), color=self.pal["texte_secondaire"])
         t = footer.add_table(1, 2, Cm(17))
         table_borders(t, None)
-        table_widths(t, [12, 5])
+        table_widths(t, [13, 4] if dans else [12, 5])
         row = t.rows[0]
         trpr = row._tr.get_or_add_trPr()
         trh = OxmlElement("w:trHeight")
@@ -807,48 +988,90 @@ class PV:
         for c in (c0, c1):
             c.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
             cell_margins(c, 0, 0, 0, 0)
-        pl = c0.paragraphs[0]
-        no_space(pl)
-        f = self.b.get("logo_pied") or self.b.get("logo_sur_fond")
-        if f and (self.b["_dir"] / f).exists():
-            path = self.b["_dir"] / f
-            h = min(0.42, hb * 0.38)
-            pl.add_run().add_picture(str(path), height=Cm(h))
+        logo = None
+        if self.st["pied_logo"]:
+            f = self.b.get("logo_pied") or self.b.get("logo_sur_fond")
+            logo = self.b["_dir"] / f if f and (self.b["_dir"] / f).exists() else None
+        if dans:
+            # Mentions en texte clair dans le bandeau (comme le pied de page du site), logo et page à droite.
+            for i, line in enumerate(lines):
+                p = c0.paragraphs[0] if i == 0 else c0.add_paragraph()
+                no_space(p, 0, 0)
+                r = p.add_run(line)
+                set_run_font(r, self.font, 7, bold=(i == 0), color=clair)
+            pl = c1.paragraphs[0]
+            pl.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            no_space(pl, 0, 2)
+            if logo:
+                ratio = image_ratio(logo)
+                h = min(0.75, hb * 0.34, 3.2 * ratio)  # logo lisible, au plus 3,2 cm de large
+                pl.add_run().add_picture(str(logo), height=Cm(h))
+                pp = c1.add_paragraph()
+                no_space(pp, 3, 0)
+            else:
+                pp = pl
         else:
-            r = pl.add_run(self.b.get("nom_affiche", ""))
-            set_run_font(r, self.font_t, 10, bold=True, color="#FFFFFF")
-        pp = c1.paragraphs[0]
+            pl = c0.paragraphs[0]
+            no_space(pl)
+            if logo:
+                pl.add_run().add_picture(str(logo), height=Cm(min(0.42, hb * 0.38)))
+            elif self.st["pied_logo"]:
+                r = pl.add_run(self.b.get("nom_affiche", ""))
+                set_run_font(r, self.font_t, 10, bold=True, color=clair)
+            pp = c1.paragraphs[0]
         pp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        no_space(pp)
+        if not dans:
+            no_space(pp)
         for txt, fld in ((self.t["page"], None), (None, "PAGE"), (" / ", None), (None, "NUMPAGES")):
             if fld:
-                add_field(pp, fld, self.font, 8, "#FFFFFF")
+                add_field(pp, fld, self.font, 7.5 if dans else 8, clair)
             else:
                 r = pp.add_run(txt)
-                set_run_font(r, self.font, 8, color="#FFFFFF")
+                set_run_font(r, self.font, 7.5 if dans else 8, color=clair)
+
+    def pied_hauteur(self):
+        """Hauteur du bandeau de pied : celle de la charte, agrandie si les mentions y sont écrites."""
+        import math
+        hb = float(self.st["pied_hauteur_cm"])
+        if self.st["pied_mentions"] == "dans_bandeau":
+            # Lignes de 7 pt sur 13 cm : ~95 caractères par ligne ; une mention longue compte pour deux lignes.
+            n = sum(max(1, math.ceil(len(x) / 95)) for x in self.footer_lines())
+            hb = max(hb, 0.8 + 0.3 * n)
+        return hb
 
     # -- blocs
     def bloc_titre(self):
         if self.st["surtitre"]:
             p = self.para(before=6, after=2)
             r = p.add_run(self.t["surtitre"])
-            set_run_font(r, self.font_t, 9, bold=True, color=self.pal["secondaire"])
+            police = self.font if self.st.get("surtitre_police") == "texte" else self.font_t
+            set_run_font(r, police, 9, bold=True, color=self.pal["secondaire"])
             char_spacing(r, 40)
         type_reu = self.reu.get("intitule") or self.t["titre"].format(organe=self.organe)
         p = self.para(before=0 if self.st["surtitre"] else 6, after=6)
         r = p.add_run(self.titre(type_reu))
-        set_run_font(r, self.font_t, 19, bold=True, color=self.pal["primaire"])
+        set_run_font(r, self.font_t, 19 * self.ech, bold=bool(self.st["titre_gras"]), color=self.pal["primaire"])
+        if self.st["titre_point"]:
+            r = p.add_run(".")
+            set_run_font(r, self.font_t, 19 * self.ech, bold=bool(self.st["titre_gras"]), color=self.pal["accent"])
         if self.st["accent_titre"]:
-            # Filet court de couleur sous le titre : bordure basse d'un paragraphe vide de 2,2 cm.
+            # Filet court de couleur sous le titre : bordure basse d'un paragraphe vide de hauteur minimale.
             p.paragraph_format.space_after = Pt(0)
-            pa = self.para(after=10)
-            pa.paragraph_format.right_indent = Cm(17 - 2.2)
-            para_border(pa, "bottom", self.pal["secondaire"], 30, 1)
+            pa = self.para(after=12)
+            pa.paragraph_format.right_indent = Cm(17 - float(self.st["accent_titre_longueur_cm"]))
+            pa.paragraph_format.line_spacing = Pt(2)
+            para_border(pa, "bottom", self.pal["accent"], 30, 1)
             r = pa.add_run()
             r.font.size = Pt(2)
         nom = self.acp.get("nom") or self.t["manque_acp"]
         prefix = "" if strip_accents(nom).lower().startswith(self.t["prefixes_acp"]) or nom.startswith("[") else self.t["prefixe_acp"]
-        self.rich(self.para(after=1), f"{prefix}{nom}", 12.5, self.pal["texte"], bold=True)
+        if self.st["acp_accent"] and not nom.startswith("["):
+            # Nom de l'ACP dans la police d'accent de la marque (ex. serif italique rouge d'OP).
+            pn = self.para(after=1)
+            r = pn.add_run(f"{prefix}{nom}")
+            set_run_font(r, self.font_acc, 14, italic=bool(self.st["acp_accent_italique"]), color=self.pal["accent"])
+        else:
+            self.rich(self.para(after=1), f"{prefix}{nom}", 12.5, self.pal["texte"], bold=True)
         sub = []
         if self.acp.get("adresse"):
             sub.append(self.acp["adresse"])
@@ -899,7 +1122,7 @@ class PV:
     def h1(self, text):
         p = self.doc.add_paragraph(style="Heading 1")
         r = p.add_run(self.titre(text))
-        set_run_font(r, self.font_t, 12.5, bold=True, color=self.pal["primaire"])
+        set_run_font(r, self.font_t, 12.5 * self.ech, bold=bool(self.st["titres_gras"]), color=self.pal["primaire"])
         return p
 
     def h2(self, text):
@@ -961,6 +1184,12 @@ class PV:
         return t
 
     def encadre(self, label, text, actions=None):
+        # L'encadré ne part pas seul en haut de page : le dernier paragraphe du point reste avec lui.
+        from docx.text.paragraph import Paragraph
+        blocs = [e for e in self.doc.element.body if e.tag != qn("w:sectPr")]
+        last = blocs[-1] if blocs else None
+        if last is not None and last.tag == qn("w:p") and last.xpath("string(.)").strip():
+            Paragraph(last, self.doc._body).paragraph_format.keep_with_next = True
         t = self.doc.add_table(1, 1)
         table_borders(t, None)
         table_widths(t, [17])
@@ -975,7 +1204,7 @@ class PV:
             cell_borders(cell, left=None, top=None, bottom=None, right=None)
         else:
             shade(cell, self.pal["fond_clair"])
-            cell_borders(cell, left=(18, self.pal["secondaire"]), top=None, bottom=None, right=None)
+            cell_borders(cell, left=(18, self.pal["accent"]), top=None, bottom=None, right=None)
         cell_margins(cell, 70, 70, 140, 100)
         p = cell.paragraphs[0]
         no_space(p, 0, 1)
@@ -1218,6 +1447,8 @@ class PV:
         core.author = self.b.get("raison_sociale") or self.b.get("nom_affiche")
         core.subject = self.t["sujet"].format(organe=self.organe)
         renumber_docpr(self.doc)
+        if self.b.get("embarquer_polices", True):
+            self.polices_embarquees = embed_fonts(self.doc, self.b)
         self.doc.save(out)
 
 
@@ -1243,7 +1474,7 @@ def render(pdf, outdir):
     if not shutil.which("pdftoppm"):
         print("pdftoppm absent : pas d'aperçu PNG.")
         return []
-    subprocess.run(["pdftoppm", "-png", "-r", "70", str(pdf), str(outdir / "page")], check=True)
+    subprocess.run(["pdftoppm", "-png", "-r", "100", str(pdf), str(outdir / "page")], check=True)
     return sorted(outdir.glob("page-*.png"))
 
 
@@ -1290,11 +1521,13 @@ def main():
     pv = PV(data, brand)
     pv.build(out)
     print(f"DOCX : {out}")
+    if pv.polices_embarquees:
+        print(f"Polices embarquées dans le .docx : {', '.join(pv.polices_embarquees)}")
 
     warnings = []
     if pv.neutre:
         warnings.append(f"Charte de « {brand['nom_affiche']} » non renseignée : rendu neutre (gris), sans couleurs de marque.")
-    if not (brand.get("logo") and (brand["_dir"] / brand["logo"]).exists()):
+    if not has_logo(brand):
         warnings.append(f"Pas de logo pour « {brand['nom_affiche']} » : nom de la marque affiché en texte.")
     if brand.get("statut_charte") != "complete":
         for v in brand.get("a_verifier", []):

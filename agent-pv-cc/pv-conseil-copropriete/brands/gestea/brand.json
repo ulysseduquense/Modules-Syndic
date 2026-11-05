@@ -4,7 +4,7 @@
     "gestea"
   ],
   "nom_affiche": "Gestea",
-  "statut_charte": "a_completer",
+  "statut_charte": "complete",
   "raison_sociale": "Gestea SRL",
   "bce": "0846.809.505",
   "ipi": "508.167",
@@ -12,24 +12,62 @@
   "telephone": "02 779 09 90",
   "email": "syndic@gestea.be",
   "site": "gestea.be",
-  "signature": null,
-  "couleurs": null,
-  "police_titres": null,
-  "police_texte": null,
+  "signature": "Real Estate Solution",
+  "couleurs": {
+    "primaire": "#111827",
+    "secondaire": "#C04332",
+    "accent": "#C04332",
+    "texte": "#111827",
+    "entete_tableau": "#1E1F1F",
+    "texte_entete_tableau": "#FFFFFF"
+  },
+  "police_titres": "Arial",
+  "police_texte": "Arial",
   "titres_majuscules": false,
-  "logo": null,
-  "logo_largeur_cm": 4.0,
-  "logo_entete": null,
-  "logo_entete_largeur_cm": 2.4,
-  "logo_sur_fond": null,
-  "style": {},
-  "mentions_pied": [],
-  "sources": [
-    "Registre public des entreprises : GESTEA, BCE 0846.809.505, SRL active, NACE 68321 activités des syndics (busibee.be, companyweb.be)",
-    "Contact et mentions légales de gestea.be (via moteur de recherche, 05/11/2026) : Rue Vilain XIIII 53-55, 1000 Bruxelles ; 02 779 09 90 ; syndic@gestea.be ; IPI 508.167"
+  "logo": "logo.png",
+  "logo_largeur_cm": 4.6,
+  "logo_entete": "logo.png",
+  "logo_entete_largeur_cm": 2.8,
+  "logo_sur_fond": "logo-blanc.png",
+  "style": {
+    "entete": "blanc",
+    "pied": "bandeau",
+    "pied_couleur": "primaire",
+    "pied_mentions": "dans_bandeau",
+    "pied_degrade": {
+      "angle": 90,
+      "arrets": [
+        [
+          "#242525",
+          0.0
+        ],
+        [
+          "#131414",
+          1.0
+        ]
+      ]
+    },
+    "encadre": "bordure_gauche",
+    "tableau_entete": "plein",
+    "surtitre": true,
+    "titre_point": true
+  },
+  "mentions_pied": [
+    "Agent immobilier agréé IPI (Belgique) · Autorité de surveillance : IPI, rue du Luxembourg 16 B, 1000 Bruxelles"
   ],
-  "a_verifier": [
-    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
-    "Couleurs, polices et éléments graphiques — à capturer sur le site"
+  "police_titres_site": "Neue Haas Grotesk Text (Adobe Fonts, licence commerciale) — remplacée par Arial",
+  "sources": [
+    "Charte relevée sur https://gestea.be/fr le 05/11/2026 (capture Chromium par le protocole DevTools : le site bloque les captures Playwright classiques)",
+    "Logos : https://gestea.be/images/logos/Gestea-1.png (header) et Gestea-1_white.png (pied de page) — fichiers d'origine, 300 × 74 px seulement (aucune version vectorielle ou HD publiée)",
+    "Couleurs (styles calculés) : rouge #C04332 (liens du menu, boutons, bandeau newsletter, point final du titre) → secondaire et accent ; titres #111827 → primaire ; hero et pied de page en dégradé noir #242525 → #131414",
+    "Police du site : neue-haas-grotesk-text (Adobe Fonts, licence) — non redistribuable, remplacée par Arial",
+    "Éléments graphiques : header blanc, boutons rectangulaires (sans arrondi), titre principal terminé par un point rouge, pied de page noir avec logo blanc",
+    "Mentions légales et contact (05/11/2026) : GESTEA, Rue Vilain XIIII 53-55, 1000 Bruxelles ; +32 (0)2 779 09 90 ; syndic@gestea.be ; BCE 0846.809.505 ; agent immobilier agréé IPI 508.167 (Belgique) ; autorité de surveillance IPI, rue du Luxembourg 16 B, 1000 Bruxelles",
+    "Registre public des entreprises : GESTEA, BCE 0846.809.505, SRL active (busibee.be, companyweb.be)"
+  ],
+  "a_verifier": [],
+  "points_ouverts": [
+    "Logo publié en 300 px seulement (aucune version vectorielle) : net à l'écran, juste à l'impression — demander le SVG/PDF/EPS à Gestea",
+    "Police du site (Neue Haas Grotesk, Adobe Fonts) non redistribuable : Arial dans le PV"
   ]
 }

@@ -13,35 +13,66 @@
     "noblier"
   ],
   "nom_affiche": "Noblué",
-  "statut_charte": "a_completer",
+  "statut_charte": "complete",
   "raison_sociale": "Noblué Immobilier SRL",
   "bce": "0466.867.532",
   "ipi": "513.309",
   "adresse": "Rue de Battice 46, 4800 Petit-Rechain",
-  "telephone": "087 44 64 09",
+  "telephone": "087/44 64 09",
   "email": "syndic@noblue.be",
   "site": "syndic-noblue.be",
   "signature": null,
-  "couleurs": null,
-  "police_titres": null,
-  "police_texte": null,
+  "couleurs": {
+    "primaire": "#000085",
+    "secondaire": "#000085",
+    "accent": "#FFB81C",
+    "texte": "#515162",
+    "texte_secondaire": "#8C8C8C",
+    "fond_clair": "#F5F5F6",
+    "entete_tableau": "#000085",
+    "texte_entete_tableau": "#FFFFFF",
+    "texte_pied": "#FFFFFF"
+  },
+  "police_titres": "Hanken Grotesk",
+  "police_texte": "Hanken Grotesk",
   "titres_majuscules": false,
   "logo": null,
   "logo_largeur_cm": 4.0,
   "logo_entete": null,
   "logo_entete_largeur_cm": 2.4,
-  "logo_sur_fond": null,
-  "style": {},
-  "mentions_pied": [],
-  "sources": [
-    "Site officiel https://www.syndic-noblue.be/fr/ (pages contact, services, noblue-groupe) — repéré par moteur de recherche le 05/11/2026, pas encore capturé",
-    "Registre public des entreprises : NOBLUE IMMOBILIER, BCE 0466.867.532, SRL active (busibee.be)",
-    "PV d'AG 2020-2021 (immo.notaire.be) : syndic « SRL Noblué Immobilier »",
-    "Page contact du site (via moteur de recherche, 05/11/2026) : Rue de Battice 46, 4800 Petit-Rechain ; 087/44 64 09 ; syndic@noblue.be ; agréée IPI n° 513.309 ; BCE 0466.867.532"
+  "logo_sur_fond": "logo-blanc.png",
+  "style": {
+    "entete": "bandeau",
+    "entete_hauteur_cm": 2.7,
+    "pied": "bandeau",
+    "pied_mentions": "dans_bandeau",
+    "encadre": "bordure_gauche",
+    "tableau_entete": "plein",
+    "accent_titre": true,
+    "accent_titre_longueur_cm": 2.6,
+    "surtitre": true
+  },
+  "mentions_pied": [
+    "Agent immobilier intermédiaire, syndic et régisseur · Autorité de surveillance : IPI, rue du Luxembourg 16b, 1000 Bruxelles",
+    "RC professionnelle et cautionnement via AXA Belgium SA – police n° 730.390.160"
   ],
-  "a_verifier": [
-    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
-    "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "Coordonnées relevées sur des pages anciennes du site : à reconfirmer à la capture"
+  "libelle_bce": "TVA BE",
+  "police_titres_site": "Nexa Bold / Nexa Light (Fontfabric, licence commerciale) — remplacée par Hanken Grotesk, la plus proche en libre",
+  "logo_sur_fond_largeur_cm": 4.4,
+  "logo_hauteur_max_cm": 1.7,
+  "interligne": 1.0,
+  "sources": [
+    "Charte relevée sur https://www.syndic-noblue.be/fr/ le 05/11/2026 (capture Playwright : accueil, pied de page, /fr/contact, /fr/noblue-groupe/noblue-syndic)",
+    "Logo : https://www.syndic-noblue.be/Instances/Front/Corporate/Images/logo.svg (anneau blanc et jaune, « Noblué » jaune, « Syndic » blanc), rendu en PNG transparent 2 400 px ; c'est la seule version de Noblué Syndic publiée, prévue pour fond bleu nuit",
+    "Couleurs (styles calculés) : bleu nuit #000085 (header, pied de page, titres) → primaire ; jaune #FFB81C (anneau du logo, bouton « Espace propriétaire », titres du pied) → accent ; texte #515162",
+    "Polices du site : Nexa Bold / Nexa Light (Fontfabric, licence commerciale, non redistribuable) → Hanken Grotesk (Google Fonts, OFL), la plus proche ; Lora pour quelques liens",
+    "Éléments graphiques : bloc bleu nuit avec logo en haut à gauche, boutons rectangulaires en capitales, accents jaunes, pied de page bleu nuit avec mentions en blanc",
+    "Mentions : pied de page et page contact (05/11/2026) — Rue de Battice 46, 4800 Petit-Rechain ; Tél : 087/44 64 09 ; syndic@noblue.be ; agent immobilier intermédiaire, syndic et régisseur, IPI (Belgique) n° 513.309 ; autorité de surveillance IPI, rue du Luxembourg 16b, 1000 Bruxelles ; TVA BE0466.867.532 ; RC professionnelle et cautionnement via AXA Belgium SA, police n° 730.390.160",
+    "Registre public des entreprises : NOBLUE IMMOBILIER, BCE 0466.867.532, SRL active (busibee.be)"
+  ],
+  "a_verifier": [],
+  "points_ouverts": [
+    "Pas de logo Noblué Syndic pour fond clair sur le site : en-tête bleu nuit (fidèle au site) ; demander une version bleue si un en-tête blanc est souhaité",
+    "Police du site (Nexa, Fontfabric) non redistribuable : Hanken Grotesk dans le PV"
   ]
 }

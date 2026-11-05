@@ -8,37 +8,67 @@
     "trevi rasquain syndic"
   ],
   "nom_affiche": "DR Syndic",
-  "statut_charte": "a_completer",
+  "statut_charte": "complete",
   "raison_sociale": "DR Syndic SRL",
   "bce": "0740.869.271",
   "ipi": "800.039",
   "adresse": "Rue des Brasseurs 1, 4500 Huy",
-  "telephone": "085 25 47 28",
+  "telephone": "085/25.47.28 – 0491/91.42.70",
   "email": "info@drsyndic.be",
   "site": "drsyndic.be",
-  "signature": null,
-  "couleurs": null,
-  "police_titres": null,
-  "police_texte": null,
+  "signature": "Votre partenaire en gestion de copropriétés",
+  "couleurs": {
+    "primaire": "#15223F",
+    "secondaire": "#B98F4E",
+    "accent": "#B98F4E",
+    "texte": "#1B2436",
+    "texte_secondaire": "#5C6678",
+    "fond_clair": "#F5F0E8",
+    "filet": "#E4DDD1",
+    "entete_tableau": "#15223F",
+    "texte_entete_tableau": "#FFFFFF",
+    "texte_pied": "#C7CFDD"
+  },
+  "police_titres": "Palatino Linotype",
+  "police_texte": "Arial",
   "titres_majuscules": false,
   "logo": null,
   "logo_largeur_cm": 4.0,
   "logo_entete": null,
   "logo_entete_largeur_cm": 2.4,
-  "logo_sur_fond": null,
-  "style": {},
+  "logo_sur_fond": "logo-blanc.png",
+  "style": {
+    "entete": "bandeau",
+    "entete_hauteur_cm": 2.9,
+    "pied": "bandeau",
+    "pied_mentions": "dans_bandeau",
+    "encadre": "bordure_gauche",
+    "tableau_entete": "plein",
+    "accent_titre": true,
+    "accent_titre_longueur_cm": 2.4,
+    "surtitre": true,
+    "surtitre_police": "texte"
+  },
   "mentions_pied": [
-    "Bureau de Liège : Rue Charles Magnette 24/40, 4000 Liège"
+    "Bureau de Liège : Rue Charles Magnette 24/40, 4000 Liège",
+    "Agréée IPI comme agent immobilier intermédiaire et syndic · RC professionnelle et cautionnement : AXA Belgium SA, police n° 730.390.160"
   ],
+  "libelle_bce": "TVA BE",
+  "police_titres_site": "Iowan Old Style, Palatino Linotype, Palatino, Georgia (polices système)",
+  "police_texte_site": "system-ui (police système : Segoe UI sous Windows) — Arial dans le PV",
+  "logo_sur_fond_largeur_cm": 3.0,
+  "logo_hauteur_max_cm": 1.5,
   "sources": [
-    "Site officiel https://www.drsyndic.be/ (accueil, /contact, /legal) — repéré par moteur de recherche le 05/11/2026, pas encore capturé",
-    "Mentions légales du site : DR SYNDIC SRL, BCE 0740.869.271, siège Rue des Brasseurs 1, 4500 Huy, soumise au contrôle de l'IPI",
-    "Registre public des entreprises (companyweb.be, busibee.be)",
-    "Mentions légales du site (via moteur de recherche, 05/11/2026) : agréée IPI n° 800.039 comme agent immobilier intermédiaire et syndic"
+    "Charte relevée sur https://www.drsyndic.be/ le 05/11/2026 (capture Playwright : accueil, pied de page, /contact, /legal)",
+    "Logo : https://www.drsyndic.be/assets/images/logo-new.png — fichier d'origine 400 × 189 px, blanc sur transparent (seule version publiée, utilisée en header et en pied sur fond bleu nuit)",
+    "Couleurs (variables CSS du site) : --navy #15223F (header, pied de page, titres) → primaire ; --gold #B98F4E (boutons, bandeau d'appel) → secondaire et accent ; fond crème #F5F0E8 ; texte du pied #C7CFDD ; texte courant #5C6678",
+    "Polices du site : titres « Iowan Old Style, Palatino Linotype, Palatino, Georgia » en gras ; texte system-ui — polices système, aucune police web chargée",
+    "Éléments graphiques : header bleu nuit, boutons dorés arrondis, sections crème, pied de page bleu nuit avec logo blanc et mentions gris-bleu",
+    "Mentions (pied de page et /legal, 05/11/2026) : DR SYNDIC SRL, siège rue des Brasseurs 1, 4500 Huy ; TVA/BCE BE 0740.869.271 ; IPI 800.039 (agent immobilier intermédiaire et syndic) ; bureaux Huy et Liège (Rue Charles Magnette 24/40, 4000 Liège) ; 085/25.47.28 et 0491/91.42.70 ; info@drsyndic.be ; RC professionnelle et cautionnement AXA Belgium SA police n° 730.390.160"
   ],
-  "a_verifier": [
-    "Logo (versions fond clair et fond de couleur) — à capturer sur le site",
-    "Couleurs, polices et éléments graphiques — à capturer sur le site",
-    "Téléphone 085 25 47 28 et info@drsyndic.be : relevés via moteur de recherche, à confirmer à la capture"
+  "a_verifier": [],
+  "points_ouverts": [
+    "Logo publié en 400 px, blanc uniquement : correct à l'impression en petit format ; demander le fichier vectoriel et une version bleu nuit",
+    "Polices système sur le site : Palatino Linotype (titres) et Arial (texte) dans le PV"
   ]
 }
