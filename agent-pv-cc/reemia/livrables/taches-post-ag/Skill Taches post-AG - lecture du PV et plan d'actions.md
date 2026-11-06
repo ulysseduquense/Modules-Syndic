@@ -1,212 +1,146 @@
 ---
 name: taches-post-ag
-description: Lit le procès-verbal d'une assemblée générale de copropriété (Belgique : ACP / VME ; Luxembourg : syndicat des copropriétaires) et en tire toutes les tâches qui suivent pour le syndic — formalités légales avec leurs délais calculés, exécution de chaque décision, intervenants externes. Livre directement, en une seule réponse, le plan d'actions HTML A4 imprimable à la charte du syndic. Contient la méthode de lecture (FR et NL), les délais légaux belges et luxembourgeois, le catalogue décision → tâches, le calcul des échéances, les libellés et le gabarit HTML compact. S'utilise avec le skill de charte de la marque (« Chartes syndic — … »). Pas pour rédiger un PV.
+description: Lit le procès-verbal signé d'une assemblée générale de copropriété (Belgique : ACP / VME ; Luxembourg : syndicat des copropriétaires) et en tire la liste de suivi du gestionnaire — les actions concrètes à déclencher après l'AG, avec leur échéance et l'intervenant externe — livrée directement en document HTML A4 imprimable à la charte du syndic. Contient la méthode (FR et NL), les délais légaux belges et luxembourgeois, le catalogue décision → actions, le calcul des échéances, les libellés et le gabarit HTML. S'utilise avec le skill de charte de la marque (« Chartes syndic — … »). Pas pour rédiger un PV.
 ---
 
-# Tâches post-AG — lecture du PV et plan d'actions
+# Tâches post-AG — la liste de suivi du gestionnaire
 
-Le gestionnaire te donne le **procès-verbal d'une assemblée générale** (fichier joint ou texte
-collé). Tu en tires les tâches qui suivent pour le syndic, puis tu les mets en page à la charte
-du syndic.
+Le gestionnaire sort de son AG ; le PV est signé. Il te le donne et attend **sa liste de suivi** :
+ce qu'il doit déclencher maintenant, pour quand, et avec qui. Pas un audit du PV.
 
-## 1. Une seule réponse : le document
+## 1. Ce que tu livres, en une seule réponse
 
-Dès que le PV est fourni, livrer directement le fichier HTML, sans liste préalable, sans
-demander de validation et sans autre question que celle du § 2.5 :
-`Plan d'actions AG - <copropriété> - <AAAA-MM-JJ>.html` (Syncura :
-`Actieplan AV - <copropriété> - <AAAA-MM-JJ>.html`), date de l'AG, nom sans « ACP » ni
-« VME ». Ouvert dans Edge : Ctrl+P → « Enregistrer au format PDF ». Puis une seule ligne
-(§ 9). Ne jamais recopier les tâches dans le chat.
+Le fichier HTML `Plan d'actions AG - <copropriété> - <AAAA-MM-JJ>.html` (Syncura :
+`Actieplan AV - <copropriété> - <AAAA-MM-JJ>.html`), date de l'AG, nom sans « ACP » ni « VME »,
+puis une seule ligne : « Plan d'actions prêt : <N> tâches. Ouvrir dans Edge, Ctrl+P, Enregistrer
+au format PDF. » Pas de liste dans le chat, pas de validation demandée, pas d'autre question que
+la marque si elle est introuvable dans le PV.
 
-**Économie** (indispensable pour que la réponse aille au bout) :
-- Réflexion courte : appliquer le catalogue sans débattre des cas limites ; un doute devient
-  `[À PRÉCISER : …]` dans le document. Ne jamais rédiger le document dans la réflexion.
-- Textes courts : tâche ≤ 60 caractères, détail ≤ 70, objet dans le suivi ≤ 30, points
-  d'attention 4 au plus d'une ligne chacun. Ne pas répéter une information d'une partie à
-  l'autre.
+**Se mettre à la place du gestionnaire, au lendemain de l'AG** :
+- Le PV est signé : aucune tâche ni remarque sur les signatures.
+- Les échéances se calculent à partir de la date de l'AG. Ne jamais les comparer à la date du
+  jour, ni écrire « échu » ou « dépassé ».
+- Une tâche = une action que le gestionnaire doit déclencher et suivre. **Pas de tâche** pour :
+  ce qui est approuvé sans exécution (comptes, décharges, bureau, rapports, informations) ; ce
+  qui est maintenu ou reconduit à l'identique (budget, provisions, fonds de réserve, contrats) ;
+  la comptabilité et l'encodage courants (clôture, encodage, fiche, archivage) ; l'information
+  de personnes présentes à l'AG (élus, demandeur présent) sauf s'il faut un écrit ; un point
+  rejeté.
+- Regrouper ce qui se fait d'un même geste (« Demander les devis et les soumettre au conseil »).
+- Pas de commentaire sur la régularité du PV, les majorités ou les personnes.
+- `[À PRÉCISER : …]` seulement pour une donnée sans laquelle l'action est impossible (montant
+  d'un appel de fonds, par exemple). Sinon formuler la tâche sans la donnée (« dans le respect
+  du préavis », « à la prise de cours du mandat »).
+
+**Réflexion courte** : appliquer le catalogue, ne pas débattre des cas limites, ne pas rédiger
+le document dans la réflexion. Textes courts : tâche ≤ 70 caractères, détail ≤ 80.
 
 ## 2. Lecture du PV
 
-1. Lire tout le PV. Pages manquantes, scan illisible : le dire en un point d'attention et
-   travailler sur le reste. Sans PV : le demander.
-2. **Marque** : le syndic qui a tenu l'AG (en-tête, pied de page, « le syndic, X, représenté
-   par … »). Introuvable : la demander en une ligne. Lire sa fiche dans le skill « Chartes
-   syndic ».
-3. **Données de l'AG** : copropriété (nom, adresse, BCE / KBO, réf.), type (ordinaire,
-   extraordinaire, deuxième séance, carence), date et heure, lieu, président(e), syndic et
-   représentant, nombre de pages et de points.
-4. **Chaque point** : numéro, objet, résultat (§ 7), et ce qui sert à l'exécution : montants,
-   clés, entreprises et devis, dates, tranches, durées de mandat, élus, conditions, délais
-   d'exécution, délégations, mandats au syndic ; voix contre : nombre de copropriétaires (avec
-   leurs lots si le PV les donne, jamais les noms), sinon les quotes-parts.
-5. **Question** : une seule, et seulement si la marque ou la date de l'AG est introuvable.
+- **Marque** : le syndic qui a tenu l'AG (en-tête, « le syndic, X, représenté par … »). Lire sa
+  fiche dans le skill « Chartes syndic ».
+- **AG** : copropriété (nom, adresse, BCE / KBO, réf.), type, date et heure, lieu, syndic et
+  son représentant.
+- **Chaque point** : décision, et ce qui sert à l'action — entreprises, devis, montants, clés,
+  dates, tranches, mandats et délégations (au conseil, au syndic, à un signataire), conditions,
+  délais d'exécution, voix contre.
 
-## 3. Règles non négociables
+## 3. Formalités (une tâche, après toute AG)
 
-- **Le PV est la seule source** : aucun montant, nom, entreprise, date ou condition qui n'y
-  figure pas ; sinon `[À PRÉCISER : …]` (Syncura : `[TE VERDUIDELIJKEN: …]`).
-- **Décision rejetée = aucune tâche.** Point reporté : sa réinscription à la prochaine AG.
-- **Chaque point du PV** figure dans le suivi, avec ses tâches ou « Aucune suite ».
-- **Intervenant externe** : seulement la personne extérieure au syndic qui doit agir
-  (entrepreneur, fournisseur, architecte, expert, notaire, avocat, assureur, banque, conseil
-  de copropriété, signataire, copropriétaire d'un lot, ancien ou nouveau syndic). Jamais un
-  collaborateur, « Syndic » ni « Gestionnaire ». Une personne seulement informée : cellule
-  vide. Pas encore choisie : « Entreprise retenue », « Fournisseur retenu ».
-- **Données personnelles** : débiteur, demandeur, opposant → son lot, jamais son nom. Les élus
-  (conseil, commissaire, président) peuvent être nommés.
-- **Délais** : « Légale » uniquement pour ceux des § 4 et § 5 ; un délai d'usage est
-  « Proposée ». Ne jamais juger la validité d'une décision, les majorités ni le cumul de
-  fonctions d'une personne.
-- **Langue** : Syncura → tout en néerlandais (VME, AV, syndicus). Agigest → droit
-  luxembourgeois (§ 4.2), « conseil syndical », ni « ACP » ni « BCE ».
-- **Charte** : blocs de la fiche copiés tels quels (logos, couleurs, mentions) ; seuls changent
-  `[RAPPEL]`, le bloc titre (§ 7) et, si le PV donne le contact du gestionnaire, la ligne 2 du
-  pied.
+- **Belgique** : « Consigner les décisions au registre et envoyer le PV aux copropriétaires » —
+  J + 30 jours, Légal (art. 3.87 §12).
+- **Luxembourg (Agigest)** : « Envoyer le PV : recommandé aux opposants et défaillants (fait
+  courir leur recours de deux mois), simple aux autres » — J + 15 jours (proposée) ; au registre
+  sans délai (RGD art. 10). Vocabulaire : syndicat des copropriétaires, conseil syndical,
+  règlement de copropriété ; ni « ACP » ni « BCE ».
 
-## 4. Formalités communes (après toute AG)
+## 4. Catalogue : décision adoptée → actions
 
-`J` = date de l'AG. Domaine 1.
+Échéance : « Légal » seulement quand c'est indiqué ici ; date fixée par l'AG → badge « AG » ;
+sinon une date proposée sans badge (J + 15 pour un premier contact ou une commande, J + 30 pour
+le reste) ou « — ».
 
-### 4.1 Belgique (Code civil, livre 3)
+- **Travaux, entreprise retenue** : « Commander <travaux> à <entreprise> » (devis, montant,
+  financement dans le détail ; J + 15 ; intervenant : l'entreprise). Délai d'exécution fixé par
+  l'AG : ajouter « Suivre les travaux jusqu'à la réception » à cette date (AG). Condition
+  (permis, accord) : la tâche qui la lève d'abord.
+- **Travaux, entreprise à choisir** : délégation au conseil → « Demander les devis et les
+  soumettre au conseil » (date de l'AG si fixée, sinon J + 30 ; intervenant : conseil de
+  copropriété), puis « Commander à l'entreprise choisie » (— ; intervenant : entreprise
+  retenue). Sans délégation → devis à présenter à la prochaine AG.
+- **Financement** : fonds de réserve → dans le détail de la commande, pas de tâche. Appel de
+  fonds extraordinaire → une tâche par tranche, à la date d'exigibilité (AG).
+- **Budget, provisions, fonds de réserve** : seulement si le montant ou la périodicité change
+  → « Adapter les appels de provisions » ou « … du fonds de réserve » (J + 30).
+- **Contrats** : résilier <contrat> dans le respect du préavis (—) ; conclure avec
+  <fournisseur> (prise d'effet → AG) ; mise en concurrence → « Demander les offres et les
+  soumettre à <conseil / prochaine AG> ». Reconduction : rien.
+- **Syndic nommé ou reconduit** : « Faire signer le contrat de syndic par <signataire désigné> »
+  (veille de la prise de cours si connue, sinon J + 30 ; intervenant : le signataire).
+  **Belgique** : « Afficher l'extrait de nomination et mettre à jour la BCE » — prise de cours
+  + 8 jours, Légal (art. 3.89 §2) ; prise de cours inconnue → échéance « 8 j après la prise de
+  cours ». Changement de syndic : transmettre ou obtenir le dossier — fin du mandat + 30 jours,
+  Légal (art. 3.89 §5).
+- **Élections du conseil, commissaire** : rien.
+- **ROI modifié** : « Mettre à jour le ROI et le communiquer » — Sans délai, Légal.
+- **Statuts, acte de base, parties communes, vente** : « Mandater le notaire » (J + 30 ;
+  intervenant : notaire).
+- **Recouvrement, contentieux** : « Mandater <avocat> pour le lot <n> » (J + 15 ; intervenant :
+  l'avocat). Le débiteur est désigné par son lot, jamais par son nom.
+- **Autorisation à un copropriétaire** (enseigne, travaux privatifs) : « Confirmer par écrit
+  l'accord de l'AG à <demandeur> » avec les conditions (J + 15) ; documents qu'il doit fournir →
+  dans le détail (intervenant : le demandeur).
+- **Sinistre, emprunt** : l'action, avec l'assureur ou la banque comme intervenant.
+- **Demande de l'AG au syndic** (étude, offre, vérification, y compris en « divers ») : la tâche,
+  échéance « Prochaine AG » (AG). **Point reporté** : « Réinscrire à la prochaine AG ».
+- **Prochaine AG à date fixée** : « Convoquer l'AG » — date − 15 jours, Légal (art. 3.87 §3 ;
+  Luxembourg : RGD art. 3). Seulement une période : rien.
+- **AG de carence** : « Convoquer la deuxième AG » (au plus tôt J + 15 jours, art. 3.87 §5).
 
-| tâche | échéance | type · base |
-|---|---|---|
-| Consigner les décisions dans le registre et archiver le PV (PV signé, présences, procurations) | J + 30 j | Légale · art. 3.87 §12 |
-| Transmettre le PV à tous les copropriétaires (et aux autres syndics s'il y a des associations partielles) | J + 30 j | Légale · art. 3.87 §12 |
-| Faire compléter les signatures du PV — **seulement** si le document n'en porte pas et ne dit pas qu'il est signé en séance | Sans délai | Légale · art. 3.87 §10 |
-| Informer les occupants des décisions qui les concernent (travaux, accès, ROI) — s'il y en a | J + 30 j | Proposée |
+## 5. Échéances
 
-Point d'attention, toujours : « Recours possible jusqu'au <J + 4 mois> (art. 3.92 §3) », avec
-les voix contre ; la date figure aussi dans les échéances clés.
+- **+ N jours** : ajouter N au quantième ; tant que le résultat dépasse la longueur du mois,
+  retrancher cette longueur et passer au mois suivant. **+ N mois** : même quantième, ou
+  dernier jour du mois. **− 15 jours** : à rebours. Mois de 31 jours : janv., mars, mai, juil.,
+  août, oct., déc. ; 30 : avr., juin, sept., nov. ; févr. 28 (29 en 2028).
+- Exemples : AG 15/10/2026 → J + 15 = 30/10/2026, J + 30 = 14/11/2026. AG 06/10/2025 → J + 15 =
+  21/10/2025, J + 30 = 05/11/2025. Prise de cours 01/01/2027 + 8 j = 09/01/2027.
+- **Ordre du tableau** : « Sans délai », puis dates croissantes, puis échéances en texte, puis
+  « — » ; une tâche qui en conditionne une autre passe avant.
 
-### 4.2 Luxembourg — Agigest (loi du 16 mai 1975, RGD du 13 juin 1975)
+## 6. À noter (3 lignes au plus, souvent aucune)
 
-| tâche | échéance | type · base |
-|---|---|---|
-| Inscrire au registre le PV signé (président, secrétaire, bureau) et l'archiver | Sans délai | Légale · RGD art. 10 |
-| Notifier les décisions aux opposants et défaillants par recommandé avec AR (fait courir leur délai de recours) | J + 15 j | Proposée · loi art. 34 |
-| Transmettre le PV aux autres copropriétaires | J + 30 j | Proposée |
-
-Point d'attention, toujours : « Recours : deux mois à compter de la notification pour les
-opposants et défaillants (loi du 16 mai 1975, art. 34). » Vocabulaire : syndicat des
-copropriétaires, conseil syndical, règlement de copropriété ; « FR » n'existe pas (avance de
-trésorerie, fonds de travaux, provision).
-
-## 5. Catalogue : décision adoptée → tâches
-
-Domaines D1 à D8 (§ 7). Échéance : « Légale » seulement si indiquée ici ; date ou moment fixé
-par la décision → « AG » ; sinon « Proposée » si une date est indiquée ici, ou « — ». Une
-tâche qui en conditionne une autre la précède.
-
-- **Sans suite** : bureau, quorum, PV précédent, rapports, informations, décharges données.
-- **Comptes** (D2) : clôturer l'exercice <période> (J + 30, Proposée). Non approuvés :
-  corriger et représenter (« Prochaine AG »). Décharge refusée : point d'attention.
-- **Budget, provisions, fonds de roulement** (D2) : encoder le budget et adapter les provisions
-  (J + 30, Proposée) ; appeler le fonds de roulement voté.
-- **Fonds de réserve** (D2) : appeler la contribution votée ; prélèvement voté → l'imputer.
-- **Appel de fonds extraordinaire** (D2) : une tâche par tranche (montant, clé) ; échéance =
-  exigibilité fixée par l'AG, sinon `[À PRÉCISER : exigibilité]`.
-- **Travaux, entreprise retenue** (D3) : commander à <entreprise> (devis, montant) (J + 15,
-  Proposée ; intervenant : l'entreprise) ; planifier, suivre et réceptionner (délai
-  d'exécution fixé par l'AG → « AG », sinon — ; intervenant : l'entreprise). Sous condition
-  (permis, accord du conseil) : d'abord la tâche qui lève la condition (J + 15, Proposée),
-  puis la commande sans échéance.
-- **Travaux, entreprise à choisir** (D3) : demander les devis (intervenant : entreprises
-  consultées) ; soumettre le choix au conseil (délégation) ou à la prochaine AG ; commander.
-- **Étude, expertise** (D3 ou D7) : mandater <expert, architecte> (intervenant) ; présenter
-  les résultats à qui l'AG a désigné.
-- **Délégation au conseil** (D5, Belgique) : « Soumettre au conseil <objet> » (intervenant :
-  conseil ; « AG » si une date est fixée). Point d'attention : objet, plafond. Échéances
-  clés : « Fin de la délégation au conseil » à J + 1 an (Légale · art. 3.90). Luxembourg :
-  acte précisément déterminé, compte rendu à l'AG, pas de durée légale.
-- **Mandat donné au syndic** : une tâche par acte autorisé, avec ses limites.
-- **Contrats** (D4) : résilier <contrat> par recommandé (échéance `[À PRÉCISER : préavis]` si
-  le PV ne la donne pas) ; conclure avec <fournisseur> (prise d'effet fixée → « AG ») ; mise
-  en concurrence : demander les offres (intervenant : fournisseurs consultés), puis les
-  présenter à qui l'AG a désigné ; assurance : transmettre au courtier ou à l'assureur.
-- **Syndic nommé ou renouvelé** (D5) :
-  - établir le contrat écrit (durée, prise de cours ; trois ans au plus) et le faire signer —
-    intervenant : le signataire désigné, sinon `[À PRÉCISER : signataire]` ; veille de la prise
-    de cours (Proposée) ; base art. 3.89 §1 (Luxembourg : RGD art. 18) ;
-  - **Belgique** : afficher à l'entrée l'extrait de l'acte de nomination — **prise de cours +
-    8 j**, Légale · art. 3.89 §2 ; mettre à jour la BCE (début et fin du mandat), même date,
-    Proposée ;
-  - point d'attention : « Mandat jusqu'au <fin> : renouvellement à l'AG qui précède. »
-- **Changement de syndic** (D5) : transmettre tout le dossier de gestion au nouveau syndic —
-  **fin du mandat + 30 j**, Légale · art. 3.89 §5 (Luxembourg : Proposée) ; intervenant :
-  nouveau syndic. Si la marque reprend un immeuble : obtenir le dossier de l'ancien syndic
-  (même échéance), puis les tâches de nomination.
-- **Élus : conseil, commissaire** (D5) : une seule tâche « Informer les élus » (noms, J + 15,
-  Proposée).
-- **Fiche de la copropriété** (D5) : une seule tâche pour toutes les mises à jour (conseil,
-  commissaire, dates du contrat de syndic) (J + 30, Proposée).
-- **ROI modifié** (D6) : mettre à jour et diffuser le ROI (« Sans délai », Légale · Code
-  civil, livre 3).
-- **Statuts, acte de base, quotités, parties communes, vente** (D6) : mandater le notaire et
-  lui transmettre PV et pièces (J + 30, Proposée ; intervenant : notaire) ; mettre à jour les
-  données après l'acte (—).
-- **Recouvrement, contentieux** (D6) : mandater <avocat, huissier> contre le lot <n> et lui
-  transmettre le dossier (J + 15, Proposée ; avocat non nommé → `[À PRÉCISER : avocat]`).
-  Mise en demeure seulement si le PV en parle.
-- **Autorisation à un lot** (D7) : notifier l'autorisation et ses conditions au copropriétaire
-  du lot <n> (J + 15, Proposée) ; une tâche par document ou action qu'il doit fournir ou faire
-  (intervenant : copropriétaire du lot <n> ; « avant les travaux » si le PV le dit).
-- **Sinistre** (D4) : déclarer ou suivre auprès de l'assureur ou du courtier (intervenant).
-- **Emprunt** (D2) : conclure l'emprunt <montant, durée> (intervenant : banque).
-- **Demande de l'AG au syndic** (D7, y compris en « divers ») : la tâche, « Prochaine AG » (badge AG).
-- **Point reporté** (D8) : le réinscrire à la prochaine AG (« Prochaine AG », badge AG).
-- **Prochaine AG** (D8) : convoquer l'AG — date fixée : date − 15 j ; seulement une période :
-  « 15 j avant l'AG » ; Légale · art. 3.87 §3 (Luxembourg : RGD art. 3) ; détail : points à
-  inscrire (demandes, reports, mandats qui expirent).
-- **AG de carence** (D8) : convoquer la deuxième AG (« Sans délai », Proposée ; détail : « au
-  plus tôt le <J + 15 j>, art. 3.87 §5 »).
-- **Autre décision** (D7) : la tâche qui l'exécute.
-
-## 6. Échéances
-
-- **+ N jours** : jours calendrier ; ajouter N au quantième, et tant que le résultat dépasse la
-  longueur du mois, retrancher cette longueur et passer au mois suivant. **+ N mois, + 1 an** :
-  même quantième, ou dernier jour du mois s'il n'existe pas. **− 15 jours** : à rebours.
-- Mois : janv. 31, févr. 28 (29 en 2028), mars 31, avr. 30, mai 31, juin 30, juil. 31, août 31,
-  sept. 30, oct. 31, nov. 30, déc. 31. Pas de report au jour ouvrable.
-- Exemples : AG 15/10/2026 → J + 15 = 30/10/2026 ; J + 30 = 14/11/2026 ; J + 4 mois =
-  15/02/2027 ; J + 1 an = 15/10/2027. AG 31/10/2026 → J + 30 = 30/11/2026 ; J + 4 mois =
-  28/02/2027. Prise de cours 01/01/2027 + 8 j = 09/01/2027. AG 20/10/2027 − 15 j = 05/10/2027.
-- **Échéance déjà passée** (PV ancien) : la garder et le dire en un point d'attention.
-- **Ordre** dans un domaine : « Sans délai », dates croissantes, « Prochaine AG », « — » et
-  `[À PRÉCISER]` ; une tâche qui en conditionne une autre passe avant.
-- **Échéances clés** : dates de type Légale et AG, fin du délai de recours (Belgique), fin de
-  délégation ; une ligne par date, chronologique ; échéance textuelle en dernier, son texte
-  dans la colonne Date.
+Seulement ce qui change la manière d'exécuter : décision adoptée avec des voix contre et suivie
+de travaux (« Pt 5 adopté avec 2 voix contre : recours possible jusqu'au <J + 4 mois> »,
+Belgique, art. 3.92 §3) ; plafond ou date limite d'une délégation au conseil (délégation valable
+un an au plus, art. 3.90) ; condition posée par l'AG. Rien d'autre.
 
 ## 7. Libellés
 
-| élément | Belgique, Luxembourg (français) | Syncura (néerlandais) |
+| élément | français (Belgique, Luxembourg) | Syncura (néerlandais) |
 |---|---|---|
 | surtitre · titre | Plan d'actions · Suites de l'assemblée générale | Actieplan · Opvolging van de algemene vergadering |
 | copropriété | ACP <nom> ; Agigest : <nom> (« Résidence … ») | VME <naam> |
-| sous-ligne (absents omis) | adresse · BCE <n°> · Réf. <réf> ; Agigest : adresse · Réf. <réf> | adres · KBO <n°> · Ref. <ref> |
-| grille | Assemblée · Présidence de l'AG · Syndic · Document analysé | Vergadering · Voorzitter van de AV · Syndicus · Geanalyseerd document |
-| synthèse | <N> tâches, dont <L> à délai légal et <A> à date fixée par l'AG · prochaine échéance légale : <date>. (sans date légale : arrêter après « l'AG ») | <N> taken, waarvan <L> met wettelijke termijn en <A> met een door de AV vastgelegde datum · eerstvolgende wettelijke termijn: <datum>. |
-| titres | Échéances clés · Tâches · Suivi des points de l'ordre du jour ; encadré : Points d'attention | Belangrijke termijnen · Taken · Opvolging van de agendapunten ; Aandachtspunten |
-| colonnes | Date · Échéance · Tâches · base ‖ N° · Tâche · Pt · Échéance · Intervenant externe ‖ Pt · Objet · Résultat · Tâches | Datum · Termijn · Taken · grondslag ‖ Nr · Taak · Pt · Termijn · Externe partij ‖ Pt · Onderwerp · Resultaat · Taken |
-| domaines | 1. Formalités légales · 2. Finances et comptabilité · 3. Travaux et entretien · 4. Contrats, fournisseurs et assurances · 5. Syndic, conseil et commissaire (Agigest : Syndic et conseil syndical) · 6. Statuts, ROI et contentieux (Agigest : Règlement de copropriété et contentieux) · 7. Autres décisions · 8. Prochaine assemblée | 1. Wettelijke formaliteiten · 2. Financiën en boekhouding · 3. Werken en onderhoud · 4. Contracten, leveranciers en verzekeringen · 5. Syndicus, raad en commissaris · 6. Statuten, HR en geschillen · 7. Andere beslissingen · 8. Volgende algemene vergadering |
-| badges | Légale · AG · Proposée | Wettelijk · AV · Voorstel |
-| échéances textuelles | Sans délai · Prochaine AG · 15 j avant l'AG | Onverwijld · Volgende AV · 15 d vóór de AV |
-| résultats | Adopté · Rejeté · Pris acte · Reporté · Retiré · Sans vote ; Aucune suite | Goedgekeurd · Verworpen · Kennisname · Uitgesteld · Ingetrokken · Zonder stemming ; Geen opvolging |
-| diffusion | Document de travail interne établi à partir du PV de l'AG du JJ/MM/AAAA — à vérifier avant exécution. | Interne werknota op basis van de notulen van de AV van DD/MM/JJJJ — na te kijken vóór uitvoering. |
-| rappel des pages 2+ (nom sans ACP ni VME) | Plan d'actions AG — <nom> — JJ/MM/AAAA | Actieplan AV — <naam> — DD/MM/JJJJ |
+| sous-ligne | adresse · BCE <n°> · Réf. <réf> ; Agigest : adresse · Réf. <réf> | adres · KBO <n°> · Ref. <ref> |
+| grille | Assemblée · Syndic | Vergadering · Syndicus |
+| synthèse | <N> tâches · PV à envoyer au plus tard le <date> | <N> taken · notulen te versturen uiterlijk op <datum> |
+| colonnes | N° · Tâche · Pt · Échéance · Intervenant externe | Nr · Taak · Pt · Termijn · Externe partij |
+| badges | Légal · AG | Wettelijk · AV |
+| échéances en texte | Sans délai · Prochaine AG · 8 j après la prise de cours | Onverwijld · Volgende AV · 8 d na aanvang |
+| encadré · fin | À noter · Sans suite : pts … | Opgelet · Geen opvolging: pt … |
+| rappel des pages 2+ | Plan d'actions AG — <nom> — JJ/MM/AAAA | Actieplan AV — <naam> — DD/MM/JJJJ |
 
-Domaine sans tâche : omis, sans renuméroter. Tâches T01, T02… sans trou. Libellé : verbe à
-l'infinitif (NL : « Notulen bezorgen aan alle mede-eigenaars »). Dates JJ/MM/AAAA ; dans la
-grille : « jeudi 15 octobre 2026, 18h30 » (NL : « donderdag 15 oktober 2026, 18u30 »).
-Montants comme dans le PV.
+Syncura : tout en néerlandais, même si la conversation est en français. Tâches T01, T02… dans
+l'ordre du tableau ; libellé à l'infinitif. Points et sous-points numérotés exactement comme
+dans le PV (8.2, 11.1.1). Dates JJ/MM/AAAA ; grille : « lundi 6 octobre 2025,
+14h00 » (NL : « maandag 6 oktober 2025, 14u00 »). Montants comme dans le PV.
 
 ## 8. Gabarit HTML
 
 ### 8.1 Squelette
 
-Remplacer les quatre marqueurs de charte par les blocs de la fiche de la marque, et
+Remplacer les quatre marqueurs de charte par les blocs de la fiche de la marque, copiés tels
+quels (adresses `data:` des logos d'un seul tenant, sans rien couper ni reformater), et
 `⟦CONTENU⟧` par le plan (§ 8.3).
 
 ```html
@@ -233,10 +167,10 @@ Remplacer les quatre marqueurs de charte par les blocs de la fiche de la marque,
 </html>
 ```
 
-`lang="nl"` pour Syncura. `⟦RAPPEL⟧` et `[RAPPEL]` de l'en-tête des pages suivantes : le rappel
-du § 7. Les adresses `data:` des logos se copient d'un seul tenant, sans rien couper ni
-reformater (`1.91` reste `1.91`). Rien en dehors du tableau `cadre`, sauf l'en-tête des pages
-suivantes et le pied.
+`lang="nl"` pour Syncura. `⟦RAPPEL⟧` et `[RAPPEL]` (en-tête des pages suivantes) : le rappel du
+§ 7. Bloc titre : la variante de la fiche, `[SURTITRE]`, `[TITRE]`, `[COPROPRIÉTÉ]`,
+`[SOUS-LIGNE]` remplacés par le § 7. Ligne 2 du pied : contact du gestionnaire seulement si le
+PV le donne.
 
 ### 8.2 CSS (à copier tel quel)
 
@@ -279,18 +213,13 @@ h2{font-family:var(--police-titres);font-weight:var(--graisse-h2);font-size:calc
 .t td{padding:3pt 5pt;border-top:1px solid var(--filet);vertical-align:top}
 .t tr{break-inside:avoid}
 .t td:first-child{font-weight:700;color:var(--primaire);white-space:nowrap}
-.ech th:first-child{width:20mm}.ech th:last-child{width:38mm}.ech td:last-child{color:var(--texte-2)}
 .taches th:first-child{width:14mm}.taches th:nth-child(3){width:10mm}.taches th:nth-child(4){width:24mm}.taches th:last-child{width:30mm}
 .taches td:first-child::before{content:"☐ ";font-weight:400;color:var(--texte-2)}
 .taches td:nth-child(2){font-weight:700}
 .taches i{display:block;font-style:normal;font-weight:400;color:var(--texte-2)}
-.taches tr.d td{font-size:9.5pt;color:var(--primaire);background:var(--fond-clair);border-top:1.5pt solid var(--accent);padding-top:4pt}
-.taches tr.d td::before{content:none}
 .taches b{display:block;width:max-content;font-size:6.3pt;letter-spacing:.04em;text-transform:uppercase;padding:0 2.5pt;border-radius:2pt;margin-top:1pt}
 .taches b.l{background:var(--entete-tableau);color:var(--texte-entete-tableau)}
 .taches b.a{border:1px solid var(--entete-tableau);color:var(--entete-tableau)}
-.taches b.p{border:1px dashed var(--texte-2);color:var(--texte-2);font-weight:400}
-.suivi th:first-child{width:10mm}.suivi th:nth-child(3){width:24mm}.suivi th:last-child{width:34mm}
 .encadre{background:var(--fond-clair);border-left:4pt solid var(--accent);padding:5pt 9pt;margin:4pt 0 6pt;font-size:9pt}
 .lbl{font-size:7.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--secondaire);margin:0 0 1pt}
 .diffusion{font-style:italic;font-size:8pt;color:var(--texte-2);margin-top:6pt}
@@ -309,9 +238,7 @@ h2{font-family:var(--police-titres);font-weight:var(--graisse-h2);font-size:calc
 .pied .logo{flex:none;width:var(--logo-pied-l);height:var(--logo-pied-h);background-position:right center}
 ```
 
-### 8.3 Contenu
-
-Échapper `&` en `&amp;`. Exemple (OP, français) — reproduire exactement ce balisage :
+### 8.3 Contenu — exemple à reproduire (abrégé)
 
 ```html
 <p class="surtitre">Plan d'actions</p>
@@ -320,54 +247,35 @@ h2{font-family:var(--police-titres);font-weight:var(--graisse-h2);font-size:calc
 <p class="acp-sous">Rue de l'Exemple 12, 1180 Uccle · BCE 0800.000.000</p>
 <table class="infos">
 <tr><th>Assemblée</th><td>AG ordinaire du jeudi 15 octobre 2026, 18h30 — Salle paroissiale, Uccle</td></tr>
-<tr><th>Présidence de l'AG</th><td>Mme Anne Lambert</td></tr>
 <tr><th>Syndic</th><td>Office des Propriétaires SA, représentée par Julie Martin</td></tr>
-<tr><th>Document analysé</th><td>PV de l'AG du 15/10/2026 (3 pages, 16 points)</td></tr>
 </table>
-<p class="synthese"><b>24 tâches</b>, dont 4 à délai légal et 6 à date fixée par l'AG · prochaine échéance légale : <b>14/11/2026</b>.</p>
-<h2 class="section">Échéances clés</h2>
-<table class="t ech"><tr><th>Date</th><th>Échéance</th><th>Tâches · base</th></tr>
-<tr><td>14/11/2026</td><td>Registre des décisions et envoi du PV</td><td>T01, T02 · art. 3.87 §12</td></tr>
-<tr><td>15/02/2027</td><td>Fin du délai de recours</td><td>art. 3.92 §3</td></tr>
-</table>
-<div class="encadre"><p class="lbl">Points d'attention</p><ul>
-<li>Recours possible jusqu'au 15/02/2027 ; voix contre : 2 copropriétaires au pt 5.</li>
-</ul></div>
-<h2 class="section">Tâches</h2>
+<p class="synthese"><b>7 tâches</b> · PV à envoyer au plus tard le <b>14/11/2026</b></p>
 <table class="t taches"><thead><tr><th>N°</th><th>Tâche</th><th>Pt</th><th>Échéance</th><th>Intervenant externe</th></tr></thead>
-<tr class="d"><td colspan="5">1. Formalités légales</td></tr>
-<tr><td>T01</td><td>Consigner les décisions dans le registre et archiver le PV</td><td>—</td><td>14/11/2026<b class="l">Légale</b></td><td></td></tr>
-<tr><td>T03</td><td>Informer les occupants des décisions qui les concernent<i>Toiture (pt 5), barbecues (pt 12).</i></td><td>5, 12</td><td>14/11/2026<b class="p">Proposée</b></td><td></td></tr>
-<tr class="d"><td colspan="5">3. Travaux et entretien</td></tr>
-<tr><td>T10</td><td>Commander les descentes d'eau pluviale<i>Devis 2026-118, 8.740,00 € TVAC.</i></td><td>5</td><td>30/10/2026<b class="p">Proposée</b></td><td>Toitures Meuse SRL</td></tr>
-<tr><td>T11</td><td>Planifier, suivre et réceptionner les travaux</td><td>5</td><td>31/03/2027<b class="a">AG</b></td><td>Toitures Meuse SRL</td></tr>
-<tr><td>T14</td><td>Résilier le contrat d'ascenseur Ascenseurs Delta SA</td><td>8</td><td><mark>[À PRÉCISER : préavis]</mark></td><td></td></tr>
+<tr><td>T01</td><td>Mettre à jour le ROI et le communiquer<i>Art. 14 : barbecues interdits sur terrasses et balcons.</i></td><td>12</td><td>Sans délai<b class="l">Légal</b></td><td></td></tr>
+<tr><td>T02</td><td>Commander les descentes d'eau pluviale à Toitures Meuse SRL<i>Devis 2026-118, 8.740,00 € TVAC, financé par le fonds de réserve.</i></td><td>5</td><td>30/10/2026</td><td>Toitures Meuse SRL</td></tr>
+<tr><td>T03</td><td>Consigner les décisions au registre et envoyer le PV aux copropriétaires</td><td>—</td><td>14/11/2026<b class="l">Légal</b></td><td></td></tr>
+<tr><td>T04</td><td>Demander les devis de façade et les soumettre au conseil<i>Mandat de l'AG : 45.000,00 € TVAC au plus.</i></td><td>6</td><td>15/12/2026<b class="a">AG</b></td><td>Conseil de copropriété</td></tr>
+<tr><td>T05</td><td>Afficher l'extrait de nomination du syndic et mettre à jour la BCE</td><td>9</td><td>09/01/2027<b class="l">Légal</b></td><td></td></tr>
+<tr><td>T06</td><td>Présenter une étude sur les bornes de recharge</td><td>15</td><td>Prochaine AG<b class="a">AG</b></td><td></td></tr>
+<tr><td>T07</td><td>Commander la façade à l'entreprise choisie par le conseil</td><td>6</td><td>—</td><td>Entreprise retenue</td></tr>
 </table>
-<h2 class="section">Suivi des points de l'ordre du jour</h2>
-<table class="t suivi"><tr><th>Pt</th><th>Objet</th><th>Résultat</th><th>Tâches</th></tr>
-<tr><td>1</td><td>Bureau de séance</td><td>Adopté</td><td>Aucune suite</td></tr>
-<tr><td>5</td><td>Descentes d'eau pluviale</td><td>Adopté</td><td>T03, T09-T11</td></tr>
-<tr><td>13</td><td>Véranda du lot 12</td><td>Rejeté</td><td>Aucune suite</td></tr>
-</table>
-<p class="diffusion">Document de travail interne établi à partir du PV de l'AG du 15/10/2026 — à vérifier avant exécution.</p>
+<div class="encadre"><p class="lbl">À noter</p><ul>
+<li>Pt 5 adopté avec 2 voix contre : recours possible jusqu'au 15/02/2027.</li>
+</ul></div>
+<p class="synthese">Sans suite : pts 1 à 3, 10, 11 et 13 (rejeté).</p>
 ```
 
-- Bloc titre : la variante de la fiche, `[SURTITRE]`, `[TITRE]`, `[COPROPRIÉTÉ]`,
-  `[SOUS-LIGNE]` remplacés par le § 7.
-- Détail facultatif : `<i>…</i>` après le libellé. Badges : `<b class="l">`, `<b class="a">`,
-  `<b class="p">` (Légale, AG, Proposée). Sans échéance : `—` sans badge. À préciser :
-  `<mark>[À PRÉCISER : …]</mark>`.
-- Ligne de domaine : `<tr class="d"><td colspan="5">…</td></tr>`.
+Détail facultatif : `<i>…</i>` après le libellé. Badges : `<b class="l">Légal</b>`,
+`<b class="a">AG</b>` (Syncura : Wettelijk, AV) ; date proposée : sans badge. Encadré « À
+noter » omis s'il est vide. Échapper `&` en `&amp;`.
 
-## 9. Contrôle et réponse
+## 9. Contrôle avant de livrer
 
-Avant de livrer : chaque point du PV dans le suivi ; aucune tâche pour un point rejeté ;
-références du suivi existantes ; T01… sans trou ; nombres de la synthèse exacts ; dates
-recomptées ; intervenants uniquement externes ; lots et non noms ; blocs de charte intacts ;
-aucun marqueur `⟦…⟧` ni `[RAPPEL]` restant ; balises fermées.
-
-Après le fichier, une seule ligne : « Plan d'actions prêt : <N> tâches, <K> éléments à préciser
-(surlignés). Ouvrir dans Edge, Ctrl+P, Enregistrer au format PDF. »
+Chaque point adopté qui appelle une action a sa tâche ; les autres sont dans « Sans suite » ;
+pas de tâche pour un point rejeté ; T01… dans l'ordre, sans trou ; nombre de tâches exact ;
+dates recomptées ; intervenants uniquement externes (jamais un collaborateur, « Syndic » ni
+« Gestionnaire ») ; montants et noms identiques au PV ; blocs de charte intacts ; aucun
+marqueur `⟦…⟧` ni `[RAPPEL]` restant ; balises fermées.
 
 **Corrections** (« ajoute une tâche », « le point 7 est reporté ») : repartir du dernier
 document, modifier seulement ce qui est demandé, relivrer le fichier complet et dire en une
