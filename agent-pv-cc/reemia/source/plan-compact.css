@@ -1,0 +1,66 @@
+*{box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;font-family:var(--police-texte);font-size:9.5pt;line-height:var(--interligne);color:var(--texte);background:#fff}
+@media screen{body{background:#9aa0a6;display:flex;flex-direction:column;align-items:center;padding:12px 0}.cadre{width:210mm;background:#fff}.haut-suite{display:none}.pied{position:static;order:2;width:210mm}}
+table.cadre{width:100%;border-collapse:collapse}
+.cadre>*>tr>td{padding:0}
+.esp-haut{height:var(--esp-haut)}
+.esp-bas{height:var(--esp-bas)}
+.haut-suite{position:fixed;top:0;left:0;right:0;height:var(--haut-h);padding:0 20mm;display:flex;align-items:center;justify-content:space-between;z-index:1}
+.rappel{font-size:7.5pt}
+.pied{position:fixed;bottom:-0.4mm;left:0;right:0;height:var(--pied-h);padding:0 20mm;display:flex;align-items:center;justify-content:space-between;gap:8mm;font-size:7pt;line-height:1.35;z-index:1}
+.mentions p{margin:0}
+.mentions p:first-child{font-weight:700}
+.entete-p1{position:relative;z-index:3;margin-top:calc(-1 * var(--esp-haut));min-height:var(--p1-h);background:#fff}
+.logo{background-repeat:no-repeat;background-position:left center;background-size:contain}
+.contenu{padding:0 20mm}
+.surtitre{font-family:var(--police-surtitre);font-weight:700;font-size:8.5pt;letter-spacing:.22em;text-transform:uppercase;color:var(--secondaire);margin:0 0 2pt}
+h1.titre{font-family:var(--police-titres);font-weight:var(--graisse-titre);font-size:calc(19pt * var(--echelle-titres));line-height:1.15;color:var(--primaire);margin:0 0 6pt}
+.point{color:var(--accent)}
+.filet-accent{width:var(--filet-accent-l);height:3.5pt;background:var(--accent);margin:2pt 0 12pt}
+.acp{font-weight:700;font-size:12.5pt;margin:0 0 1pt}
+.acp.accent{font-family:var(--police-accent);font-style:italic;font-weight:400;font-size:14.5pt;color:var(--accent)}
+.acp-sous{font-size:9pt;color:var(--texte-2);margin:0 0 8pt;padding-bottom:6pt;border-bottom:1px solid var(--filet)}
+p{margin:0 0 4pt}
+ul{margin:0;padding-left:14pt}
+mark{background:#FFF200;color:inherit;font-weight:700}
+.infos{width:100%;border-collapse:collapse;margin:0 0 4pt;font-size:9pt}
+.infos th{width:4cm;text-align:left;vertical-align:top;color:var(--primaire);padding:2pt 6pt 2pt 4pt}
+.infos td{padding:2pt 4pt}
+.infos tr+tr>*{border-top:1px solid var(--filet)}
+.synthese{font-size:9pt;color:var(--texte-2)}
+.synthese b{color:var(--primaire)}
+h2{font-family:var(--police-titres);font-weight:var(--graisse-h2);font-size:calc(12pt * var(--echelle-titres));color:var(--primaire);margin:12pt 0 4pt;break-after:avoid}
+.t{width:100%;border-collapse:collapse;table-layout:fixed;font-size:8.5pt;border:1px solid var(--filet);margin:0 0 6pt}
+.t th{background:var(--entete-tableau);color:var(--texte-entete-tableau);text-align:left;padding:3pt 5pt}
+.t td{padding:3pt 5pt;border-top:1px solid var(--filet);vertical-align:top}
+.t tr{break-inside:avoid}
+.t td:first-child{font-weight:700;color:var(--primaire);white-space:nowrap}
+.ech th:first-child{width:20mm}.ech th:last-child{width:38mm}.ech td:last-child{color:var(--texte-2)}
+.taches th:first-child{width:14mm}.taches th:nth-child(3){width:10mm}.taches th:nth-child(4){width:24mm}.taches th:last-child{width:30mm}
+.taches td:first-child::before{content:"☐ ";font-weight:400;color:var(--texte-2)}
+.taches td:nth-child(2){font-weight:700}
+.taches i{display:block;font-style:normal;font-weight:400;color:var(--texte-2)}
+.taches tr.d td{font-size:9.5pt;color:var(--primaire);background:var(--fond-clair);border-top:1.5pt solid var(--accent);padding-top:4pt}
+.taches tr.d td::before{content:none}
+.taches b{display:block;width:max-content;font-size:6.3pt;letter-spacing:.04em;text-transform:uppercase;padding:0 2.5pt;border-radius:2pt;margin-top:1pt}
+.taches b.l{background:var(--entete-tableau);color:var(--texte-entete-tableau)}
+.taches b.a{border:1px solid var(--entete-tableau);color:var(--entete-tableau)}
+.taches b.p{border:1px dashed var(--texte-2);color:var(--texte-2);font-weight:400}
+.suivi th:first-child{width:10mm}.suivi th:nth-child(3){width:24mm}.suivi th:last-child{width:34mm}
+.encadre{background:var(--fond-clair);border-left:4pt solid var(--accent);padding:5pt 9pt;margin:4pt 0 6pt;font-size:9pt}
+.lbl{font-size:7.5pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--secondaire);margin:0 0 1pt}
+.diffusion{font-style:italic;font-size:8pt;color:var(--texte-2);margin-top:6pt}
+.p1-blanc{padding:10mm 20mm 4mm}
+.p1-bandeau{height:var(--p1-h);background:var(--entete-fond);padding:0 20mm;display:flex;align-items:center;margin-bottom:8mm}
+.entete-p1 .logo{width:var(--logo-p1-l);height:var(--logo-p1-h)}
+.pastille{flex:1;height:var(--pastille-h);background:#fff;border-radius:999px;display:flex;align-items:center;padding:0 7mm}
+.suite-blanc{background:#fff;align-items:flex-end;padding-bottom:2.5mm}
+.suite-blanc::after{content:"";position:absolute;left:20mm;right:20mm;bottom:0;border-bottom:1px solid var(--filet)}
+.suite-blanc .rappel{color:var(--texte-2)}
+.suite-bandeau{background:var(--entete-fond);color:#fff}
+.haut-suite .logo{width:var(--logo-suite-l);height:var(--logo-suite-h)}
+.pied-bandeau{background:var(--pied-fond);color:var(--texte-pied)}
+.pied-filet{background:#fff;color:var(--texte-2)}
+.pied-filet::before{content:"";position:absolute;left:20mm;right:20mm;top:0;border-top:1px solid var(--filet)}
+.pied .logo{flex:none;width:var(--logo-pied-l);height:var(--logo-pied-h);background-position:right center}

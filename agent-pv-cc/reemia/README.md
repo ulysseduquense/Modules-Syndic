@@ -20,16 +20,17 @@ livrables/
     Skill Taches post-AG - lecture du PV et plan d'actions.md
 source/
   core.src.md, instructions-pv-cc.md         texte de l'agent PV de CC ({{CSS}} = commun.css)
-  post_ag.src.md, instructions-post-ag.md    texte de l'agent tâches post-AG ({{CSS}} = commun.css + plan.css)
+  post_ag.src.md, instructions-post-ag.md    texte de l'agent tâches post-AG ({{CSS}} = plan-compact.css)
   commun.css       CSS commun (A4, bandeaux, en-tête répété, pied, numéros de page)
-  plan.css         composants du plan d'actions (tableaux de tâches, badges d'échéance, suivi)
+  plan-compact.css CSS complet et réduit du plan d'actions (cadre, charte, tableaux de tâches, badges)
   marques.py       chartes des 8 marques (couleurs, polices, logos, mentions), reprises de brand.json
   logos/           logos officiels compactés (SVG minifiés, PNG ou WebP à la taille d'impression)
   build_skills.py  régénère tous les textes de livrables/ et contrôle la limite de 65 000 caractères
   assemble.py      PV de CC d'exemple assemblé comme le ferait l'agent (test)
   pdfall.js        impression Chromium des HTML d'un dossier (test)
 exemples/
-  PV d'AG fictifs (OP, Syncura, Agigest) et plans d'actions produits par un agent simulé sans code
+  PV d'AG fictifs (OP, Syncura, Agigest), et pour OP la liste (1re réponse) et le plan d'actions
+  produits par un agent simulé sans code
 ```
 
 ## Mise en place dans Reemia
@@ -56,3 +57,11 @@ Après un changement de délai légal ou de méthode : modifier `source/post_ag.
 `source/core.src.md`, relancer `build_skills.py`, recoller le skill de l'agent.
 
 Test PV de CC : `python3 source/assemble.py /tmp/pv-html && node source/pdfall.js /tmp/pv-html`.
+
+## Agent « Tâches post-AG » : deux réponses
+
+Le plan d'actions se fait en deux réponses pour que le document HTML soit écrit d'un seul jet
+(une sortie trop longue faisait bloquer l'agent) : 1) la liste des tâches dans le chat, que le
+gestionnaire corrige au besoin ; 2) après « génère », le HTML à la charte. Le gabarit est
+compact (environ 20 000 caractères pour 25 tâches, comme un PV de CC). Si l'agent bloque encore,
+réduire en priorité la longueur des libellés et des détails (section 1 du skill).

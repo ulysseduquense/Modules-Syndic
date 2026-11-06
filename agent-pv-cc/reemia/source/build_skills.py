@@ -178,11 +178,11 @@ libellés. Pour la marque du document, copier ses blocs **tels quels** aux marqu
 
 def main():
     css = (HERE / "commun.css").read_text().strip()
-    plan_css = (HERE / "plan.css").read_text().strip()
+    plan_css = (HERE / "plan-compact.css").read_text().strip()
     files = {
         "pv-cc/Skill PV de CC - redaction et gabarit.md": (HERE / "core.src.md").read_text().replace("{{CSS}}", css),
         "pv-cc/Instructions agent - PV de CC.md": (HERE / "instructions-pv-cc.md").read_text(),
-        "taches-post-ag/Skill Taches post-AG - lecture du PV et plan d'actions.md": (HERE / "post_ag.src.md").read_text().replace("{{CSS}}", css + "\n" + plan_css),
+        "taches-post-ag/Skill Taches post-AG - lecture du PV et plan d'actions.md": (HERE / "post_ag.src.md").read_text().replace("{{CSS}}", plan_css),
         "taches-post-ag/Instructions agent - Taches post-AG.md": (HERE / "instructions-post-ag.md").read_text(),
     }
     for slug, (titre, ids) in GROUPES.items():
