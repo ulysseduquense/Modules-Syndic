@@ -1,18 +1,20 @@
 ---
-name: pv-cc-chartes-op-easy-gestea
-description: Fiches de charte graphique pour le PV de conseil de copropriété en HTML — OP, Easy Syndic, Gestea. Contient, pour chaque marque, le bloc de style (couleurs, polices, logos officiels intégrés), l'en-tête de la page 1, l'en-tête des pages suivantes, le pied de page avec les mentions légales exactes et le bloc titre. À utiliser avec le skill « pv-cc-redaction-gabarit » dès que le PV concerne un immeuble géré par OP, Easy Syndic, Gestea (OP, O.P., Office des Propriétaires, OP Bruxelles, Opbrussels, OP Wallonie, OPBW, OP BW ; Easy Syndic, EasySyndic, easy-syndic ; Gestea).
+name: charte-syndic-op-easy-gestea
+description: Charte graphique des documents HTML A4 imprimables des syndics OP, Easy Syndic, Gestea (OP, O.P., Office des Propriétaires, OP Bruxelles, Opbrussels, OP Wallonie, OPBW, OP BW ; Easy Syndic, EasySyndic, easy-syndic ; Gestea). Pour chaque marque, le bloc de style (couleurs, polices, logos officiels intégrés), l'en-tête de la page 1, l'en-tête des pages suivantes, le pied de page avec les mentions légales exactes et le bloc titre. Commun à tous les agents qui produisent un document à la charte d'un syndic Emeria (PV de conseil de copropriété, plan d'actions post-AG…) ; s'utilise avec le skill du document, qui donne le squelette HTML, le CSS commun et les libellés.
 ---
 
-# PV de CC — chartes OP, Easy Syndic, Gestea
+# Chartes syndic — OP, Easy Syndic, Gestea
 
-Ces fiches complètent le skill **pv-cc-redaction-gabarit** (squelette, CSS commun et composants,
-§ 8). Pour la marque du PV, copier ses blocs **tels quels** aux marqueurs du squelette.
+Ces fiches complètent le skill du document en cours (PV de conseil de copropriété, plan
+d'actions post-AG…), qui donne le squelette HTML, le CSS commun, les composants et les
+libellés. Pour la marque du document, copier ses blocs **tels quels** aux marqueurs du squelette.
 
 - Ne jamais modifier un logo (les adresses `data:` sont les fichiers officiels relevés sur le site
   de la marque), une couleur ou une mention légale, ni mélanger les blocs de deux marques.
-- Seuls changements permis : `[RAPPEL]` dans l'en-tête des pages suivantes, la ligne 2 du pied
-  (contact du gestionnaire ou de son bureau) et, pour une entité ou un bureau listé dans la fiche,
-  les lignes indiquées.
+- Seuls changements permis : `[RAPPEL]` dans l'en-tête des pages suivantes ; `[SURTITRE]`,
+  `[TITRE]`, `[COPROPRIÉTÉ]` et `[SOUS-LIGNE]` dans le bloc titre ; la ligne 2 du pied (contact
+  du gestionnaire ou de son bureau) ; pour une entité ou un bureau listé dans la fiche, les
+  lignes indiquées.
 - Les polices viennent de Google Fonts : sans connexion, le navigateur bascule sur Arial ; le PDF
   reste propre.
 
@@ -46,7 +48,7 @@ Ces fiches complètent le skill **pv-cc-redaction-gabarit** (squelette, CSS comm
 <header class="entete-p1 p1-blanc"><div class="logo logo-1" role="img" aria-label="Office des Propriétaires (OP)"></div></header>
 ```
 
-**3. En-tête des pages suivantes** — à la place de `⟦EN-TÊTE DES PAGES SUIVANTES⟧` ; remplacer `[RAPPEL]` (§ 7 du skill de rédaction) :
+**3. En-tête des pages suivantes** — à la place de `⟦EN-TÊTE DES PAGES SUIVANTES⟧` ; remplacer `[RAPPEL]` par le rappel défini dans le skill du document :
 
 ```html
 <div class="haut-suite suite-blanc"><div class="logo logo-1"></div><div class="rappel">[RAPPEL]</div></div>
@@ -62,18 +64,18 @@ Ces fiches complètent le skill **pv-cc-redaction-gabarit** (squelette, CSS comm
 </div></div>
 ```
 
-**5. Bloc titre** — début de `⟦CONTENU⟧` :
+**5. Bloc titre** — début de `⟦CONTENU⟧` ; remplacer `[SURTITRE]`, `[TITRE]`, `[COPROPRIÉTÉ]` et `[SOUS-LIGNE]` par les libellés du skill du document, sans changer les balises :
 
 ```html
-<p class="surtitre">Procès-verbal</p>
-<h1 class="titre">Réunion du conseil de copropriété</h1>
-<p class="acp accent">ACP Résidence …</p>
-<p class="acp-sous">adresse · BCE …</p>
+<p class="surtitre">[SURTITRE]</p>
+<h1 class="titre">[TITRE]</h1>
+<p class="acp accent">[COPROPRIÉTÉ]</p>
+<p class="acp-sous">[SOUS-LIGNE]</p>
 ```
 
 **6. Entités et bureaux** — **OP Wallonie** (immeubles gérés par la société OP Wallonie) : dans le pied de page, remplacer la
 ligne 1 par `Office des Propriétaires Wallonie SRL · Rue Vilain XIIII 53-55, 1000 Bruxelles · BCE 0432.691.858 · IPI n° 508 167`,
-et la ligne Syndic de la grille par « Office des Propriétaires Wallonie SRL, représentée par … ».
+et, dans la ligne « Syndic » de la grille d'informations, écrire « Office des Propriétaires Wallonie SRL, représentée par … ».
 
 **Bureaux** (ligne 2 du pied de page, si le gestionnaire en dépend) :
 
@@ -118,7 +120,7 @@ et la ligne Syndic de la grille par « Office des Propriétaires Wallonie SRL, r
 <header class="entete-p1 p1-blanc"><div class="logo logo-1" role="img" aria-label="Easy Syndic"></div></header>
 ```
 
-**3. En-tête des pages suivantes** — à la place de `⟦EN-TÊTE DES PAGES SUIVANTES⟧` ; remplacer `[RAPPEL]` (§ 7 du skill de rédaction) :
+**3. En-tête des pages suivantes** — à la place de `⟦EN-TÊTE DES PAGES SUIVANTES⟧` ; remplacer `[RAPPEL]` par le rappel défini dans le skill du document :
 
 ```html
 <div class="haut-suite suite-blanc"><div class="logo logo-1"></div><div class="rappel">[RAPPEL]</div></div>
@@ -134,14 +136,14 @@ et la ligne Syndic de la grille par « Office des Propriétaires Wallonie SRL, r
 </div><div class="logo logo-2"></div></div>
 ```
 
-**5. Bloc titre** — début de `⟦CONTENU⟧` :
+**5. Bloc titre** — début de `⟦CONTENU⟧` ; remplacer `[SURTITRE]`, `[TITRE]`, `[COPROPRIÉTÉ]` et `[SOUS-LIGNE]` par les libellés du skill du document, sans changer les balises :
 
 ```html
-<p class="surtitre">Procès-verbal</p>
-<h1 class="titre">Réunion du conseil de copropriété</h1>
+<p class="surtitre">[SURTITRE]</p>
+<h1 class="titre">[TITRE]</h1>
 <div class="filet-accent"></div>
-<p class="acp">ACP Résidence …</p>
-<p class="acp-sous">adresse · BCE …</p>
+<p class="acp">[COPROPRIÉTÉ]</p>
+<p class="acp-sous">[SOUS-LIGNE]</p>
 ```
 
 **6. Entités et bureaux** — **Bureaux** (Bruxelles, Liège, Namur, Gand, Anvers, Hasselt, Mons, Marche-en-Famenne, Arlon, Luxembourg) : le site ne publie pas leurs coordonnées ; mettre en ligne 2 du pied de page le téléphone et l'e-mail du gestionnaire s'ils sont donnés, sinon garder ceux du siège.
@@ -167,8 +169,8 @@ et la ligne Syndic de la grille par « Office des Propriétaires Wallonie SRL, r
 --filet-accent-l:0;
 --logo-p1-l:46mm;--logo-p1-h:12mm;--logo-suite-l:28mm;--logo-suite-h:7.3mm;--logo-pied-l:28mm;--logo-pied-h:7.3mm}
 @page{size:A4;margin:0 0 7mm 0;@bottom-left-corner{background:#1E1F1F;content:""}@bottom-left{background:#1E1F1F;content:""}@bottom-center{background:#1E1F1F;content:""}@bottom-right-corner{background:#1E1F1F;content:""}@bottom-right{background:#1E1F1F;content:"Page " counter(page) " / " counter(pages);color:#FFFFFF;font:7.5pt Arial, Helvetica, sans-serif;text-align:right;vertical-align:top;padding-right:20mm}}
-.logo-1{background-image:url("data:image/png;base64,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")}
-.logo-2{background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAABRCAMAAABxLUp+AAAAYFBMVEUAAAD///////////////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw2ciRAAAAIHRSTlMA+wkwkG3SUa4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPOGM3gAAAjFSURBVHja7ZyJsqQqDEDbhO3/v3hIAi4QFm17pqaUqjf1bgsuh2yE6Ofztre97W1ve9vb/koDQG+Dc8uyWLgyHGCiD8amdgW1KcP3P0KvTZ93/gGUhtYQstQukENjfH8UeMPz4pwLxiKUw7UG1fA4eB0L1nQats+rPB+fy5+VFgzLsdnT4OyymB44MMUl3OHu/aK2rYvfzesS5Hd0S6fxM6B6yGE98fw7fIftisz1wYHVbn8nogNwFXYeeiO4dINnRG7FFoyn0UTAnSfXBbdewwVqrpCcITgI2/A02N8MTk5l5sUtiwI9NTKw+B+ehD8A50vlBDTFfXpWlJYRNzstgIQLC8PveSLKwVj9qnsHrGzDlJYGuicQbgQuIbwJnK8Uk2fM7U0Kg2sKLN8j7q+1l9atk1GBhAkQ4ZRxB7G46ZESLAYnf9wDDleJLty/tXPg2MDttYulq1SJr8DxPZpZkUtqmq4GScgEHJ/qjMw1wcGU1e2Cc9UJQn1334BLUzPpHoRbEjdYlROyWT2nrS1w4g+HJ+qCqyUhPmPwN4KTqTGKBWhxy5Zjw5TBndTWFjhU9fQ0uCLCAo9wo40T1yQzhHPcoOS2gePTTctcAxxb3Ym48qTENWboKriQ3EIYuwexr6bmtgN3Slsb4Gbtxkkbdy+4VdL8eJY5GFLk7QAOTsRzDXBzZmMALsyI3Bfg1pscTxHfS3og9gvbJWEvrX5a5nRwMBsbdeM4r8SBN4LbbhKG82x3Mlko5AHcvIfQweGMuR2CS+Fp6KK7Ds5uAj26373lgUKojuC4q4er4OxsTNkFl1eS8RLYTJpdBsfTkhd/rhsDSFdQ9LQGN+sh2uDCZxYcFk1LSrmY9oOT4NrnXaUIjoFJP2zRsZTgxM5dA8fPa2bBVTmMenWY2OEpcGUz9eSaOQ8e1oPgqqtV4Pihhto6Cw79viH00kpFABW66cJ5cKF2Df6oI9C2BmFd15cXq8FN+VZdVU11n8eMZpgHx9DX/H7Au8AVytlzD+sKWTVfCjiOlv1VG+emwZVbA+qOUrJ2lSFqg3PljkPld3bjDq6isYLR5E0FN7P60sH5yqv6Njg3m3t1GrmLXrWSMKvvSeyMYcNdquDGHmI2jttsnLkILmfib0kr1SEvtBaJ3BXq+K0Pbqit51cOeBmcmjq4CM5VJq3lHqhrUOK3Prihhzi/Vv0CnJYAugZOiR99I2jn1G4nrG2BG2jr+ezIV+BMJcmXwMmSxB1bY7tLojLXXFk0wfXjuVYis52POwGuWiuArQPEK+CwubmoRwi2za0Drqut5zPAs+BiTUu1VLgJXLXP3atlCIOt+g64T8dDnN9zmASnpnog3KKqkpWsmlMNs1v6uwA9cB1tbe9yuc4aaUbi7FJfFO9xDg0/oK8eBtz64Nra2tlXdbJGgp4k9VTVcRqzmb/+Alxrj0FdPYx26yBXeOit5SU7O/m4KJMl2Y4p51DtaMtUfL892NzVUiVxlByGZdzwXO1ILo4xnqsKY6xkXWGC1XwcipSmjXNnZbQ3y8kSiNZ5m0EmC7lVwH2+BGfPVittecgcKBW58G610loZtBsc4HJ2JK9F28sa2dmHfw9uLTFq1uANyryq4Tqic+A6eX0tbp9QVdsrrQ1XwHEe8vDwRRp3VJEJ9lCR6b9JZCZwnQRSlWxK4NwI3GhVfAEcB7I2xkhcAlxVMIBX26EG2FIRsAxWZ8YrBzrnheICVaIa7wXXcKt2pkLkv27NPN0cOHwyuG5ibQDOPxqcvQxOIoPHggvXwYVHg1vgMjj3bHD+Kji/PBucu5gdSdUvzwXXEbkuOFyeDC50V109cLJKeSw463rVc6PUufPPBed7ItcBxwLn8bngBMCFXS4G/mRwvrNghW7NQuT9YHCHovNpcHnQk8GpiboRuFyp7k/vOXz+h085wBQ4WQHYM0U36+r+H4HzAe+iYqtTgXM4B0422P25Mi9B80NwTnLqoL/+gtuG+rbyQXesmTcVASlExsO26f4vOkHUwElw7dIEaGXGM5kfgqNq1pD3oOAoLhkcV7zyi7V8AJOtTt0ygZ2Qmfi1AZdeOZJfj+B4FmTHcBulqG7mAkEnp4E7vGr4S3Au7kWY/IY2A+Q6PvppBefknXrPWy15T99yZO7ya1/0c9ZHtwC9Lw+pFhUYXOzIHyFwUifAqgo5vg38srQFHVwiVxcCKcXTZr+T+VtwJCGWX+SNt4f0LC5wYd4OnNwF/W6pqjWYeIPcy9EMu0CjeHgC5/P+M3WKl9jAxRGGT0BTlo4DVUDQcAs6uMSjfLmsApfezTC7aoXfqaqlTX4fb93Tdx1CfD7DH3jYgaPyInqb2cZPMVA4HqiDiGoUxqiq9E8cbtNUWyKDHEZxJwMHcMAiTGUE6Xj4pIuGFrhcHmag80oSrJ0+fwNculS8B2vjhaPKARulPTjO/XuqqIBk4wzvj0ICR4hkOGwTbyNI+daAO4BLIhzB+fwtgnjMy9la4NbK9/2Xjg7gAHOPwwcbfugcHDGAXF6awB1tHFWQxFsntfIZnC3AyfC1ECDe3RBcOu4SuE8P3PYNmi2yObzoux49Viv80MYhy0m8BJUxe3GS8d/KxmEs4CEcKK4hZMVjcC4PZ69qxCd73moR/SdwyIZyL3Fy3E2B22oLSOx4KnlNRmVB25HyFY9felWTdA+RzJEhlvboHLjcKNohjDpI4JCWz7GUiQw7PbQcjJNuUtRmeTrQSSfLzsFQEVMQcMg2DnbHJ8B9NkDRqcQIiWxp/CTYWukRgVY5kl96VSTnIB4/EpT/caWNc4TB5WV3EDPG4CjkSJqSw6dUEro5uSBSmd5QJLfK4HbHdXCmrBbz7RriujPN/6/AkXLFiUT+V15MjZ+Ni3IQJw+T3Pto9y318/IRulhTEjsCdZfh3vLBdQESiVnpmYdwP/7De5acNHR/PD6RB8VzfdfgidkR8z0380hwgN82NQMz/tTj2972tre97W1ve3z7A/miQPdJ3XV2AAAAAElFTkSuQmCC")}
+.logo-1{background-image:url("data:image/webp;base64,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")}
+.logo-2{background-image:url("data:image/webp;base64,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")}
 </style>
 ```
 
@@ -178,7 +180,7 @@ et la ligne Syndic de la grille par « Office des Propriétaires Wallonie SRL, r
 <header class="entete-p1 p1-blanc"><div class="logo logo-1" role="img" aria-label="Gestea"></div></header>
 ```
 
-**3. En-tête des pages suivantes** — à la place de `⟦EN-TÊTE DES PAGES SUIVANTES⟧` ; remplacer `[RAPPEL]` (§ 7 du skill de rédaction) :
+**3. En-tête des pages suivantes** — à la place de `⟦EN-TÊTE DES PAGES SUIVANTES⟧` ; remplacer `[RAPPEL]` par le rappel défini dans le skill du document :
 
 ```html
 <div class="haut-suite suite-blanc"><div class="logo logo-1"></div><div class="rappel">[RAPPEL]</div></div>
@@ -194,13 +196,13 @@ et la ligne Syndic de la grille par « Office des Propriétaires Wallonie SRL, r
 </div><div class="logo logo-2"></div></div>
 ```
 
-**5. Bloc titre** — début de `⟦CONTENU⟧` :
+**5. Bloc titre** — début de `⟦CONTENU⟧` ; remplacer `[SURTITRE]`, `[TITRE]`, `[COPROPRIÉTÉ]` et `[SOUS-LIGNE]` par les libellés du skill du document, sans changer les balises :
 
 ```html
-<p class="surtitre">Procès-verbal</p>
-<h1 class="titre">Réunion du conseil de copropriété<span class="point">.</span></h1>
-<p class="acp">ACP Résidence …</p>
-<p class="acp-sous">adresse · BCE …</p>
+<p class="surtitre">[SURTITRE]</p>
+<h1 class="titre">[TITRE]<span class="point">.</span></h1>
+<p class="acp">[COPROPRIÉTÉ]</p>
+<p class="acp-sous">[SOUS-LIGNE]</p>
 ```
 
 **6. Entités et bureaux** — Un seul siège (Rue Vilain XIIII 53-55, 1000 Bruxelles).

@@ -1,6 +1,6 @@
 ---
 name: pv-cc-redaction-gabarit
-description: Rédige le procès-verbal d'une réunion du conseil de copropriété (PV de CC ; « conseil syndical » au Luxembourg, « raad van mede-eigendom » en néerlandais) à partir de notes tapées en vrac, et le livre en document HTML A4 imprimable à la charte du syndic. Contient la méthode de rédaction (FR et NL), le cadre légal belge et luxembourgeois, les libellés fixes et le gabarit HTML. S'utilise avec le skill de charte de la marque (« PV de CC — chartes … »). Pas pour un PV d'assemblée générale.
+description: Rédige le procès-verbal d'une réunion du conseil de copropriété (PV de CC ; « conseil syndical » au Luxembourg, « raad van mede-eigendom » en néerlandais) à partir de notes tapées en vrac, et le livre en document HTML A4 imprimable à la charte du syndic. Contient la méthode de rédaction (FR et NL), le cadre légal belge et luxembourgeois, les libellés fixes et le gabarit HTML. S'utilise avec le skill de charte de la marque (« Chartes syndic — … »). Pas pour un PV d'assemblée générale.
 ---
 
 # PV de conseil de copropriété — rédaction et gabarit HTML
@@ -27,7 +27,7 @@ syndic**, prêt à relire, imprimer et signer.
 1. **Identifier la marque** : le syndic qui gère l'immeuble. Elle fixe le logo, les couleurs,
    le pied de page et la langue. Si elle n'est pas dite, la déduire du contexte (société,
    gestionnaire, immeuble) ; sinon la demander en une ligne. Ouvrir ensuite le skill
-   « PV de CC — chartes » qui contient cette marque et y lire sa fiche.
+   « Chartes syndic » qui contient cette marque et y lire sa fiche.
 2. **Recueillir les notes** telles quelles (abréviations, fautes). Si l'utilisateur annonce
    plusieurs messages (« je te dicte », « attends »), accuser réception en une ligne et
    attendre « c'est tout » ou « génère ».
@@ -271,7 +271,7 @@ de la prochaine AG · divers. Ne garder que les points abordés.
 ### 8.1 Squelette
 
 Copier ce squelette, puis remplacer les quatre marqueurs `⟦…⟧` par les blocs de la fiche de
-la marque (skill « chartes »), et `⟦CONTENU⟧` par le PV rédigé avec les composants du § 8.3.
+la marque (skill « Chartes syndic »), et `⟦CONTENU⟧` par le PV rédigé avec les composants du § 8.3.
 
 ```html
 <!doctype html>
@@ -318,8 +318,9 @@ la marque (skill « chartes »), et `⟦CONTENU⟧` par le PV rédigé avec les 
 Échapper `&` en `&amp;` et `<` en `&lt;` dans le texte. Les exemples sont en français ; pour
 Syncura et Agigest, prendre les libellés du § 7.
 
-**Bloc titre** — la fiche de la marque donne la variante exacte (filet d'accent, point final,
-nom en italique) ; forme générale :
+**Bloc titre** — prendre la variante de la fiche de la marque (filet d'accent, point final, nom
+en italique) et y remplacer `[SURTITRE]`, `[TITRE]`, `[COPROPRIÉTÉ]` et `[SOUS-LIGNE]` par les
+libellés du § 7 ; résultat, par exemple :
 
 ```html
 <p class="surtitre">Procès-verbal</p>
@@ -430,7 +431,7 @@ les donnent.
 - Chaque note est reprise ; aucun fait ajouté ; aucun « le conseil décide » sans délégation
   citée ; débiteurs désignés par leur lot.
 - Bloc marque, en-têtes et pied copiés **sans modification** depuis la fiche de la marque
-  (logos, couleurs, mentions) ; seuls `[RAPPEL]` et, le cas échéant, la ligne de contact du
+  (logos, couleurs, mentions) ; seuls `[RAPPEL]`, le bloc titre et, le cas échéant, la ligne de contact du
   pied ont été remplacés.
 - Langue de la marque (Syncura : tout en néerlandais), libellés du § 7, organe correct
   (Agigest : conseil syndical, pas d'ACP ni de BCE).

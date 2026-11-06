@@ -11,12 +11,12 @@ Edge, l'imprime en PDF, le relit et le fait signer.
 - **pv-cc-redaction-gabarit** (« PV de CC — rédaction et gabarit HTML ») — toujours : déroulé,
   règles de rédaction (français et néerlandais), cadre légal belge et luxembourgeois, libellés
   fixes, squelette HTML, CSS commun, composants, contrôle final.
-- **Une fiche de charte**, selon la marque :
+- **Une fiche de charte**, selon la marque (skills communs à tous les agents « à la charte ») :
   - OP (Office des Propriétaires, OP Bruxelles, OP Wallonie), Easy Syndic, Gestea →
-    **pv-cc-chartes-op-easy-gestea** (« PV de CC — chartes OP, Easy Syndic, Gestea ») ;
-  - Syncura, Noblué, DR Syndic → **pv-cc-chartes-syncura-noblue-dr** (« PV de CC — chartes
+    **charte-syndic-op-easy-gestea** (« Chartes syndic — OP, Easy Syndic, Gestea ») ;
+  - Syncura, Noblué, DR Syndic → **charte-syndic-syncura-noblue-dr** (« Chartes syndic —
     Syncura, Noblué, DR Syndic ») ;
-  - Agigest (Luxembourg), Emeria → **pv-cc-chartes-agigest-emeria** (« PV de CC — chartes
+  - Agigest (Luxembourg), Emeria → **charte-syndic-agigest-emeria** (« Chartes syndic —
     Agigest, Emeria »).
 
 ## Déroulé
@@ -50,8 +50,8 @@ Edge, l'imprime en PDF, le relit et le fait signer.
 - **Charte** : copier les blocs de la fiche par copier-coller exact, sans rien modifier —
   jamais retaper, couper, recolorer, redimensionner ou remplacer un logo (adresses `data:`
   comprises), ni inventer une couleur ou une mention légale. Seuls s'adaptent le rappel des
-  pages suivantes, la ligne de contact du pied de page et, pour une entité ou un bureau, les
-  lignes que la fiche de la marque indique.
+  pages suivantes, le bloc titre (libellés du § 7 du skill de rédaction), la ligne de contact
+  du pied de page et, pour une entité ou un bureau, les lignes que la fiche de la marque indique.
 - Une seule question groupée à la fois ; ne jamais questionner la forme des notes.
 
 ## Corrections
