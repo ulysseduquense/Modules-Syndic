@@ -1,6 +1,6 @@
 ---
 name: taches-post-ag
-description: Lit le procès-verbal d'une assemblée générale de copropriété (Belgique : ACP / VME ; Luxembourg : syndicat des copropriétaires) et en tire toutes les tâches qui suivent pour le syndic — formalités légales avec leurs délais calculés, exécution de chaque décision, intervenants externes. Livre d'abord la liste dans le chat, puis le plan d'actions HTML A4 imprimable à la charte du syndic. Contient la méthode de lecture (FR et NL), les délais légaux belges et luxembourgeois, le catalogue décision → tâches, le calcul des échéances, les libellés et le gabarit HTML compact. S'utilise avec le skill de charte de la marque (« Chartes syndic — … »). Pas pour rédiger un PV.
+description: Lit le procès-verbal d'une assemblée générale de copropriété (Belgique : ACP / VME ; Luxembourg : syndicat des copropriétaires) et en tire toutes les tâches qui suivent pour le syndic — formalités légales avec leurs délais calculés, exécution de chaque décision, intervenants externes. Livre directement, en une seule réponse, le plan d'actions HTML A4 imprimable à la charte du syndic. Contient la méthode de lecture (FR et NL), les délais légaux belges et luxembourgeois, le catalogue décision → tâches, le calcul des échéances, les libellés et le gabarit HTML compact. S'utilise avec le skill de charte de la marque (« Chartes syndic — … »). Pas pour rédiger un PV.
 ---
 
 # Tâches post-AG — lecture du PV et plan d'actions
@@ -9,37 +9,26 @@ Le gestionnaire te donne le **procès-verbal d'une assemblée générale** (fich
 collé). Tu en tires les tâches qui suivent pour le syndic, puis tu les mets en page à la charte
 du syndic.
 
-## 1. Deux temps, deux réponses
+## 1. Une seule réponse : le document
 
-Le document HTML est long à écrire : pour qu'il passe d'un seul jet, le travail se fait en deux
-réponses.
-
-1. **Liste** (première réponse) : la liste des tâches dans le chat, en tableau markdown
-   compact (§ 9), avec les éléments à préciser. Elle termine par : « Réponds « génère » pour le
-   plan d'actions à la charte, ou corrige la liste. »
-2. **Document** (après « génère », « ok », « vas-y » ou des corrections) : le fichier HTML
-   `Plan d'actions AG - <copropriété> - <AAAA-MM-JJ>.html` (Syncura :
-   `Actieplan AV - <copropriété> - <AAAA-MM-JJ>.html`), date de l'AG, nom sans « ACP » ni
-   « VME ». Ouvert dans Edge : Ctrl+P → « Enregistrer au format PDF ». Puis une ligne de
-   réponse (§ 10).
-
-Si le premier message demande expressément le document (« génère directement », « fais le
-document »), faire les deux dans la même réponse : la liste en une ligne par tâche, puis le
-fichier.
+Dès que le PV est fourni, livrer directement le fichier HTML, sans liste préalable, sans
+demander de validation et sans autre question que celle du § 2.5 :
+`Plan d'actions AG - <copropriété> - <AAAA-MM-JJ>.html` (Syncura :
+`Actieplan AV - <copropriété> - <AAAA-MM-JJ>.html`), date de l'AG, nom sans « ACP » ni
+« VME ». Ouvert dans Edge : Ctrl+P → « Enregistrer au format PDF ». Puis une seule ligne
+(§ 9). Ne jamais recopier les tâches dans le chat.
 
 **Économie** (indispensable pour que la réponse aille au bout) :
 - Réflexion courte : appliquer le catalogue sans débattre des cas limites ; un doute devient
-  `[À PRÉCISER : …]`. Ne jamais rédiger le document ni la liste dans la réflexion.
-- Au moment du document, reprendre la liste validée telle quelle, sans réanalyser le PV.
+  `[À PRÉCISER : …]` dans le document. Ne jamais rédiger le document dans la réflexion.
 - Textes courts : tâche ≤ 60 caractères, détail ≤ 70, objet dans le suivi ≤ 30, points
   d'attention 4 au plus d'une ligne chacun. Ne pas répéter une information d'une partie à
   l'autre.
 
 ## 2. Lecture du PV
 
-1. Lire tout le PV. Pages manquantes, scan illisible, annexes citées absentes : le dire dans la
-   liste (première réponse), pas dans le document, et travailler sur le reste. Sans PV : le
-   demander.
+1. Lire tout le PV. Pages manquantes, scan illisible : le dire en un point d'attention et
+   travailler sur le reste. Sans PV : le demander.
 2. **Marque** : le syndic qui a tenu l'AG (en-tête, pied de page, « le syndic, X, représenté
    par … »). Introuvable : la demander en une ligne. Lire sa fiche dans le skill « Chartes
    syndic ».
@@ -66,7 +55,8 @@ fichier.
 - **Données personnelles** : débiteur, demandeur, opposant → son lot, jamais son nom. Les élus
   (conseil, commissaire, président) peuvent être nommés.
 - **Délais** : « Légale » uniquement pour ceux des § 4 et § 5 ; un délai d'usage est
-  « Proposée ». Ne jamais juger la validité d'une décision ni les majorités.
+  « Proposée ». Ne jamais juger la validité d'une décision, les majorités ni le cumul de
+  fonctions d'une personne.
 - **Langue** : Syncura → tout en néerlandais (VME, AV, syndicus). Agigest → droit
   luxembourgeois (§ 4.2), « conseil syndical », ni « ACP » ni « BCE ».
 - **Charte** : blocs de la fiche copiés tels quels (logos, couleurs, mentions) ; seuls changent
@@ -304,24 +294,16 @@ suivantes et le pied.
   `<mark>[À PRÉCISER : …]</mark>`.
 - Ligne de domaine : `<tr class="d"><td colspan="5">…</td></tr>`.
 
-## 9. Liste dans le chat (première réponse)
+## 9. Contrôle et réponse
 
-Une ligne de contexte (marque, langue, AG du …), puis un tableau markdown, une ligne par
-tâche, groupé par domaine :
-
-| N° | Tâche | Pt | Échéance | Intervenant externe |
-|---|---|---|---|---|
-| T01 | Consigner les décisions dans le registre et archiver le PV | — | 14/11/2026 (légale) | |
-
-Puis les échéances clés en une ligne, les points d'attention (4 au plus), les points sans
-suite (« Pts 1, 3, 13 : aucune suite »), les éléments à préciser, et la phrase du § 1.
-
-## 10. Contrôle et réponse finale
-
-Avant le document : chaque point du PV dans le suivi ; aucune tâche pour un point rejeté ;
+Avant de livrer : chaque point du PV dans le suivi ; aucune tâche pour un point rejeté ;
 références du suivi existantes ; T01… sans trou ; nombres de la synthèse exacts ; dates
 recomptées ; intervenants uniquement externes ; lots et non noms ; blocs de charte intacts ;
 aucun marqueur `⟦…⟧` ni `[RAPPEL]` restant ; balises fermées.
 
-Après le fichier : une ligne — « Plan d'actions prêt : <N> tâches. Ouvrir dans Edge, Ctrl+P,
-Enregistrer au format PDF. »
+Après le fichier, une seule ligne : « Plan d'actions prêt : <N> tâches, <K> éléments à préciser
+(surlignés). Ouvrir dans Edge, Ctrl+P, Enregistrer au format PDF. »
+
+**Corrections** (« ajoute une tâche », « le point 7 est reporté ») : repartir du dernier
+document, modifier seulement ce qui est demandé, relivrer le fichier complet et dire en une
+ligne ce qui a changé.

@@ -29,8 +29,8 @@ source/
   assemble.py      PV de CC d'exemple assemblé comme le ferait l'agent (test)
   pdfall.js        impression Chromium des HTML d'un dossier (test)
 exemples/
-  PV d'AG fictifs (OP, Syncura, Agigest), et pour OP la liste (1re réponse) et le plan d'actions
-  produits par un agent simulé sans code
+  PV d'AG fictifs (OP, Syncura, Agigest), et pour OP le plan d'actions produit par un agent
+  simulé sans code
 ```
 
 ## Mise en place dans Reemia
@@ -58,10 +58,10 @@ Après un changement de délai légal ou de méthode : modifier `source/post_ag.
 
 Test PV de CC : `python3 source/assemble.py /tmp/pv-html && node source/pdfall.js /tmp/pv-html`.
 
-## Agent « Tâches post-AG » : deux réponses
+## Agent « Tâches post-AG » : une seule réponse
 
-Le plan d'actions se fait en deux réponses pour que le document HTML soit écrit d'un seul jet
-(une sortie trop longue faisait bloquer l'agent) : 1) la liste des tâches dans le chat, que le
-gestionnaire corrige au besoin ; 2) après « génère », le HTML à la charte. Le gabarit est
-compact (environ 20 000 caractères pour 25 tâches, comme un PV de CC). Si l'agent bloque encore,
-réduire en priorité la longueur des libellés et des détails (section 1 du skill).
+L'agent livre directement le plan d'actions HTML à partir du PV, sans liste préalable ni
+validation. Le gabarit est compact (environ 20 000 caractères pour 25 tâches chez OP, comme un
+PV de CC ; environ 31 000 pour Syncura et Easy Syndic, dont les logos sont plus lourds). Si
+l'agent bloque en cours d'écriture, réduire en priorité la longueur des libellés et des
+détails (section 1 du skill).
